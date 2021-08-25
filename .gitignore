@@ -1,3 +1,11 @@
+# rust
 /target
+
+# ides
+.vscode/
+.idea/
+
+# holenews
 .env
 holenews.db*
+scripts/mapdump.txt

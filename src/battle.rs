@@ -8,7 +8,7 @@ use sqlx::SqlitePool;
 pub struct Battle {
     pub id: i64,
     pub war_num: i64,
-    pub location: String,
+    pub location: String, // TODO: use map.rs to make better
     pub name: Option<String>,
     pub description: Option<String>,
     pub last_edited: Option<DateTime<Utc>>,
