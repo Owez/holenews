@@ -1,0 +1,17 @@
+[package]
+name = "holenews"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+chrono = "0.4"
+dotenv = "0.15"
+actix-web = "3"
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.5", features = [ "runtime-tokio-rustls", "sqlite", "chrono" ] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
