@@ -17,9 +17,6 @@ print("Starting map formatting..")
 
 buffer = "" # primary buffer, instead of printing
 
-def add_buffer(input):
-    buffer += f"{input}\n"
-
 hexes = requests.get("https://war-service-live.foxholeservices.com/api/worldconquest/maps").json()
 hex_enum = "/// Hex name of a single map tile, topmost of all map details\npub enum MapHex {\n"
 
@@ -31,7 +28,7 @@ for pos in hexes:
 
     detailed = requests.get(f"https://war-service-live.foxholeservices.com/api/worldconquest/maps/{pos}/static").json()["mapTextItems"]
 
-    add_buffer(f"/// Specific map details for the `{pos}` tile\npub enum {name} {{")
+    buffer += (f"/// Specific map details for the `{pos}` tile\npub enum {name} {{") + "\n"
     hex_impl_major = f"impl MapLocation for {name} {{\n    fn is_major(&self) -> bool {{\n        match self {{\n"
     hex_impl_location = f"    fn location(&self) -> (f64, f64) {{\n        match self {{\n"
 
@@ -47,22 +44,22 @@ for pos in hexes:
         _location_y = str(detail["y"])
         location = f"({_location_x}, {_location_y})"
 
-        add_buffer(f"    /// {detailrawname} is a {morm} location\n    {detailname},")
+        buffer += (f"    /// {detailrawname} is a {morm} location\n    {detailname},") + "\n"
         hex_impl_major += f"            {name}::{detailname} => {is_morm},\n"
         hex_impl_location += f"            {name}::{detailname} => {location},\n"
 
 
-    add_buffer("}\n")
+    buffer += ("}\n") + "\n"
 
-    add_buffer(hex_impl_major + "    }\n")
-    add_buffer(hex_impl_location + "    }\n}\n")
+    buffer += (hex_impl_major + "        }\n    }\n") + "\n"
+    buffer += (hex_impl_location + "        }\n    }\n}\n") + "\n"
 
 hex_enum += "}"
 
-add_buffer("--------------------------\n--------------------------\n--------------------------\nADD ALL BELOW TO THE TOP OF FILE\n--------------------------\n--------------------------\n--------------------------\n")
+buffer += ("--------------------------\n--------------------------\n--------------------------\nADD ALL BELOW TO THE TOP OF FILE\n--------------------------\n--------------------------\n--------------------------\n") + "\n"
 
-add_buffer(MAP_LOCATION_TRAIT)
-add_buffer(hex_enum)
+buffer += (MAP_LOCATION_TRAIT) + "\n"
+buffer += (hex_enum) + "\n"
 
 print("Saving buffer..")
 
