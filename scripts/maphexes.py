@@ -1,24 +1,21 @@
 """Formats map hexes from warapi into a Rust enumeration"""
 
-import re
 import requests
 
-MAP_LOCATION_TRAIT = """/// Common trait for map locations of a given hex
-pub trait MapLocation {
-    /// Checks if this map location if major or not
-    pub fn is_major(&self) -> bool;
-
-    /// The `x` and `y` coordinates of this location
-    pub fn location(&self) -> (f64, f64);
-}
-"""
+HEX_URL = "https://war-service-live.foxholeservices.com/api/worldconquest/maps"
+LOCATION_PREFIX_URL = (
+    "https://war-service-live.foxholeservices.com/api/worldconquest/maps/"
+)
+LOCATION_SUFFIX_URL = "/static"
+DIV = "--------------------------"
 
 print("Starting map formatting..")
+buffer = ""  # primary buffer, instead of printing
 
-buffer = "" # primary buffer, instead of printing
-
-hexes = requests.get("https://war-service-live.foxholeservices.com/api/worldconquest/maps").json()
-hex_enum = "/// Hex name of a single map tile, topmost of all map details\npub enum MapHex {\n"
+hexes = requests.get(HEX_URL).json()
+hex_enum = (
+    "/// Hex name of a single map tile, topmost of all map details\npub enum MapHex {\n"
+)
 
 for pos in hexes:
     name = pos[:-3]
@@ -26,11 +23,17 @@ for pos in hexes:
 
     print(f"Getting details for {name} hex..")
 
-    detailed = requests.get(f"https://war-service-live.foxholeservices.com/api/worldconquest/maps/{pos}/static").json()["mapTextItems"]
+    detailed = requests.get(f"{LOCATION_PREFIX_URL}{pos}{LOCATION_SUFFIX_URL}").json()[
+        "mapTextItems"
+    ]
 
-    buffer += (f"/// Specific map details for the `{pos}` tile\npub enum {name} {{") + "\n"
+    buffer += (
+        f"/// Specific map details for the `{pos}` tile\npub enum {name} {{"
+    ) + "\n"
     hex_impl_major = f"impl MapLocation for {name} {{\n    fn is_major(&self) -> bool {{\n        match self {{\n"
-    hex_impl_location = f"    fn location(&self) -> (f64, f64) {{\n        match self {{\n"
+    hex_impl_location = (
+        f"    fn location(&self) -> (f64, f64) {{\n        match self {{\n"
+    )
 
     for detail in detailed:
         detailrawname = detail["text"]
@@ -44,21 +47,21 @@ for pos in hexes:
         _location_y = str(detail["y"])
         location = f"({_location_x}, {_location_y})"
 
-        buffer += (f"    /// {detailrawname} is a {morm} location\n    {detailname},") + "\n"
+        buffer += (
+            f"    /// {detailrawname} is a {morm} location\n    {detailname},"
+        ) + "\n"
         hex_impl_major += f"            {name}::{detailname} => {is_morm},\n"
         hex_impl_location += f"            {name}::{detailname} => {location},\n"
 
-
     buffer += ("}\n") + "\n"
-
     buffer += (hex_impl_major + "        }\n    }\n") + "\n"
     buffer += (hex_impl_location + "        }\n    }\n}\n") + "\n"
 
 hex_enum += "}"
 
-buffer += ("--------------------------\n--------------------------\n--------------------------\nADD ALL BELOW TO THE TOP OF FILE\n--------------------------\n--------------------------\n--------------------------\n") + "\n"
-
-buffer += (MAP_LOCATION_TRAIT) + "\n"
+buffer += (
+    "{DIV}\n{DIV}\n{DIV}\nADD ALL BELOW TO THE TOP OF FILE\n{DIV}\n{DIV}\n{DIV}\n"
+) + "\n"
 buffer += (hex_enum) + "\n"
 
 print("Saving buffer..")
