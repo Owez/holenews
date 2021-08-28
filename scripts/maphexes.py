@@ -34,6 +34,10 @@ for pos in hexes:
     hex_impl_location = (
         f"    fn location(&self) -> (f64, f64) {{\n        match self {{\n"
     )
+    hex_impl_name_api = (
+        f'    fn name_api(&self) -> &str {{\n        ("{name}", match self {{\n'
+    )
+    hex_impl_name_friendly = f'    fn name_friendly(&self) -> &str {{\n        ("{name}", match self {{\n'  # TODO get space splitted name
 
     for detail in detailed:
         detailrawname = detail["text"]
@@ -52,17 +56,30 @@ for pos in hexes:
         ) + "\n"
         hex_impl_major += f"            {name}::{detailname} => {is_morm},\n"
         hex_impl_location += f"            {name}::{detailname} => {location},\n"
+        hex_impl_name_api += f'            {name}::{detailname} => "{detailname}",\n'
+        hex_impl_name_friendly += (
+            f'            {name}::{detailname} => "{detailrawname}",\n'
+        )
 
     buffer += ("}\n") + "\n"
     buffer += (hex_impl_major + "        }\n    }\n") + "\n"
-    buffer += (hex_impl_location + "        }\n    }\n}\n") + "\n"
+    buffer += (hex_impl_location + "        }\n    }\n") + "\n"
+    buffer += (hex_impl_name_api + "        })\n    }\n") + "\n"
+    buffer += (hex_impl_name_friendly + "        })\n    }\n}\n") + "\n"
 
 hex_enum += "}"
 
 buffer += (
-    "{DIV}\n{DIV}\n{DIV}\nADD ALL BELOW TO THE TOP OF FILE\n{DIV}\n{DIV}\n{DIV}\n"
+    f"{DIV}\n{DIV}\n{DIV}\nADD ALL BELOW TO THE TOP OF FILE\n{DIV}\n{DIV}\n{DIV}\n"
 ) + "\n"
 buffer += (hex_enum) + "\n"
+
+# 18th sideroad or something is broken with rust, so format the NON-SPACED one
+sideroadfix = "EighteenthS"
+buffer.replace(" 18thS", sideroadfix)
+buffer.replace(
+    "::18thS",sideroadfix
+)  
 
 print("Saving buffer..")
 

@@ -7,6 +7,12 @@ pub trait Location {
 
     /// The `x` and `y` coordinates of this location
     fn location(&self) -> (f64, f64);
+
+    /// Provides the api-centric name for the overall hex map tile and inner location
+    fn name_api(&self) -> (&str, &str);
+
+    /// Provides the human-readable name for the overall hex map tile and inner location
+    fn name_friendly(&self) -> (&str, &str);
 }
 
 /// Rich location marker for each hex and then location of a map
@@ -34,35 +40,6 @@ pub enum Map {
     MooringCounty(MooringCounty),
     WeatheredExpanse(WeatheredExpanse),
     LochMor(LochMor),
-}
-
-impl Location for Map {
-    fn is_major(&self) -> bool {
-        match self {
-            Map::Stonecradle(val) => val.is_major(),
-            Map::AllodsBight(val) => val.is_major(),
-            Map::TempestIsland(val) => val.is_major(),
-            Map::GreatMarch(val) => val.is_major(),
-            Map::MarbanHol(val) => val.is_major(),
-            Map::ViperPit(val) => val.is_major(),
-            Map::ShackledChasm(val) => val.is_major(),
-            Map::DeadLands(val) => val.is_major(),
-            Map::Heartlands(val) => val.is_major(),
-            Map::LinnMercy(val) => val.is_major(),
-            Map::Godcrofts(val) => val.is_major(),
-            Map::FishermansRow(val) => val.is_major(),
-            Map::Westgate(val) => val.is_major(),
-            Map::ReachingTrail(val) => val.is_major(),
-            Map::UmbralWildwood(val) => val.is_major(),
-            Map::Oarbreaker(val) => val.is_major(),
-            Map::CallahansPassage(val) => val.is_major(),
-            Map::DrownedVale(val) => val.is_major(),
-            Map::FarranacCoast(val) => val.is_major(),
-            Map::MooringCounty(val) => val.is_major(),
-            Map::WeatheredExpanse(val) => val.is_major(),
-            Map::LochMor(val) => val.is_major(),
-        }
-    }
 }
 
 //////////////////////////////////////////////////////////////
@@ -99,7 +76,7 @@ pub enum Stonecradle {
     WorldsEnd,
 }
 
-impl Location for Stonecradle {
+impl MapLocation for Stonecradle {
     fn is_major(&self) -> bool {
         match self {
             Stonecradle::BucklerSound => true,
@@ -134,6 +111,48 @@ impl Location for Stonecradle {
             Stonecradle::TrammelPool => (0.77552485, 0.46081984),
             Stonecradle::WorldsEnd => (0.2149299, 0.55217665),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "Stonecradle",
+            match self {
+                Stonecradle::BucklerSound => "BucklerSound",
+                Stonecradle::FadingLights => "FadingLights",
+                Stonecradle::Longing => "Longing",
+                Stonecradle::TheAgingOcean => "TheAgingOcean",
+                Stonecradle::TheCord => "TheCord",
+                Stonecradle::TheHeirsKnife => "TheHeirsKnife",
+                Stonecradle::TheLoneliestShore => "TheLoneliestShore",
+                Stonecradle::TheLongFast => "TheLongFast",
+                Stonecradle::ThePram => "ThePram",
+                Stonecradle::TheReach => "TheReach",
+                Stonecradle::TheRoilingComets => "TheRoilingComets",
+                Stonecradle::TrammelPool => "TrammelPool",
+                Stonecradle::WorldsEnd => "WorldsEnd",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "Stonecradle",
+            match self {
+                Stonecradle::BucklerSound => "Buckler Sound",
+                Stonecradle::FadingLights => "Fading Lights",
+                Stonecradle::Longing => "Longing",
+                Stonecradle::TheAgingOcean => "The Aging Ocean",
+                Stonecradle::TheCord => "The Cord",
+                Stonecradle::TheHeirsKnife => "The Heir's Knife",
+                Stonecradle::TheLoneliestShore => "The Loneliest Shore",
+                Stonecradle::TheLongFast => "The Long Fast",
+                Stonecradle::ThePram => "The Pram",
+                Stonecradle::TheReach => "The Reach",
+                Stonecradle::TheRoilingComets => "The Roiling Comets",
+                Stonecradle::TrammelPool => "Trammel Pool",
+                Stonecradle::WorldsEnd => "World's End",
+            },
+        )
     }
 }
 
@@ -175,7 +194,7 @@ pub enum AllodsBight {
     WitchsLastFlight,
 }
 
-impl Location for AllodsBight {
+impl MapLocation for AllodsBight {
     fn is_major(&self) -> bool {
         match self {
             AllodsBight::ACaptainsRepose => false,
@@ -219,6 +238,56 @@ impl Location for AllodsBight {
             AllodsBight::WitchsLastFlight => (0.6181798, 0.26963705),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "AllodsBight",
+            match self {
+                AllodsBight::ACaptainsRepose => "ACaptainsRepose",
+                AllodsBight::AllodsChildren => "AllodsChildren",
+                AllodsBight::BelayingTrace => "BelayingTrace",
+                AllodsBight::BlunderBight => "BlunderBight",
+                AllodsBight::BreathofCetus => "BreathofCetus",
+                AllodsBight::GangrenousHollow => "GangrenousHollow",
+                AllodsBight::HarpysPerch => "HarpysPerch",
+                AllodsBight::Homesick => "Homesick",
+                AllodsBight::MercysWail => "MercysWail",
+                AllodsBight::Rumhold => "Rumhold",
+                AllodsBight::Scurvyshire => "Scurvyshire",
+                AllodsBight::TheList => "TheList",
+                AllodsBight::TheRumroad => "TheRumroad",
+                AllodsBight::TheStonePlank => "TheStonePlank",
+                AllodsBight::TheTurncoat => "TheTurncoat",
+                AllodsBight::TitansEnd => "TitansEnd",
+                AllodsBight::WitchsLastFlight => "WitchsLastFlight",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "AllodsBight",
+            match self {
+                AllodsBight::ACaptainsRepose => "A Captain's Repose",
+                AllodsBight::AllodsChildren => "Allod's Children",
+                AllodsBight::BelayingTrace => "Belaying Trace",
+                AllodsBight::BlunderBight => "Blunder Bight",
+                AllodsBight::BreathofCetus => "Breath of Cetus",
+                AllodsBight::GangrenousHollow => "Gangrenous Hollow",
+                AllodsBight::HarpysPerch => "Harpy's Perch",
+                AllodsBight::Homesick => "Homesick",
+                AllodsBight::MercysWail => "Mercy's Wail",
+                AllodsBight::Rumhold => "Rumhold",
+                AllodsBight::Scurvyshire => "Scurvyshire",
+                AllodsBight::TheList => "The List",
+                AllodsBight::TheRumroad => "The Rumroad",
+                AllodsBight::TheStonePlank => "The Stone Plank",
+                AllodsBight::TheTurncoat => "The Turncoat",
+                AllodsBight::TitansEnd => "Titan's End",
+                AllodsBight::WitchsLastFlight => "Witch's Last Flight",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `TempestIslandHex` tile
@@ -257,7 +326,7 @@ pub enum TempestIsland {
     TheRush,
 }
 
-impl Location for TempestIsland {
+impl MapLocation for TempestIsland {
     fn is_major(&self) -> bool {
         match self {
             TempestIsland::AlchimioEstate => true,
@@ -298,6 +367,54 @@ impl Location for TempestIsland {
             TempestIsland::TheOutwood => (0.6131708, 0.39710408),
             TempestIsland::TheRush => (0.52295, 0.37489086),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "TempestIsland",
+            match self {
+                TempestIsland::AlchimioEstate => "AlchimioEstate",
+                TempestIsland::CirrisValve => "CirrisValve",
+                TempestIsland::ErosLagoon => "ErosLagoon",
+                TempestIsland::IsleofPsyche => "IsleofPsyche",
+                TempestIsland::LiarsHaven => "LiarsHaven",
+                TempestIsland::LostAirchal => "LostAirchal",
+                TempestIsland::PlanaFada => "PlanaFada",
+                TempestIsland::Reef => "Reef",
+                TempestIsland::Sclera => "Sclera",
+                TempestIsland::StratosValve => "StratosValve",
+                TempestIsland::SurgeField => "SurgeField",
+                TempestIsland::SurgeGate => "SurgeGate",
+                TempestIsland::TheGale => "TheGale",
+                TempestIsland::TheIris => "TheIris",
+                TempestIsland::TheOutwood => "TheOutwood",
+                TempestIsland::TheRush => "TheRush",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "TempestIsland",
+            match self {
+                TempestIsland::AlchimioEstate => "Alchimio Estate",
+                TempestIsland::CirrisValve => "Cirris Valve",
+                TempestIsland::ErosLagoon => "Eros Lagoon",
+                TempestIsland::IsleofPsyche => "Isle of Psyche",
+                TempestIsland::LiarsHaven => "Liar's Haven",
+                TempestIsland::LostAirchal => "Lost Airchal",
+                TempestIsland::PlanaFada => "Plana Fada",
+                TempestIsland::Reef => "Reef",
+                TempestIsland::Sclera => "Sclera",
+                TempestIsland::StratosValve => "Stratos Valve",
+                TempestIsland::SurgeField => "Surge Field",
+                TempestIsland::SurgeGate => "Surge Gate",
+                TempestIsland::TheGale => "The Gale",
+                TempestIsland::TheIris => "The Iris",
+                TempestIsland::TheOutwood => "The Outwood",
+                TempestIsland::TheRush => "The Rush",
+            },
+        )
     }
 }
 
@@ -367,7 +484,7 @@ pub enum GreatMarch {
     ZealousApproach,
 }
 
-impl Location for GreatMarch {
+impl MapLocation for GreatMarch {
     fn is_major(&self) -> bool {
         match self {
             GreatMarch::CampSenti => true,
@@ -439,6 +556,84 @@ impl Location for GreatMarch {
             GreatMarch::ZealousApproach => (0.4341586, 0.6098335),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "GreatMarch",
+            match self {
+                GreatMarch::CampSenti => "CampSenti",
+                GreatMarch::DaltonMeadow => "DaltonMeadow",
+                GreatMarch::DendróField => "DendróField",
+                GreatMarch::Eristown => "Eristown",
+                GreatMarch::FatelessGrove => "FatelessGrove",
+                GreatMarch::Fengari => "Fengari",
+                GreatMarch::HaltingValley => "HaltingValley",
+                GreatMarch::JackField => "JackField",
+                GreatMarch::JackbootCreek => "JackbootCreek",
+                GreatMarch::LegacyPasture => "LegacyPasture",
+                GreatMarch::Leto => "Leto",
+                GreatMarch::Lionsfort => "Lionsfort",
+                GreatMarch::Milowood => "Milowood",
+                GreatMarch::MorsRange => "MorsRange",
+                GreatMarch::MyrmidonsStay => "MyrmidonsStay",
+                GreatMarch::RemnantAcreage => "RemnantAcreage",
+                GreatMarch::RemnantVilla => "RemnantVilla",
+                GreatMarch::SchalaEstate => "SchalaEstate",
+                GreatMarch::ScrabblingMotte => "ScrabblingMotte",
+                GreatMarch::SerpentCharm => "SerpentCharm",
+                GreatMarch::Sitaria => "Sitaria",
+                GreatMarch::TheBlackWing => "TheBlackWing",
+                GreatMarch::TheGreatMarch => "TheGreatMarch",
+                GreatMarch::TheMidmarch => "TheMidmarch",
+                GreatMarch::TheRiverSenti => "TheRiverSenti",
+                GreatMarch::TheSpiceRoad => "TheSpiceRoad",
+                GreatMarch::TheSwan => "TheSwan",
+                GreatMarch::TheWhiteWing => "TheWhiteWing",
+                GreatMarch::VioletFields => "VioletFields",
+                GreatMarch::Violethome => "Violethome",
+                GreatMarch::ZealousApproach => "ZealousApproach",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "GreatMarch",
+            match self {
+                GreatMarch::CampSenti => "Camp Senti",
+                GreatMarch::DaltonMeadow => "Dalton Meadow",
+                GreatMarch::DendróField => "Dendró Field",
+                GreatMarch::Eristown => "Eristown",
+                GreatMarch::FatelessGrove => "Fateless Grove",
+                GreatMarch::Fengari => "Fengari",
+                GreatMarch::HaltingValley => "Halting Valley",
+                GreatMarch::JackField => "Jack Field",
+                GreatMarch::JackbootCreek => "Jackboot Creek",
+                GreatMarch::LegacyPasture => "Legacy Pasture",
+                GreatMarch::Leto => "Leto",
+                GreatMarch::Lionsfort => "Lionsfort",
+                GreatMarch::Milowood => "Milowood",
+                GreatMarch::MorsRange => "Mors Range",
+                GreatMarch::MyrmidonsStay => "Myrmidon's Stay",
+                GreatMarch::RemnantAcreage => "Remnant Acreage",
+                GreatMarch::RemnantVilla => "Remnant Villa",
+                GreatMarch::SchalaEstate => "Schala Estate",
+                GreatMarch::ScrabblingMotte => "Scrabbling Motte",
+                GreatMarch::SerpentCharm => "Serpent Charm",
+                GreatMarch::Sitaria => "Sitaria",
+                GreatMarch::TheBlackWing => "The Black Wing",
+                GreatMarch::TheGreatMarch => "The Great March",
+                GreatMarch::TheMidmarch => "The Midmarch",
+                GreatMarch::TheRiverSenti => "The River Senti",
+                GreatMarch::TheSpiceRoad => "The Spice Road",
+                GreatMarch::TheSwan => "The Swan",
+                GreatMarch::TheWhiteWing => "The White Wing",
+                GreatMarch::VioletFields => "Violet Fields",
+                GreatMarch::Violethome => "Violethome",
+                GreatMarch::ZealousApproach => "Zealous Approach",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `MarbanHollow` tile
@@ -483,7 +678,7 @@ pub enum MarbanHol {
     TheSpitrocks,
 }
 
-impl Location for MarbanHol {
+impl MapLocation for MarbanHol {
     fn is_major(&self) -> bool {
         match self {
             MarbanHol::BleatingPlateau => false,
@@ -530,6 +725,60 @@ impl Location for MarbanHol {
             MarbanHol::TheCurse => (0.62511504, 0.5131462),
             MarbanHol::TheSpitrocks => (0.3551116, 0.7273359),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "MarbanHol",
+            match self {
+                MarbanHol::BleatingPlateau => "BleatingPlateau",
+                MarbanHol::BubbleBasin => "BubbleBasin",
+                MarbanHol::CheckpointBua => "CheckpointBua",
+                MarbanHol::DeepfleetValley => "DeepfleetValley",
+                MarbanHol::GapingMaw => "GapingMaw",
+                MarbanHol::Lockheed => "Lockheed",
+                MarbanHol::LockheedBreakers => "LockheedBreakers",
+                MarbanHol::LughboneDam => "LughboneDam",
+                MarbanHol::MaidensVeil => "MaidensVeil",
+                MarbanHol::MountMacTire => "MountMacTire",
+                MarbanHol::Mox => "Mox",
+                MarbanHol::OsterWall => "OsterWall",
+                MarbanHol::Pilgrimage => "Pilgrimage",
+                MarbanHol::Sanctum => "Sanctum",
+                MarbanHol::SlenderCove => "SlenderCove",
+                MarbanHol::TheClaim => "TheClaim",
+                MarbanHol::TheClutch => "TheClutch",
+                MarbanHol::TheCurse => "TheCurse",
+                MarbanHol::TheSpitrocks => "TheSpitrocks",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "MarbanHol",
+            match self {
+                MarbanHol::BleatingPlateau => "Bleating Plateau",
+                MarbanHol::BubbleBasin => "Bubble Basin",
+                MarbanHol::CheckpointBua => "Checkpoint Bua",
+                MarbanHol::DeepfleetValley => "Deepfleet Valley",
+                MarbanHol::GapingMaw => "Gaping Maw",
+                MarbanHol::Lockheed => "Lockheed",
+                MarbanHol::LockheedBreakers => "Lockheed Breakers",
+                MarbanHol::LughboneDam => "Lughbone Dam",
+                MarbanHol::MaidensVeil => "Maiden's Veil",
+                MarbanHol::MountMacTire => "Mount Mac Tire",
+                MarbanHol::Mox => "Mox",
+                MarbanHol::OsterWall => "Oster Wall",
+                MarbanHol::Pilgrimage => "Pilgrimage",
+                MarbanHol::Sanctum => "Sanctum",
+                MarbanHol::SlenderCove => "Slender Cove",
+                MarbanHol::TheClaim => "The Claim",
+                MarbanHol::TheClutch => "The Clutch",
+                MarbanHol::TheCurse => "The Curse",
+                MarbanHol::TheSpitrocks => "The Spitrocks",
+            },
+        )
     }
 }
 
@@ -581,7 +830,7 @@ pub enum ViperPit {
     TwinFangs,
 }
 
-impl Location for ViperPit {
+impl MapLocation for ViperPit {
     fn is_major(&self) -> bool {
         match self {
             ViperPit::AfricsApproach => false,
@@ -635,6 +884,66 @@ impl Location for ViperPit {
             ViperPit::TwinFangs => (0.37024617, 0.40132323),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "ViperPit",
+            match self {
+                ViperPit::AfricsApproach => "AfricsApproach",
+                ViperPit::AustriacaRiver => "AustriacaRiver",
+                ViperPit::Blackthroat => "Blackthroat",
+                ViperPit::Deadsteps => "Deadsteps",
+                ViperPit::EarlCrowley => "EarlCrowley",
+                ViperPit::EarlsWelcome => "EarlsWelcome",
+                ViperPit::FleckCrossing => "FleckCrossing",
+                ViperPit::FortViper => "FortViper",
+                ViperPit::Hardcaps => "Hardcaps",
+                ViperPit::Kirknell => "Kirknell",
+                ViperPit::LakeMioira => "LakeMioira",
+                ViperPit::Moltworth => "Moltworth",
+                ViperPit::PathoftheCharmed => "PathoftheCharmed",
+                ViperPit::SerenitysBlight => "SerenitysBlight",
+                ViperPit::SnakeheadLake => "SnakeheadLake",
+                ViperPit::TheBloodyBowery => "TheBloodyBowery",
+                ViperPit::TheFriars => "TheFriars",
+                ViperPit::TheLadysLake => "TheLadysLake",
+                ViperPit::TheRockaway => "TheRockaway",
+                ViperPit::TheSlitheringScales => "TheSlitheringScales",
+                ViperPit::TheTongue => "TheTongue",
+                ViperPit::TwinFangs => "TwinFangs",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "ViperPit",
+            match self {
+                ViperPit::AfricsApproach => "Afric's Approach",
+                ViperPit::AustriacaRiver => "Austriaca River",
+                ViperPit::Blackthroat => "Blackthroat",
+                ViperPit::Deadsteps => "Deadsteps",
+                ViperPit::EarlCrowley => "Earl Crowley",
+                ViperPit::EarlsWelcome => "Earl's Welcome",
+                ViperPit::FleckCrossing => "Fleck Crossing",
+                ViperPit::FortViper => "Fort Viper",
+                ViperPit::Hardcaps => "Hardcaps",
+                ViperPit::Kirknell => "Kirknell",
+                ViperPit::LakeMioira => "Lake Mioira",
+                ViperPit::Moltworth => "Moltworth",
+                ViperPit::PathoftheCharmed => "Path of the Charmed",
+                ViperPit::SerenitysBlight => "Serenity's Blight",
+                ViperPit::SnakeheadLake => "Snakehead Lake",
+                ViperPit::TheBloodyBowery => "The Bloody Bowery",
+                ViperPit::TheFriars => "The Friars",
+                ViperPit::TheLadysLake => "The Lady's Lake",
+                ViperPit::TheRockaway => "The Rockaway",
+                ViperPit::TheSlitheringScales => "The Slithering Scales",
+                ViperPit::TheTongue => "The Tongue",
+                ViperPit::TwinFangs => "Twin Fangs",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `ShackledChasmHex` tile
@@ -687,7 +996,7 @@ pub enum ShackledChasm {
     WidowsWeb,
 }
 
-impl Location for ShackledChasm {
+impl MapLocation for ShackledChasm {
     fn is_major(&self) -> bool {
         match self {
             ShackledChasm::ACarelessNet => false,
@@ -742,6 +1051,68 @@ impl Location for ShackledChasm {
             ShackledChasm::TheVanguard => (0.69273907, 0.6221794),
             ShackledChasm::WidowsWeb => (0.5278859, 0.6728514),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "ShackledChasm",
+            match self {
+                ShackledChasm::ACarelessNet => "ACarelessNet",
+                ShackledChasm::ANewSpring => "ANewSpring",
+                ShackledChasm::AutumnPyres => "AutumnPyres",
+                ShackledChasm::FinalStep => "FinalStep",
+                ShackledChasm::Firstmarch => "Firstmarch",
+                ShackledChasm::GorgonGrove => "GorgonGrove",
+                ShackledChasm::HadesLadder => "HadesLadder",
+                ShackledChasm::LegionsDawn => "LegionsDawn",
+                ShackledChasm::LimewoodHoldfast => "LimewoodHoldfast",
+                ShackledChasm::MankyHills => "MankyHills",
+                ShackledChasm::Reflection => "Reflection",
+                ShackledChasm::Savages => "Savages",
+                ShackledChasm::SilkFarms => "SilkFarms",
+                ShackledChasm::SimosRun => "SimosRun",
+                ShackledChasm::Southreach => "Southreach",
+                ShackledChasm::TheBellToll => "TheBellToll",
+                ShackledChasm::TheBlue => "TheBlue",
+                ShackledChasm::TheFirstRung => "TheFirstRung",
+                ShackledChasm::TheFoolishMaidens => "TheFoolishMaidens",
+                ShackledChasm::TheGraveofRastus => "TheGraveofRastus",
+                ShackledChasm::ThePlunging => "ThePlunging",
+                ShackledChasm::TheVanguard => "TheVanguard",
+                ShackledChasm::WidowsWeb => "WidowsWeb",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "ShackledChasm",
+            match self {
+                ShackledChasm::ACarelessNet => "A Careless Net",
+                ShackledChasm::ANewSpring => "A New Spring",
+                ShackledChasm::AutumnPyres => "Autumn Pyres",
+                ShackledChasm::FinalStep => "Final Step",
+                ShackledChasm::Firstmarch => "Firstmarch",
+                ShackledChasm::GorgonGrove => "Gorgon Grove",
+                ShackledChasm::HadesLadder => "Hades Ladder",
+                ShackledChasm::LegionsDawn => "Legion's Dawn",
+                ShackledChasm::LimewoodHoldfast => "Limewood Holdfast",
+                ShackledChasm::MankyHills => "Manky Hills",
+                ShackledChasm::Reflection => "Reflection",
+                ShackledChasm::Savages => "Savages",
+                ShackledChasm::SilkFarms => "Silk Farms",
+                ShackledChasm::SimosRun => "Simo's Run",
+                ShackledChasm::Southreach => "Southreach",
+                ShackledChasm::TheBellToll => "The Bell Toll",
+                ShackledChasm::TheBlue => "The Blue",
+                ShackledChasm::TheFirstRung => "The First Rung",
+                ShackledChasm::TheFoolishMaidens => "The Foolish Maidens",
+                ShackledChasm::TheGraveofRastus => "The Grave of Rastus",
+                ShackledChasm::ThePlunging => "The Plunging",
+                ShackledChasm::TheVanguard => "The Vanguard",
+                ShackledChasm::WidowsWeb => "Widow's Web",
+            },
+        )
     }
 }
 
@@ -833,7 +1204,7 @@ pub enum DeadLands {
     TheSteppes,
 }
 
-impl Location for DeadLands {
+impl MapLocation for DeadLands {
     fn is_major(&self) -> bool {
         match self {
             DeadLands::AbandonedWard => true,
@@ -927,12 +1298,112 @@ impl Location for DeadLands {
             DeadLands::TheSteppes => (0.66786224, 0.5271883),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "DeadLands",
+            match self {
+                DeadLands::AbandonedWard => "AbandonedWard",
+                DeadLands::BitingTarn => "BitingTarn",
+                DeadLands::BorderConcourse => "BorderConcourse",
+                DeadLands::BorderThicket => "BorderThicket",
+                DeadLands::BrineGlen => "BrineGlen",
+                DeadLands::CallahansBelt => "CallahansBelt",
+                DeadLands::CallahansBoot => "CallahansBoot",
+                DeadLands::CallahansGate => "CallahansGate",
+                DeadLands::CarpalTrail => "CarpalTrail",
+                DeadLands::CemetaryJunction => "CemetaryJunction",
+                DeadLands::CemetaryLane => "CemetaryLane",
+                DeadLands::CoracoidFootpath => "CoracoidFootpath",
+                DeadLands::CrumblingPassage => "CrumblingPassage",
+                DeadLands::HopesCauseway => "HopesCauseway",
+                DeadLands::IronsEnd => "IronsEnd",
+                DeadLands::JasparRange => "JasparRange",
+                DeadLands::LiberationPoint => "LiberationPoint",
+                DeadLands::MandibleCrossroads => "MandibleCrossroads",
+                DeadLands::MarrowCopse => "MarrowCopse",
+                DeadLands::MercyMeadow => "MercyMeadow",
+                DeadLands::MercysEnd => "MercysEnd",
+                DeadLands::OvergrownPasture => "OvergrownPasture",
+                DeadLands::PathtotheSun => "PathtotheSun",
+                DeadLands::PommelAnnex => "PommelAnnex",
+                DeadLands::SunsHollow => "SunsHollow",
+                DeadLands::SunhavenGateway => "SunhavenGateway",
+                DeadLands::TarsalPathway => "TarsalPathway",
+                DeadLands::TheAbbeyDrag => "TheAbbeyDrag",
+                DeadLands::TheBlade => "TheBlade",
+                DeadLands::TheBoneyard => "TheBoneyard",
+                DeadLands::TheCrossing => "TheCrossing",
+                DeadLands::TheGreatMarch => "TheGreatMarch",
+                DeadLands::TheIronPassage => "TheIronPassage",
+                DeadLands::TheIronRoad => "TheIronRoad",
+                DeadLands::ThePits => "ThePits",
+                DeadLands::ThePlaza => "ThePlaza",
+                DeadLands::TheSaltFarms => "TheSaltFarms",
+                DeadLands::TheSaltMarch => "TheSaltMarch",
+                DeadLands::TheSaltTrail => "TheSaltTrail",
+                DeadLands::TheShornFields => "TheShornFields",
+                DeadLands::TheSpine => "TheSpine",
+                DeadLands::TheSteppes => "TheSteppes",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "DeadLands",
+            match self {
+                DeadLands::AbandonedWard => "Abandoned Ward",
+                DeadLands::BitingTarn => "Biting Tarn",
+                DeadLands::BorderConcourse => "Border Concourse",
+                DeadLands::BorderThicket => "Border Thicket",
+                DeadLands::BrineGlen => "Brine Glen",
+                DeadLands::CallahansBelt => "Callahan's Belt",
+                DeadLands::CallahansBoot => "Callahan's Boot",
+                DeadLands::CallahansGate => "Callahan's Gate",
+                DeadLands::CarpalTrail => "Carpal Trail",
+                DeadLands::CemetaryJunction => "Cemetary Junction",
+                DeadLands::CemetaryLane => "Cemetary Lane",
+                DeadLands::CoracoidFootpath => "Coracoid Footpath",
+                DeadLands::CrumblingPassage => "Crumbling Passage",
+                DeadLands::HopesCauseway => "Hope's Causeway",
+                DeadLands::IronsEnd => "Iron's End",
+                DeadLands::JasparRange => "Jaspar Range",
+                DeadLands::LiberationPoint => "Liberation Point",
+                DeadLands::MandibleCrossroads => "Mandible Crossroads",
+                DeadLands::MarrowCopse => "Marrow Copse",
+                DeadLands::MercyMeadow => "Mercy Meadow",
+                DeadLands::MercysEnd => "Mercy's End",
+                DeadLands::OvergrownPasture => "Overgrown Pasture",
+                DeadLands::PathtotheSun => "Path to the Sun",
+                DeadLands::PommelAnnex => "Pommel Annex",
+                DeadLands::SunsHollow => "Sun's Hollow",
+                DeadLands::SunhavenGateway => "Sunhaven Gateway",
+                DeadLands::TarsalPathway => "Tarsal Pathway",
+                DeadLands::TheAbbeyDrag => "The Abbey Drag",
+                DeadLands::TheBlade => "The Blade",
+                DeadLands::TheBoneyard => "The Boneyard",
+                DeadLands::TheCrossing => "The Crossing",
+                DeadLands::TheGreatMarch => "The Great March",
+                DeadLands::TheIronPassage => "The Iron Passage",
+                DeadLands::TheIronRoad => "The Iron Road",
+                DeadLands::ThePits => "The Pits",
+                DeadLands::ThePlaza => "The Plaza",
+                DeadLands::TheSaltFarms => "The Salt Farms",
+                DeadLands::TheSaltMarch => "The Salt March",
+                DeadLands::TheSaltTrail => "The Salt Trail",
+                DeadLands::TheShornFields => "The Shorn Fields",
+                DeadLands::TheSpine => "The Spine",
+                DeadLands::TheSteppes => "The Steppes",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `HeartlandsHex` tile
 pub enum Heartlands {
     /// 18th Sideroad is a minor location
-    EighteenthSideRoad,
+    EighteenthSideroad,
     /// Barronshire  is a minor location
     Barronshire,
     /// Barronswall is a major location
@@ -993,10 +1464,10 @@ pub enum Heartlands {
     UpperHeartlands,
 }
 
-impl Location for Heartlands {
+impl MapLocation for Heartlands {
     fn is_major(&self) -> bool {
         match self {
-            Heartlands::EighteenthSideRoad => false,
+            Heartlands::EighteenthSideroad => false,
             Heartlands::Barronshire => false,
             Heartlands::Barronswall => true,
             Heartlands::BarronyRanch => true,
@@ -1031,7 +1502,7 @@ impl Location for Heartlands {
 
     fn location(&self) -> (f64, f64) {
         match self {
-            Heartlands::EighteenthSideRoad => (0.5635743, 0.07919855),
+            Heartlands::EighteenthSideroad => (0.5635743, 0.07919855),
             Heartlands::Barronshire => (0.30404317, 0.5293029),
             Heartlands::Barronswall => (0.39372203, 0.40942293),
             Heartlands::BarronyRanch => (0.3733477, 0.1098376),
@@ -1062,6 +1533,82 @@ impl Location for Heartlands {
             Heartlands::UpperBarronyField => (0.47143874, 0.092723675),
             Heartlands::UpperHeartlands => (0.32511675, 0.11369127),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "Heartlands",
+            match self {
+                Heartlands::EighteenthSideroad => "18thSideroad",
+                Heartlands::Barronshire => "Barronshire",
+                Heartlands::Barronswall => "Barronswall",
+                Heartlands::BarronyRanch => "BarronyRanch",
+                Heartlands::BarronyRoad => "BarronyRoad",
+                Heartlands::Cageroad => "Cageroad",
+                Heartlands::CraterBasin => "CraterBasin",
+                Heartlands::DeeplawPost => "DeeplawPost",
+                Heartlands::ErimosRanch => "ErimosRanch",
+                Heartlands::FortProvidence => "FortProvidence",
+                Heartlands::GreenfieldOrchard => "GreenfieldOrchard",
+                Heartlands::HarvestersRange => "HarvestersRange",
+                Heartlands::JanusField => "JanusField",
+                Heartlands::KosMeadows => "KosMeadows",
+                Heartlands::Loftmire => "Loftmire",
+                Heartlands::LowerBarronyField => "LowerBarronyField",
+                Heartlands::OleanderFields => "OleanderFields",
+                Heartlands::OleanderHomestead => "OleanderHomestead",
+                Heartlands::PandoraCompound => "PandoraCompound",
+                Heartlands::Proexí => "Proexí",
+                Heartlands::ProvidenceField => "ProvidenceField",
+                Heartlands::TheBlemish => "TheBlemish",
+                Heartlands::TheBreach => "TheBreach",
+                Heartlands::TheFumingPen => "TheFumingPen",
+                Heartlands::TheOrchardWall => "TheOrchardWall",
+                Heartlands::ThePlough => "ThePlough",
+                Heartlands::TheRollcage => "TheRollcage",
+                Heartlands::TheSaltCrossing => "TheSaltCrossing",
+                Heartlands::UpperBarronyField => "UpperBarronyField",
+                Heartlands::UpperHeartlands => "UpperHeartlands",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "Heartlands",
+            match self {
+                Heartlands::EighteenthSideroad => "18th Sideroad",
+                Heartlands::Barronshire => "Barronshire ",
+                Heartlands::Barronswall => "Barronswall",
+                Heartlands::BarronyRanch => "Barrony Ranch",
+                Heartlands::BarronyRoad => "Barrony Road",
+                Heartlands::Cageroad => "Cageroad",
+                Heartlands::CraterBasin => "Crater Basin",
+                Heartlands::DeeplawPost => "Deeplaw Post",
+                Heartlands::ErimosRanch => "Erimos Ranch",
+                Heartlands::FortProvidence => "Fort Providence",
+                Heartlands::GreenfieldOrchard => "Greenfield Orchard",
+                Heartlands::HarvestersRange => "Harvester's Range",
+                Heartlands::JanusField => "Janus Field",
+                Heartlands::KosMeadows => "Kos Meadows",
+                Heartlands::Loftmire => "Loftmire",
+                Heartlands::LowerBarronyField => "Lower Barrony Field",
+                Heartlands::OleanderFields => "Oleander Fields",
+                Heartlands::OleanderHomestead => "Oleander Homestead",
+                Heartlands::PandoraCompound => "Pandora Compound",
+                Heartlands::Proexí => "Proexí",
+                Heartlands::ProvidenceField => "Providence Field",
+                Heartlands::TheBlemish => "The Blemish",
+                Heartlands::TheBreach => "The Breach",
+                Heartlands::TheFumingPen => "The Fuming Pen",
+                Heartlands::TheOrchardWall => "The Orchard Wall",
+                Heartlands::ThePlough => "The Plough",
+                Heartlands::TheRollcage => "The Rollcage",
+                Heartlands::TheSaltCrossing => "The Salt Crossing",
+                Heartlands::UpperBarronyField => "Upper Barrony Field",
+                Heartlands::UpperHeartlands => "Upper Heartlands",
+            },
+        )
     }
 }
 
@@ -1109,7 +1656,7 @@ pub enum LinnMercy {
     UlsterFalls,
 }
 
-impl Location for LinnMercy {
+impl MapLocation for LinnMercy {
     fn is_major(&self) -> bool {
         match self {
             LinnMercy::Blackroad => false,
@@ -1158,6 +1705,62 @@ impl Location for LinnMercy {
             LinnMercy::TheRiverMercy => (0.64159554, 0.6174841),
             LinnMercy::UlsterFalls => (0.46410957, 0.45022747),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "LinnMercy",
+            match self {
+                LinnMercy::Blackroad => "Blackroad",
+                LinnMercy::FortDuncan => "FortDuncan",
+                LinnMercy::GallantGoughBoulevard => "GallantGoughBoulevard",
+                LinnMercy::Hardline => "Hardline",
+                LinnMercy::Lathair => "Lathair",
+                LinnMercy::MercifulStrait => "MercifulStrait",
+                LinnMercy::Mudhole => "Mudhole",
+                LinnMercy::Nathair => "Nathair",
+                LinnMercy::OutwichRanch => "OutwichRanch",
+                LinnMercy::Rotdust => "Rotdust",
+                LinnMercy::SolasBurn => "SolasBurn",
+                LinnMercy::TheCrimsonGardens => "TheCrimsonGardens",
+                LinnMercy::TheDrone => "TheDrone",
+                LinnMercy::TheFirstCoin => "TheFirstCoin",
+                LinnMercy::TheGreatScale => "TheGreatScale",
+                LinnMercy::TheLastGrove => "TheLastGrove",
+                LinnMercy::TheLongWhine => "TheLongWhine",
+                LinnMercy::ThePrairieBazaar => "ThePrairieBazaar",
+                LinnMercy::TheRiverMercy => "TheRiverMercy",
+                LinnMercy::UlsterFalls => "UlsterFalls",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "LinnMercy",
+            match self {
+                LinnMercy::Blackroad => "Blackroad",
+                LinnMercy::FortDuncan => "Fort Duncan",
+                LinnMercy::GallantGoughBoulevard => "Gallant Gough Boulevard",
+                LinnMercy::Hardline => "Hardline",
+                LinnMercy::Lathair => "Lathair",
+                LinnMercy::MercifulStrait => "Merciful Strait",
+                LinnMercy::Mudhole => "Mudhole",
+                LinnMercy::Nathair => "Nathair",
+                LinnMercy::OutwichRanch => "Outwich Ranch",
+                LinnMercy::Rotdust => "Rotdust",
+                LinnMercy::SolasBurn => "Solas Burn",
+                LinnMercy::TheCrimsonGardens => "The Crimson Gardens",
+                LinnMercy::TheDrone => "The Drone",
+                LinnMercy::TheFirstCoin => "The First Coin",
+                LinnMercy::TheGreatScale => "The Great Scale",
+                LinnMercy::TheLastGrove => "The Last Grove",
+                LinnMercy::TheLongWhine => "The Long Whine",
+                LinnMercy::ThePrairieBazaar => "The Prairie Bazaar",
+                LinnMercy::TheRiverMercy => "The River Mercy",
+                LinnMercy::UlsterFalls => "Ulster Falls",
+            },
+        )
     }
 }
 
@@ -1217,7 +1820,7 @@ pub enum EndlessShore {
     Woodbind,
 }
 
-impl Location for EndlessShore {
+impl MapLocation for EndlessShore {
     fn is_major(&self) -> bool {
         match self {
             EndlessShore::BalorsCrown => false,
@@ -1279,6 +1882,74 @@ impl Location for EndlessShore {
             EndlessShore::Woodbind => (0.6993119, 0.7336695),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "EndlessShore",
+            match self {
+                EndlessShore::BalorsCrown => "BalorsCrown",
+                EndlessShore::BatteredLanding => "BatteredLanding",
+                EndlessShore::BrackishPoint => "BrackishPoint",
+                EndlessShore::DannanRidge => "DannanRidge",
+                EndlessShore::DeargsFang => "DeargsFang",
+                EndlessShore::EnduringWake => "EnduringWake",
+                EndlessShore::IronJunction => "IronJunction",
+                EndlessShore::KelpiesMane => "KelpiesMane",
+                EndlessShore::KelpiesTail => "KelpiesTail",
+                EndlessShore::Liegehearth => "Liegehearth",
+                EndlessShore::MerrowsRest => "MerrowsRest",
+                EndlessShore::SaltbrookChannel => "SaltbrookChannel",
+                EndlessShore::SídheFall => "SídheFall",
+                EndlessShore::TheDannanCoast => "TheDannanCoast",
+                EndlessShore::TheDarkRoad => "TheDarkRoad",
+                EndlessShore::TheEvilEye => "TheEvilEye",
+                EndlessShore::TheNorthStar => "TheNorthStar",
+                EndlessShore::TheOldJackTar => "TheOldJackTar",
+                EndlessShore::TheOverland => "TheOverland",
+                EndlessShore::TheSelkieBluffs => "TheSelkieBluffs",
+                EndlessShore::TheStyx => "TheStyx",
+                EndlessShore::TheWhisperingWaves => "TheWhisperingWaves",
+                EndlessShore::TuathaWatchpost => "TuathaWatchpost",
+                EndlessShore::VulpineWatch => "VulpineWatch",
+                EndlessShore::Wellchurch => "Wellchurch",
+                EndlessShore::Woodbind => "Woodbind",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "EndlessShore",
+            match self {
+                EndlessShore::BalorsCrown => "Balor's Crown",
+                EndlessShore::BatteredLanding => "Battered Landing",
+                EndlessShore::BrackishPoint => "Brackish Point",
+                EndlessShore::DannanRidge => "Dannan Ridge",
+                EndlessShore::DeargsFang => "Dearg's Fang",
+                EndlessShore::EnduringWake => "Enduring Wake",
+                EndlessShore::IronJunction => "Iron Junction",
+                EndlessShore::KelpiesMane => "Kelpie's Mane",
+                EndlessShore::KelpiesTail => "Kelpie's Tail",
+                EndlessShore::Liegehearth => "Liegehearth",
+                EndlessShore::MerrowsRest => "Merrow's Rest",
+                EndlessShore::SaltbrookChannel => "Saltbrook Channel",
+                EndlessShore::SídheFall => "Sídhe Fall",
+                EndlessShore::TheDannanCoast => "The Dannan Coast",
+                EndlessShore::TheDarkRoad => "The Dark Road",
+                EndlessShore::TheEvilEye => "The Evil Eye",
+                EndlessShore::TheNorthStar => "The North Star",
+                EndlessShore::TheOldJackTar => "The Old Jack Tar",
+                EndlessShore::TheOverland => "The Overland",
+                EndlessShore::TheSelkieBluffs => "The Selkie Bluffs",
+                EndlessShore::TheStyx => "The Styx",
+                EndlessShore::TheWhisperingWaves => "The Whispering Waves",
+                EndlessShore::TuathaWatchpost => "Tuatha Watchpost",
+                EndlessShore::VulpineWatch => "Vulpine Watch",
+                EndlessShore::Wellchurch => "Wellchurch",
+                EndlessShore::Woodbind => "Woodbind",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `GodcroftsHex` tile
@@ -1335,7 +2006,7 @@ pub enum Godcrofts {
     VicitLagoon,
 }
 
-impl Location for Godcrofts {
+impl MapLocation for Godcrofts {
     fn is_major(&self) -> bool {
         match self {
             Godcrofts::AnchorBeach => true,
@@ -1395,6 +2066,72 @@ impl Location for Godcrofts {
             Godcrofts::VicitLagoon => (0.33476177, 0.36637142),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "Godcrofts",
+            match self {
+                Godcrofts::AnchorBeach => "AnchorBeach",
+                Godcrofts::Argosa => "Argosa",
+                Godcrofts::BaghMòr => "BaghMòr",
+                Godcrofts::BarrellersBay => "BarrellersBay",
+                Godcrofts::Blackwatch => "Blackwatch",
+                Godcrofts::ChamilRavine => "ChamilRavine",
+                Godcrofts::DenofThieves => "DenofThieves",
+                Godcrofts::Exile => "Exile",
+                Godcrofts::Isawa => "Isawa",
+                Godcrofts::Kolas => "Kolas",
+                Godcrofts::Lipsia => "Lipsia",
+                Godcrofts::PeriptiDepths => "PeriptiDepths",
+                Godcrofts::PerpetuaChannel => "PerpetuaChannel",
+                Godcrofts::PrimusTrames => "PrimusTrames",
+                Godcrofts::Promithiens => "Promithiens",
+                Godcrofts::Protos => "Protos",
+                Godcrofts::Saegio => "Saegio",
+                Godcrofts::Skodio => "Skodio",
+                Godcrofts::TheAxehead => "TheAxehead",
+                Godcrofts::TheDiceRoad => "TheDiceRoad",
+                Godcrofts::TheFleeceRoad => "TheFleeceRoad",
+                Godcrofts::TheKrisFord => "TheKrisFord",
+                Godcrofts::TheKrisFord => "TheKrisFord",
+                Godcrofts::UrsaTrail => "UrsaTrail",
+                Godcrofts::VicitLagoon => "VicitLagoon",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "Godcrofts",
+            match self {
+                Godcrofts::AnchorBeach => "Anchor Beach",
+                Godcrofts::Argosa => "Argosa",
+                Godcrofts::BaghMòr => "Bagh Mòr",
+                Godcrofts::BarrellersBay => "Barreller's Bay",
+                Godcrofts::Blackwatch => "Blackwatch",
+                Godcrofts::ChamilRavine => "Chamil Ravine",
+                Godcrofts::DenofThieves => "Den of Thieves",
+                Godcrofts::Exile => "Exile",
+                Godcrofts::Isawa => "Isawa",
+                Godcrofts::Kolas => "Kolas",
+                Godcrofts::Lipsia => "Lipsia",
+                Godcrofts::PeriptiDepths => "Peripti Depths",
+                Godcrofts::PerpetuaChannel => "Perpetua Channel",
+                Godcrofts::PrimusTrames => "Primus Trames",
+                Godcrofts::Promithiens => "Promithiens",
+                Godcrofts::Protos => "Protos",
+                Godcrofts::Saegio => "Saegio",
+                Godcrofts::Skodio => "Skodio",
+                Godcrofts::TheAxehead => "The Axehead",
+                Godcrofts::TheDiceRoad => "The Dice Road",
+                Godcrofts::TheFleeceRoad => "The Fleece Road",
+                Godcrofts::TheKrisFord => "The Kris Ford",
+                Godcrofts::TheKrisFord => "The Kris Ford",
+                Godcrofts::UrsaTrail => "Ursa Trail",
+                Godcrofts::VicitLagoon => "Vicit Lagoon",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `FishermansRowHex` tile
@@ -1445,7 +2182,7 @@ pub enum FishermansRow {
     TorchofDemeter,
 }
 
-impl Location for FishermansRow {
+impl MapLocation for FishermansRow {
     fn is_major(&self) -> bool {
         match self {
             FishermansRow::ALostSot => false,
@@ -1498,6 +2235,66 @@ impl Location for FishermansRow {
             FishermansRow::TheThreeSisters => (0.684986, 0.3528056),
             FishermansRow::TorchofDemeter => (0.42485577, 0.6818831),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "FishermansRow",
+            match self {
+                FishermansRow::ALostSot => "ALostSot",
+                FishermansRow::Arcadia => "Arcadia",
+                FishermansRow::BidentCrossroads => "BidentCrossroads",
+                FishermansRow::BlackWell => "BlackWell",
+                FishermansRow::CatStep => "CatStep",
+                FishermansRow::DankanaPost => "DankanaPost",
+                FishermansRow::Eidolo => "Eidolo",
+                FishermansRow::FortEmber => "FortEmber",
+                FishermansRow::HangmensCourt => "HangmensCourt",
+                FishermansRow::HeartofRites => "HeartofRites",
+                FishermansRow::HouseRoloi => "HouseRoloi",
+                FishermansRow::LakeNerites => "LakeNerites",
+                FishermansRow::LibertyHill => "LibertyHill",
+                FishermansRow::Oceanwatch => "Oceanwatch",
+                FishermansRow::PartisanIsland => "PartisanIsland",
+                FishermansRow::PeriptiLanding => "PeriptiLanding",
+                FishermansRow::ProgonosWatch => "ProgonosWatch",
+                FishermansRow::TheDireStrings => "TheDireStrings",
+                FishermansRow::TheRiteRoad => "TheRiteRoad",
+                FishermansRow::TheSatyrStone => "TheSatyrStone",
+                FishermansRow::TheThreeSisters => "TheThreeSisters",
+                FishermansRow::TorchofDemeter => "TorchofDemeter",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "FishermansRow",
+            match self {
+                FishermansRow::ALostSot => "A Lost Sot",
+                FishermansRow::Arcadia => "Arcadia",
+                FishermansRow::BidentCrossroads => "Bident Crossroads",
+                FishermansRow::BlackWell => "Black Well",
+                FishermansRow::CatStep => "Cat Step",
+                FishermansRow::DankanaPost => "Dankana Post",
+                FishermansRow::Eidolo => "Eidolo",
+                FishermansRow::FortEmber => "Fort Ember",
+                FishermansRow::HangmensCourt => "Hangmen's Court",
+                FishermansRow::HeartofRites => "Heart of Rites",
+                FishermansRow::HouseRoloi => "House Roloi",
+                FishermansRow::LakeNerites => "Lake Nerites",
+                FishermansRow::LibertyHill => "Liberty Hill",
+                FishermansRow::Oceanwatch => "Oceanwatch",
+                FishermansRow::PartisanIsland => "Partisan Island",
+                FishermansRow::PeriptiLanding => "Peripti Landing",
+                FishermansRow::ProgonosWatch => "Progonos Watch",
+                FishermansRow::TheDireStrings => "The Dire Strings",
+                FishermansRow::TheRiteRoad => "The Rite Road",
+                FishermansRow::TheSatyrStone => "The Satyr Stone",
+                FishermansRow::TheThreeSisters => "The Three Sisters",
+                FishermansRow::TorchofDemeter => "Torch of Demeter",
+            },
+        )
     }
 }
 
@@ -1595,7 +2392,7 @@ pub enum Westgate {
     ZeusDemise,
 }
 
-impl Location for Westgate {
+impl MapLocation for Westgate {
     fn is_major(&self) -> bool {
         match self {
             Westgate::AshStep => false,
@@ -1695,6 +2492,112 @@ impl Location for Westgate {
             Westgate::ZeusDemise => (0.4019617, 0.7723668),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "Westgate",
+            match self {
+                Westgate::AshStep => "AshStep",
+                Westgate::CandleHills => "CandleHills",
+                Westgate::CattleMarch => "CattleMarch",
+                Westgate::CeoHighlands => "CeoHighlands",
+                Westgate::CinderRoad => "CinderRoad",
+                Westgate::Coasthill => "Coasthill",
+                Westgate::Coastway => "Coastway",
+                Westgate::CobbersLane => "CobbersLane",
+                Westgate::CobbersLane => "CobbersLane",
+                Westgate::EmberHills => "EmberHills",
+                Westgate::FandsChain => "FandsChain",
+                Westgate::FieldsofBadb => "FieldsofBadb",
+                Westgate::FieldsofBadb => "FieldsofBadb",
+                Westgate::FlidaisPasture => "FlidaisPasture",
+                Westgate::HandsomeHideaway => "HandsomeHideaway",
+                Westgate::Hillcrest => "Hillcrest",
+                Westgate::Holdfast => "Holdfast",
+                Westgate::InkwellLane => "InkwellLane",
+                Westgate::KardiaRoad => "KardiaRoad",
+                Westgate::KillianQuarter => "KillianQuarter",
+                Westgate::Kingstone => "Kingstone",
+                Westgate::Longstone => "Longstone",
+                Westgate::LordsMouth => "LordsMouth",
+                Westgate::LostPartition => "LostPartition",
+                Westgate::RanchersFast => "RanchersFast",
+                Westgate::ReaversCove => "ReaversCove",
+                Westgate::SanctifiedPath => "SanctifiedPath",
+                Westgate::Sanctuary => "Sanctuary",
+                Westgate::SíochánaValley => "SíochánaValley",
+                Westgate::TaswellPoint => "TaswellPoint",
+                Westgate::TheAgingOcean => "TheAgingOcean",
+                Westgate::TheBulwark => "TheBulwark",
+                Westgate::TheDivide => "TheDivide",
+                Westgate::TheGallows => "TheGallows",
+                Westgate::TheHem => "TheHem",
+                Westgate::TheKingsRoad => "TheKingsRoad",
+                Westgate::TheKingsRoad => "TheKingsRoad",
+                Westgate::TheKnightsEdge => "TheKnightsEdge",
+                Westgate::TritonsCurse => "TritonsCurse",
+                Westgate::WardenWalk => "WardenWalk",
+                Westgate::WesternHeartlands => "WesternHeartlands",
+                Westgate::WestgateKeep => "WestgateKeep",
+                Westgate::WireRoad => "WireRoad",
+                Westgate::Wyattwick => "Wyattwick",
+                Westgate::ZeusDemise => "ZeusDemise",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "Westgate",
+            match self {
+                Westgate::AshStep => "Ash Step",
+                Westgate::CandleHills => "Candle Hills",
+                Westgate::CattleMarch => "Cattle March",
+                Westgate::CeoHighlands => "Ceo Highlands",
+                Westgate::CinderRoad => "Cinder Road",
+                Westgate::Coasthill => "Coasthill",
+                Westgate::Coastway => "Coastway",
+                Westgate::CobbersLane => "Cobber's Lane",
+                Westgate::CobbersLane => "Cobber's Lane",
+                Westgate::EmberHills => "Ember Hills",
+                Westgate::FandsChain => "Fand's Chain",
+                Westgate::FieldsofBadb => "Fields of Badb",
+                Westgate::FieldsofBadb => "Fields of Badb",
+                Westgate::FlidaisPasture => "Flidais' Pasture",
+                Westgate::HandsomeHideaway => "Handsome Hideaway",
+                Westgate::Hillcrest => "Hillcrest",
+                Westgate::Holdfast => "Holdfast",
+                Westgate::InkwellLane => "Inkwell Lane",
+                Westgate::KardiaRoad => "Kardia Road",
+                Westgate::KillianQuarter => "Killian Quarter",
+                Westgate::Kingstone => "Kingstone",
+                Westgate::Longstone => "Longstone",
+                Westgate::LordsMouth => "Lord's Mouth",
+                Westgate::LostPartition => "Lost Partition",
+                Westgate::RanchersFast => "Rancher's Fast",
+                Westgate::ReaversCove => "Reaver's Cove",
+                Westgate::SanctifiedPath => "Sanctified Path",
+                Westgate::Sanctuary => "Sanctuary",
+                Westgate::SíochánaValley => "Síochána Valley",
+                Westgate::TaswellPoint => "Taswell Point",
+                Westgate::TheAgingOcean => "The Aging Ocean",
+                Westgate::TheBulwark => "The Bulwark",
+                Westgate::TheDivide => "The Divide",
+                Westgate::TheGallows => "The Gallows",
+                Westgate::TheHem => "The Hem",
+                Westgate::TheKingsRoad => "The King's Road",
+                Westgate::TheKingsRoad => "The King's Road",
+                Westgate::TheKnightsEdge => "The Knight's Edge",
+                Westgate::TritonsCurse => "Triton's Curse",
+                Westgate::WardenWalk => "Warden Walk",
+                Westgate::WesternHeartlands => "Western Heartlands",
+                Westgate::WestgateKeep => "Westgate Keep",
+                Westgate::WireRoad => "Wire Road",
+                Westgate::Wyattwick => "Wyattwick",
+                Westgate::ZeusDemise => "Zeus' Demise",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `ReachingTrailHex` tile
@@ -1773,7 +2676,7 @@ pub enum ReachingTrail {
     WindyWay,
 }
 
-impl Location for ReachingTrail {
+impl MapLocation for ReachingTrail {
     fn is_major(&self) -> bool {
         match self {
             ReachingTrail::Brodytown => true,
@@ -1855,6 +2758,94 @@ impl Location for ReachingTrail {
             ReachingTrail::WindyWay => (0.22708872, 0.078611076),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "ReachingTrail",
+            match self {
+                ReachingTrail::Brodytown => "Brodytown",
+                ReachingTrail::CampEos => "CampEos",
+                ReachingTrail::Caragtais => "Caragtais",
+                ReachingTrail::DuffysFarm => "DuffysFarm",
+                ReachingTrail::DugansApproach => "DugansApproach",
+                ReachingTrail::Dwyersfield => "Dwyersfield",
+                ReachingTrail::Dwyerstown => "Dwyerstown",
+                ReachingTrail::Elksford => "Elksford",
+                ReachingTrail::Featherfield => "Featherfield",
+                ReachingTrail::FishermansFloe => "FishermansFloe",
+                ReachingTrail::FortMacConaill => "FortMacConaill",
+                ReachingTrail::Harpy => "Harpy",
+                ReachingTrail::Hookhall => "Hookhall",
+                ReachingTrail::Humidus => "Humidus",
+                ReachingTrail::IceRanch => "IceRanch",
+                ReachingTrail::LimestoneHoldfast => "LimestoneHoldfast",
+                ReachingTrail::MacConaillsPass => "MacConaillsPass",
+                ReachingTrail::Mousetrap => "Mousetrap",
+                ReachingTrail::Nightchurch => "Nightchurch",
+                ReachingTrail::Pitfall => "Pitfall",
+                ReachingTrail::Puncta => "Puncta",
+                ReachingTrail::Reprieve => "Reprieve",
+                ReachingTrail::Scorpion => "Scorpion",
+                ReachingTrail::TheArk => "TheArk",
+                ReachingTrail::TheBait => "TheBait",
+                ReachingTrail::TheCairns => "TheCairns",
+                ReachingTrail::TheChickenCoop => "TheChickenCoop",
+                ReachingTrail::TheDeckard => "TheDeckard",
+                ReachingTrail::TheKnot => "TheKnot",
+                ReachingTrail::TheReachingHeights => "TheReachingHeights",
+                ReachingTrail::TheRimeLedge => "TheRimeLedge",
+                ReachingTrail::TheRousingFields => "TheRousingFields",
+                ReachingTrail::TheScar => "TheScar",
+                ReachingTrail::TheSqueeze => "TheSqueeze",
+                ReachingTrail::Thýlak => "Thýlak",
+                ReachingTrail::WindyWay => "WindyWay",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "ReachingTrail",
+            match self {
+                ReachingTrail::Brodytown => "Brodytown",
+                ReachingTrail::CampEos => "Camp Eos",
+                ReachingTrail::Caragtais => "Caragtais",
+                ReachingTrail::DuffysFarm => "Duffy's Farm",
+                ReachingTrail::DugansApproach => "Dugan's Approach",
+                ReachingTrail::Dwyersfield => "Dwyersfield",
+                ReachingTrail::Dwyerstown => "Dwyerstown",
+                ReachingTrail::Elksford => "Elksford",
+                ReachingTrail::Featherfield => "Featherfield",
+                ReachingTrail::FishermansFloe => "Fisherman's Floe",
+                ReachingTrail::FortMacConaill => "Fort Mac Conaill",
+                ReachingTrail::Harpy => "Harpy",
+                ReachingTrail::Hookhall => "Hookhall",
+                ReachingTrail::Humidus => "Humidus",
+                ReachingTrail::IceRanch => "Ice Ranch",
+                ReachingTrail::LimestoneHoldfast => "Limestone Holdfast",
+                ReachingTrail::MacConaillsPass => "Mac Conaill's Pass",
+                ReachingTrail::Mousetrap => "Mousetrap",
+                ReachingTrail::Nightchurch => "Nightchurch",
+                ReachingTrail::Pitfall => "Pitfall",
+                ReachingTrail::Puncta => "Puncta",
+                ReachingTrail::Reprieve => "Reprieve",
+                ReachingTrail::Scorpion => "Scorpion",
+                ReachingTrail::TheArk => "The Ark",
+                ReachingTrail::TheBait => "The Bait",
+                ReachingTrail::TheCairns => "The Cairns",
+                ReachingTrail::TheChickenCoop => "The Chicken Coop",
+                ReachingTrail::TheDeckard => "The Deckard",
+                ReachingTrail::TheKnot => "The Knot",
+                ReachingTrail::TheReachingHeights => "The Reaching Heights",
+                ReachingTrail::TheRimeLedge => "The Rime Ledge",
+                ReachingTrail::TheRousingFields => "The Rousing Fields",
+                ReachingTrail::TheScar => "The Scar",
+                ReachingTrail::TheSqueeze => "The Squeeze",
+                ReachingTrail::Thýlak => "Thýlak",
+                ReachingTrail::WindyWay => "Windy Way",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `UmbralWildwoodHex` tile
@@ -1909,7 +2900,7 @@ pub enum UmbralWildwood {
     WeaversTrail,
 }
 
-impl Location for UmbralWildwood {
+impl MapLocation for UmbralWildwood {
     fn is_major(&self) -> bool {
         match self {
             UmbralWildwood::AdzeCrossroads => false,
@@ -1966,6 +2957,70 @@ impl Location for UmbralWildwood {
             UmbralWildwood::WastingHolt => (0.5504174, 0.9400169),
             UmbralWildwood::WeaversTrail => (0.55006844, 0.44620684),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "UmbralWildwood",
+            match self {
+                UmbralWildwood::AdzeCrossroads => "AdzeCrossroads",
+                UmbralWildwood::Amethyst => "Amethyst",
+                UmbralWildwood::AtroposFate => "AtroposFate",
+                UmbralWildwood::ClothosRefuge => "ClothosRefuge",
+                UmbralWildwood::Dredgefield => "Dredgefield",
+                UmbralWildwood::GoldenConcourse => "GoldenConcourse",
+                UmbralWildwood::GoldenRootRanch => "GoldenRootRanch",
+                UmbralWildwood::HermitsRest => "HermitsRest",
+                UmbralWildwood::LachesisTally => "LachesisTally",
+                UmbralWildwood::LeatherbackPathway => "LeatherbackPathway",
+                UmbralWildwood::Sentry => "Sentry",
+                UmbralWildwood::SteelyFields => "SteelyFields",
+                UmbralWildwood::Stray => "Stray",
+                UmbralWildwood::TerrapinWoods => "TerrapinWoods",
+                UmbralWildwood::TheDredgewood => "TheDredgewood",
+                UmbralWildwood::TheFoundry => "TheFoundry",
+                UmbralWildwood::TheFrontier => "TheFrontier",
+                UmbralWildwood::TheGap => "TheGap",
+                UmbralWildwood::TheStrands => "TheStrands",
+                UmbralWildwood::ThunderRow => "ThunderRow",
+                UmbralWildwood::Thunderfoot => "Thunderfoot",
+                UmbralWildwood::VagrantBastion => "VagrantBastion",
+                UmbralWildwood::WastingHolt => "WastingHolt",
+                UmbralWildwood::WeaversTrail => "WeaversTrail",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "UmbralWildwood",
+            match self {
+                UmbralWildwood::AdzeCrossroads => "Adze Crossroads",
+                UmbralWildwood::Amethyst => "Amethyst",
+                UmbralWildwood::AtroposFate => "Atropos' Fate",
+                UmbralWildwood::ClothosRefuge => "Clotho's Refuge",
+                UmbralWildwood::Dredgefield => "Dredgefield",
+                UmbralWildwood::GoldenConcourse => "Golden Concourse",
+                UmbralWildwood::GoldenRootRanch => "GoldenRoot Ranch",
+                UmbralWildwood::HermitsRest => "Hermit's Rest",
+                UmbralWildwood::LachesisTally => "Lachesis' Tally ",
+                UmbralWildwood::LeatherbackPathway => "Leatherback Pathway",
+                UmbralWildwood::Sentry => "Sentry",
+                UmbralWildwood::SteelyFields => "Steely Fields",
+                UmbralWildwood::Stray => "Stray",
+                UmbralWildwood::TerrapinWoods => "Terrapin Woods",
+                UmbralWildwood::TheDredgewood => "The Dredgewood",
+                UmbralWildwood::TheFoundry => "The Foundry",
+                UmbralWildwood::TheFrontier => "The Frontier",
+                UmbralWildwood::TheGap => "The Gap",
+                UmbralWildwood::TheStrands => "The Strands",
+                UmbralWildwood::ThunderRow => "Thunder Row",
+                UmbralWildwood::Thunderfoot => "Thunderfoot",
+                UmbralWildwood::VagrantBastion => "Vagrant Bastion",
+                UmbralWildwood::WastingHolt => "Wasting Holt",
+                UmbralWildwood::WeaversTrail => "Weaver's Trail",
+            },
+        )
     }
 }
 
@@ -2027,7 +3082,7 @@ pub enum Oarbreaker {
     TheIdes,
 }
 
-impl Location for Oarbreaker {
+impl MapLocation for Oarbreaker {
     fn is_major(&self) -> bool {
         match self {
             Oarbreaker::Barrenson => false,
@@ -2091,6 +3146,76 @@ impl Location for Oarbreaker {
             Oarbreaker::TheIdes => (0.85254693, 0.3931426),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "Oarbreaker",
+            match self {
+                Oarbreaker::Barrenson => "Barrenson",
+                Oarbreaker::BaseAkri => "BaseAkri",
+                Oarbreaker::Castor => "Castor",
+                Oarbreaker::CrachWoods => "CrachWoods",
+                Oarbreaker::Fogwood => "Fogwood",
+                Oarbreaker::Gold => "Gold",
+                Oarbreaker::GrislyRefuge => "GrislyRefuge",
+                Oarbreaker::Integrum => "Integrum",
+                Oarbreaker::KofteriChannel => "KofteriChannel",
+                Oarbreaker::LionsHead => "LionsHead",
+                Oarbreaker::Martius => "Martius",
+                Oarbreaker::MountMarce => "MountMarce",
+                Oarbreaker::NeptunesThrone => "NeptunesThrone",
+                Oarbreaker::Oasis => "Oasis",
+                Oarbreaker::Obitum => "Obitum",
+                Oarbreaker::Pollux => "Pollux",
+                Oarbreaker::Posterus => "Posterus",
+                Oarbreaker::Reliqua => "Reliqua",
+                Oarbreaker::SandalwoodBeach => "SandalwoodBeach",
+                Oarbreaker::SheepsHead => "SheepsHead",
+                Oarbreaker::Silver => "Silver",
+                Oarbreaker::SkelterCourse => "SkelterCourse",
+                Oarbreaker::SkullBeach => "SkullBeach",
+                Oarbreaker::TheConclave => "TheConclave",
+                Oarbreaker::TheDirk => "TheDirk",
+                Oarbreaker::TheEmblem => "TheEmblem",
+                Oarbreaker::TheIdes => "TheIdes",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "Oarbreaker",
+            match self {
+                Oarbreaker::Barrenson => "Barrenson",
+                Oarbreaker::BaseAkri => "Base Akri",
+                Oarbreaker::Castor => "Castor",
+                Oarbreaker::CrachWoods => "Crach Woods",
+                Oarbreaker::Fogwood => "Fogwood",
+                Oarbreaker::Gold => "Gold",
+                Oarbreaker::GrislyRefuge => "Grisly Refuge",
+                Oarbreaker::Integrum => "Integrum",
+                Oarbreaker::KofteriChannel => "Kofteri Channel",
+                Oarbreaker::LionsHead => "Lion's Head",
+                Oarbreaker::Martius => "Martius",
+                Oarbreaker::MountMarce => "Mount Marce",
+                Oarbreaker::NeptunesThrone => "Neptune's Throne",
+                Oarbreaker::Oasis => "Oasis",
+                Oarbreaker::Obitum => "Obitum",
+                Oarbreaker::Pollux => "Pollux",
+                Oarbreaker::Posterus => "Posterus",
+                Oarbreaker::Reliqua => "Reliqua",
+                Oarbreaker::SandalwoodBeach => "Sandalwood Beach",
+                Oarbreaker::SheepsHead => "Sheep's Head",
+                Oarbreaker::Silver => "Silver",
+                Oarbreaker::SkelterCourse => "Skelter Course",
+                Oarbreaker::SkullBeach => "Skull Beach",
+                Oarbreaker::TheConclave => "The Conclave",
+                Oarbreaker::TheDirk => "The Dirk",
+                Oarbreaker::TheEmblem => "The Emblem",
+                Oarbreaker::TheIdes => "The Ides",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `CallahansPassageHex` tile
@@ -2151,7 +3276,7 @@ pub enum CallahansPassage {
     WindingCrag,
 }
 
-impl Location for CallahansPassage {
+impl MapLocation for CallahansPassage {
     fn is_major(&self) -> bool {
         match self {
             CallahansPassage::CallahansEye => false,
@@ -2215,6 +3340,76 @@ impl Location for CallahansPassage {
             CallahansPassage::WindingCrag => (0.52042425, 0.24549948),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "CallahansPassage",
+            match self {
+                CallahansPassage::CallahansEye => "CallahansEye",
+                CallahansPassage::ChapelAccess => "ChapelAccess",
+                CallahansPassage::Cragsfield => "Cragsfield",
+                CallahansPassage::Cragsroad => "Cragsroad",
+                CallahansPassage::Cragstown => "Cragstown",
+                CallahansPassage::CrumblingPost => "CrumblingPost",
+                CallahansPassage::LingeringLashes => "LingeringLashes",
+                CallahansPassage::Lochan => "Lochan",
+                CallahansPassage::LochanBerth => "LochanBerth",
+                CallahansPassage::LostTops => "LostTops",
+                CallahansPassage::OverlookHill => "OverlookHill",
+                CallahansPassage::ScáthPassing => "ScáthPassing",
+                CallahansPassage::SiocApproach => "SiocApproach",
+                CallahansPassage::SolasGateway => "SolasGateway",
+                CallahansPassage::SolasGorge => "SolasGorge",
+                CallahansPassage::SouredFields => "SouredFields",
+                CallahansPassage::TheCrumblingPassage => "TheCrumblingPassage",
+                CallahansPassage::TheKey => "TheKey",
+                CallahansPassage::TheLance => "TheLance",
+                CallahansPassage::TheLatch => "TheLatch",
+                CallahansPassage::TheProcession => "TheProcession",
+                CallahansPassage::TheRustRoad => "TheRustRoad",
+                CallahansPassage::TheStern => "TheStern",
+                CallahansPassage::TwistedMumble => "TwistedMumble",
+                CallahansPassage::WhisperingGulch => "WhisperingGulch",
+                CallahansPassage::WhiteChapel => "WhiteChapel",
+                CallahansPassage::WindingCrag => "WindingCrag",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "CallahansPassage",
+            match self {
+                CallahansPassage::CallahansEye => "Callahan's Eye",
+                CallahansPassage::ChapelAccess => "Chapel Access",
+                CallahansPassage::Cragsfield => "Cragsfield",
+                CallahansPassage::Cragsroad => "Cragsroad",
+                CallahansPassage::Cragstown => "Cragstown",
+                CallahansPassage::CrumblingPost => "Crumbling Post",
+                CallahansPassage::LingeringLashes => "Lingering Lashes",
+                CallahansPassage::Lochan => "Lochan",
+                CallahansPassage::LochanBerth => "Lochan Berth",
+                CallahansPassage::LostTops => "Lost Tops",
+                CallahansPassage::OverlookHill => "Overlook Hill",
+                CallahansPassage::ScáthPassing => "Scáth Passing",
+                CallahansPassage::SiocApproach => "Sioc Approach",
+                CallahansPassage::SolasGateway => "Solas Gateway",
+                CallahansPassage::SolasGorge => "Solas Gorge",
+                CallahansPassage::SouredFields => "Soured Fields",
+                CallahansPassage::TheCrumblingPassage => "The Crumbling Passage",
+                CallahansPassage::TheKey => "The Key",
+                CallahansPassage::TheLance => "The Lance",
+                CallahansPassage::TheLatch => "The Latch",
+                CallahansPassage::TheProcession => "The Procession",
+                CallahansPassage::TheRustRoad => "The Rust Road",
+                CallahansPassage::TheStern => "The Stern",
+                CallahansPassage::TwistedMumble => "Twisted Mumble",
+                CallahansPassage::WhisperingGulch => "Whispering Gulch",
+                CallahansPassage::WhiteChapel => "White Chapel",
+                CallahansPassage::WindingCrag => "Winding Crag",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `DrownedValeHex` tile
@@ -2259,7 +3454,7 @@ pub enum DrownedVale {
     WispsWarning,
 }
 
-impl Location for DrownedVale {
+impl MapLocation for DrownedVale {
     fn is_major(&self) -> bool {
         match self {
             DrownedVale::Bootnap => true,
@@ -2306,6 +3501,60 @@ impl Location for DrownedVale {
             DrownedVale::Vessel => (0.36351255, 0.715022),
             DrownedVale::WispsWarning => (0.33081633, 0.29379123),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "DrownedVale",
+            match self {
+                DrownedVale::Bootnap => "Bootnap",
+                DrownedVale::CoaldrifterStead => "CoaldrifterStead",
+                DrownedVale::Eastmarch => "Eastmarch",
+                DrownedVale::Esterfal => "Esterfal",
+                DrownedVale::FleetsfallRiver => "FleetsfallRiver",
+                DrownedVale::Linger => "Linger",
+                DrownedVale::Loggerhead => "Loggerhead",
+                DrownedVale::SingingSerpents => "SingingSerpents",
+                DrownedVale::SopFields => "SopFields",
+                DrownedVale::SplinterPens => "SplinterPens",
+                DrownedVale::SpritesGame => "SpritesGame",
+                DrownedVale::TheBaths => "TheBaths",
+                DrownedVale::TheOtherVein => "TheOtherVein",
+                DrownedVale::TheSaltcaps => "TheSaltcaps",
+                DrownedVale::TheTurtlerocks => "TheTurtlerocks",
+                DrownedVale::TheWash => "TheWash",
+                DrownedVale::TheWillowWood => "TheWillowWood",
+                DrownedVale::Vessel => "Vessel",
+                DrownedVale::WispsWarning => "WispsWarning",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "DrownedVale",
+            match self {
+                DrownedVale::Bootnap => "Bootnap",
+                DrownedVale::CoaldrifterStead => "Coaldrifter Stead",
+                DrownedVale::Eastmarch => "Eastmarch",
+                DrownedVale::Esterfal => "Esterfal",
+                DrownedVale::FleetsfallRiver => "Fleetsfall River",
+                DrownedVale::Linger => "Linger",
+                DrownedVale::Loggerhead => "Loggerhead",
+                DrownedVale::SingingSerpents => "Singing Serpents",
+                DrownedVale::SopFields => "Sop Fields",
+                DrownedVale::SplinterPens => "Splinter Pens",
+                DrownedVale::SpritesGame => "Sprite's Game",
+                DrownedVale::TheBaths => "The Baths",
+                DrownedVale::TheOtherVein => "The Other Vein",
+                DrownedVale::TheSaltcaps => "The Saltcaps",
+                DrownedVale::TheTurtlerocks => "The Turtlerocks",
+                DrownedVale::TheWash => "The Wash",
+                DrownedVale::TheWillowWood => "The Willow Wood",
+                DrownedVale::Vessel => "Vessel",
+                DrownedVale::WispsWarning => "Wisp's Warning",
+            },
+        )
     }
 }
 
@@ -2381,7 +3630,7 @@ pub enum FarranacCoast {
     Victa,
 }
 
-impl Location for FarranacCoast {
+impl MapLocation for FarranacCoast {
     fn is_major(&self) -> bool {
         match self {
             FarranacCoast::ApollosLanding => false,
@@ -2459,6 +3708,90 @@ impl Location for FarranacCoast {
             FarranacCoast::Victa => (0.4417568, 0.8744741),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "FarranacCoast",
+            match self {
+                FarranacCoast::ApollosLanding => "ApollosLanding",
+                FarranacCoast::CarrionFields => "CarrionFields",
+                FarranacCoast::CoraLushlands => "CoraLushlands",
+                FarranacCoast::CormacBeach => "CormacBeach",
+                FarranacCoast::GulfoftheDaughters => "GulfoftheDaughters",
+                FarranacCoast::HermesInlet => "HermesInlet",
+                FarranacCoast::Huskhollow => "Huskhollow",
+                FarranacCoast::IuxtaHomestead => "IuxtaHomestead",
+                FarranacCoast::Kardia => "Kardia",
+                FarranacCoast::LiberationStreet => "LiberationStreet",
+                FarranacCoast::MachasKeening => "MachasKeening",
+                FarranacCoast::Mara => "Mara",
+                FarranacCoast::McCarthyFields => "McCarthyFields",
+                FarranacCoast::MooringDens => "MooringDens",
+                FarranacCoast::PleadingWharf => "PleadingWharf",
+                FarranacCoast::ScarpofAmbrose => "ScarpofAmbrose",
+                FarranacCoast::Scythe => "Scythe",
+                FarranacCoast::SickleHill => "SickleHill",
+                FarranacCoast::SkeletonRoad => "SkeletonRoad",
+                FarranacCoast::SunderBeach => "SunderBeach",
+                FarranacCoast::Terra => "Terra",
+                FarranacCoast::TheBayofArtemis => "TheBayofArtemis",
+                FarranacCoast::TheBoneHaft => "TheBoneHaft",
+                FarranacCoast::TheHeartRoad => "TheHeartRoad",
+                FarranacCoast::TheIronBeach => "TheIronBeach",
+                FarranacCoast::TheJadeCove => "TheJadeCove",
+                FarranacCoast::TheMirror => "TheMirror",
+                FarranacCoast::TheReapingFields => "TheReapingFields",
+                FarranacCoast::TheRiverMercy => "TheRiverMercy",
+                FarranacCoast::TheSnag => "TheSnag",
+                FarranacCoast::TheSpearhead => "TheSpearhead",
+                FarranacCoast::TheWingedWalk => "TheWingedWalk",
+                FarranacCoast::TransientValley => "TransientValley",
+                FarranacCoast::Victa => "Victa",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "FarranacCoast",
+            match self {
+                FarranacCoast::ApollosLanding => "Apollo's Landing",
+                FarranacCoast::CarrionFields => "Carrion Fields",
+                FarranacCoast::CoraLushlands => "Cora Lushlands",
+                FarranacCoast::CormacBeach => "Cormac Beach",
+                FarranacCoast::GulfoftheDaughters => "Gulf of the Daughters",
+                FarranacCoast::HermesInlet => "Hermes Inlet",
+                FarranacCoast::Huskhollow => "Huskhollow",
+                FarranacCoast::IuxtaHomestead => "Iuxta Homestead",
+                FarranacCoast::Kardia => "Kardia",
+                FarranacCoast::LiberationStreet => "Liberation Street",
+                FarranacCoast::MachasKeening => "Macha's Keening",
+                FarranacCoast::Mara => "Mara",
+                FarranacCoast::McCarthyFields => "McCarthy Fields",
+                FarranacCoast::MooringDens => "Mooring Dens",
+                FarranacCoast::PleadingWharf => "Pleading Wharf",
+                FarranacCoast::ScarpofAmbrose => "Scarp of Ambrose",
+                FarranacCoast::Scythe => "Scythe",
+                FarranacCoast::SickleHill => "Sickle Hill",
+                FarranacCoast::SkeletonRoad => "Skeleton Road",
+                FarranacCoast::SunderBeach => "Sunder Beach",
+                FarranacCoast::Terra => "Terra",
+                FarranacCoast::TheBayofArtemis => "The Bay of Artemis",
+                FarranacCoast::TheBoneHaft => "The Bone Haft",
+                FarranacCoast::TheHeartRoad => "The Heart Road",
+                FarranacCoast::TheIronBeach => "The Iron Beach",
+                FarranacCoast::TheJadeCove => "The Jade Cove",
+                FarranacCoast::TheMirror => "The Mirror",
+                FarranacCoast::TheReapingFields => "The Reaping Fields",
+                FarranacCoast::TheRiverMercy => "The River Mercy",
+                FarranacCoast::TheSnag => "The Snag",
+                FarranacCoast::TheSpearhead => "The Spearhead",
+                FarranacCoast::TheWingedWalk => "The Winged Walk",
+                FarranacCoast::TransientValley => "Transient Valley",
+                FarranacCoast::Victa => "Victa",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `MooringCountyHex` tile
@@ -2503,7 +3836,7 @@ pub enum MooringCounty {
     Wiccwood,
 }
 
-impl Location for MooringCounty {
+impl MapLocation for MooringCounty {
     fn is_major(&self) -> bool {
         match self {
             MooringCounty::Borderlane => false,
@@ -2550,6 +3883,60 @@ impl Location for MooringCounty {
             MooringCounty::Wiccwalk => (0.77282596, 0.7926232),
             MooringCounty::Wiccwood => (0.64314055, 0.4514375),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "MooringCounty",
+            match self {
+                MooringCounty::Borderlane => "Borderlane",
+                MooringCounty::GravekeepersHoldfast => "GravekeepersHoldfast",
+                MooringCounty::Headstone => "Headstone",
+                MooringCounty::LuchsWorkshop => "LuchsWorkshop",
+                MooringCounty::LyonsWood => "LyonsWood",
+                MooringCounty::MacConmaraBarrows => "MacConmaraBarrows",
+                MooringCounty::MoonsWalk => "MoonsWalk",
+                MooringCounty::MorrighansGrave => "MorrighansGrave",
+                MooringCounty::Ogmaran => "Ogmaran",
+                MooringCounty::ReachingRiver => "ReachingRiver",
+                MooringCounty::Riverhill => "Riverhill",
+                MooringCounty::ScáthCopse => "ScáthCopse",
+                MooringCounty::TheCut => "TheCut",
+                MooringCounty::TheGraveyard => "TheGraveyard",
+                MooringCounty::TheMound => "TheMound",
+                MooringCounty::TheSpade => "TheSpade",
+                MooringCounty::TheWindHills => "TheWindHills",
+                MooringCounty::Wiccwalk => "Wiccwalk",
+                MooringCounty::Wiccwood => "Wiccwood",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "MooringCounty",
+            match self {
+                MooringCounty::Borderlane => "Borderlane",
+                MooringCounty::GravekeepersHoldfast => "Gravekeeper's Holdfast",
+                MooringCounty::Headstone => "Headstone",
+                MooringCounty::LuchsWorkshop => "Luch's Workshop",
+                MooringCounty::LyonsWood => "Lyon's Wood",
+                MooringCounty::MacConmaraBarrows => "MacConmara Barrows",
+                MooringCounty::MoonsWalk => "Moon's Walk",
+                MooringCounty::MorrighansGrave => "Morrighan's Grave",
+                MooringCounty::Ogmaran => "Ogmaran",
+                MooringCounty::ReachingRiver => "Reaching River",
+                MooringCounty::Riverhill => "Riverhill",
+                MooringCounty::ScáthCopse => "Scáth Copse",
+                MooringCounty::TheCut => "The Cut",
+                MooringCounty::TheGraveyard => "The Graveyard",
+                MooringCounty::TheMound => "The Mound",
+                MooringCounty::TheSpade => "The Spade",
+                MooringCounty::TheWindHills => "The Wind Hills",
+                MooringCounty::Wiccwalk => "Wiccwalk",
+                MooringCounty::Wiccwood => "Wiccwood",
+            },
+        )
     }
 }
 
@@ -2603,7 +3990,7 @@ pub enum WeatheredExpanse {
     WraithsGate,
 }
 
-impl Location for WeatheredExpanse {
+impl MapLocation for WeatheredExpanse {
     fn is_major(&self) -> bool {
         match self {
             WeatheredExpanse::Bannerwatch => false,
@@ -2659,6 +4046,68 @@ impl Location for WeatheredExpanse {
             WeatheredExpanse::WraithsGate => (0.5287201, 0.43321595),
         }
     }
+
+    fn name_api(&self) -> &str {
+        (
+            "WeatheredExpanse",
+            match self {
+                WeatheredExpanse::Bannerwatch => "Bannerwatch",
+                WeatheredExpanse::Barrowsfield => "Barrowsfield",
+                WeatheredExpanse::CrowsNest => "CrowsNest",
+                WeatheredExpanse::DullahansCrest => "DullahansCrest",
+                WeatheredExpanse::Eapoe => "Eapoe",
+                WeatheredExpanse::Foxcatcher => "Foxcatcher",
+                WeatheredExpanse::Frostmarch => "Frostmarch",
+                WeatheredExpanse::Huntsfort => "Huntsfort",
+                WeatheredExpanse::Kirkyard => "Kirkyard",
+                WeatheredExpanse::Necropolis => "Necropolis",
+                WeatheredExpanse::PortofRime => "PortofRime",
+                WeatheredExpanse::RevenantsPath => "RevenantsPath",
+                WeatheredExpanse::RimeWastes => "RimeWastes",
+                WeatheredExpanse::ShatteredAdvance => "ShatteredAdvance",
+                WeatheredExpanse::SpiritWatch => "SpiritWatch",
+                WeatheredExpanse::TheIvoryBank => "TheIvoryBank",
+                WeatheredExpanse::TheIvorySea => "TheIvorySea",
+                WeatheredExpanse::TheSpear => "TheSpear",
+                WeatheredExpanse::TheStand => "TheStand",
+                WeatheredExpanse::TheWeatheredWall => "TheWeatheredWall",
+                WeatheredExpanse::TheWeatheringHalls => "TheWeatheringHalls",
+                WeatheredExpanse::Wightwalk => "Wightwalk",
+                WeatheredExpanse::WraithsGate => "WraithsGate",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "WeatheredExpanse",
+            match self {
+                WeatheredExpanse::Bannerwatch => "Bannerwatch",
+                WeatheredExpanse::Barrowsfield => "Barrowsfield",
+                WeatheredExpanse::CrowsNest => "Crow's Nest",
+                WeatheredExpanse::DullahansCrest => "Dullahan's Crest",
+                WeatheredExpanse::Eapoe => "Eapoe",
+                WeatheredExpanse::Foxcatcher => "Foxcatcher",
+                WeatheredExpanse::Frostmarch => "Frostmarch",
+                WeatheredExpanse::Huntsfort => "Huntsfort",
+                WeatheredExpanse::Kirkyard => "Kirkyard",
+                WeatheredExpanse::Necropolis => "Necropolis",
+                WeatheredExpanse::PortofRime => "Port of Rime",
+                WeatheredExpanse::RevenantsPath => "Revenant's Path",
+                WeatheredExpanse::RimeWastes => "Rime Wastes",
+                WeatheredExpanse::ShatteredAdvance => "Shattered Advance",
+                WeatheredExpanse::SpiritWatch => "Spirit Watch",
+                WeatheredExpanse::TheIvoryBank => "The Ivory Bank",
+                WeatheredExpanse::TheIvorySea => "The Ivory Sea",
+                WeatheredExpanse::TheSpear => "The Spear",
+                WeatheredExpanse::TheStand => "The Stand",
+                WeatheredExpanse::TheWeatheredWall => "The Weathered Wall",
+                WeatheredExpanse::TheWeatheringHalls => "The Weathering Halls",
+                WeatheredExpanse::Wightwalk => "Wightwalk",
+                WeatheredExpanse::WraithsGate => "Wraith's Gate",
+            },
+        )
+    }
 }
 
 /// Specific map details for the `LochMorHex` tile
@@ -2709,7 +4158,7 @@ pub enum LochMor {
     WidowsWail,
 }
 
-impl Location for LochMor {
+impl MapLocation for LochMor {
     fn is_major(&self) -> bool {
         match self {
             LochMor::BastardsBlade => false,
@@ -2762,5 +4211,65 @@ impl Location for LochMor {
             LochMor::Westmarch => (0.62941134, 0.15675731),
             LochMor::WidowsWail => (0.33518988, 0.76240003),
         }
+    }
+
+    fn name_api(&self) -> &str {
+        (
+            "LochMor",
+            match self {
+                LochMor::BastardsBlade => "BastardsBlade",
+                LochMor::ChatteringPrairie => "ChatteringPrairie",
+                LochMor::Escape => "Escape",
+                LochMor::FallenFields => "FallenFields",
+                LochMor::Feirmor => "Feirmor",
+                LochMor::LakeSeverspring => "LakeSeverspring",
+                LochMor::LochMor => "LochMor",
+                LochMor::MarketRoad => "MarketRoad",
+                LochMor::MercysWish => "MercysWish",
+                LochMor::MissingBones => "MissingBones",
+                LochMor::MoonsCopse => "MoonsCopse",
+                LochMor::Ousterdown => "Ousterdown",
+                LochMor::Pockfields => "Pockfields",
+                LochMor::Rip => "Rip",
+                LochMor::Tear => "Tear",
+                LochMor::TheFoundingFields => "TheFoundingFields",
+                LochMor::TheGlean => "TheGlean",
+                LochMor::TheReapingRoad => "TheReapingRoad",
+                LochMor::TheRoilfort => "TheRoilfort",
+                LochMor::TomboftheFirst => "TomboftheFirst",
+                LochMor::Westmarch => "Westmarch",
+                LochMor::WidowsWail => "WidowsWail",
+            },
+        )
+    }
+
+    fn name_friendly(&self) -> &str {
+        (
+            "LochMor",
+            match self {
+                LochMor::BastardsBlade => "Bastard's Blade",
+                LochMor::ChatteringPrairie => "Chattering Prairie",
+                LochMor::Escape => "Escape",
+                LochMor::FallenFields => "Fallen Fields",
+                LochMor::Feirmor => "Feirmor",
+                LochMor::LakeSeverspring => "Lake Severspring",
+                LochMor::LochMor => "Loch Mor",
+                LochMor::MarketRoad => "Market Road",
+                LochMor::MercysWish => "Mercy's Wish",
+                LochMor::MissingBones => "Missing Bones",
+                LochMor::MoonsCopse => "Moon's Copse",
+                LochMor::Ousterdown => "Ousterdown",
+                LochMor::Pockfields => "Pockfields",
+                LochMor::Rip => "Rip",
+                LochMor::Tear => "Tear",
+                LochMor::TheFoundingFields => "The Founding Fields",
+                LochMor::TheGlean => "The Glean",
+                LochMor::TheReapingRoad => "The Reaping Road",
+                LochMor::TheRoilfort => "The Roilfort",
+                LochMor::TomboftheFirst => "Tomb of the First",
+                LochMor::Westmarch => "Westmarch",
+                LochMor::WidowsWail => "Widow's Wail",
+            },
+        )
     }
 }
