@@ -1,6 +1,7 @@
 //! Contains [Battle] and implementations
 
-use crate::Population;
+use crate::map::*;
+use crate::{Error, Population, Result};
 use chrono::prelude::*;
 use sqlx::SqlitePool;
 
@@ -8,7 +9,7 @@ use sqlx::SqlitePool;
 pub struct Battle {
     pub id: i64,
     pub war_num: i64,
-    pub location: String, // TODO: use map.rs to make better
+    pub map: Map,
     pub name: Option<String>,
     pub description: Option<String>,
     pub last_edited: Option<DateTime<Utc>>,
@@ -21,19 +22,20 @@ impl Battle {
     pub async fn new(
         pool: &SqlitePool,
         war_num: i64,
-        location: String,
+        map_location: String,
         name: impl Into<Option<String>>,
         description: impl Into<Option<String>>,
-    ) -> Result<Self, sqlx::Error> {
+    ) -> Result<Self> {
         let name = name.into();
+        let map = Map::from_name(&map_location).ok_or(Error::LocationNotFound)?;
         let description = description.into();
         let submitted = Utc::now();
-        let id = sqlx::query!("INSERT INTO battle (war_num, location, name, description, submitted) VALUES (?, ?, ?, ?, ?)", war_num, location, name, description,submitted).execute(pool).await?.last_insert_rowid();
+        let id = sqlx::query!("INSERT INTO battle (war_num, map_location, name, description, submitted) VALUES (?, ?, ?, ?, ?)", war_num, map_location, name, description,submitted).execute(pool).await?.last_insert_rowid();
 
         Ok(Self {
             id,
             war_num,
-            location,
+            map,
             name,
             description,
             last_edited: None,
@@ -48,7 +50,7 @@ impl Battle {
         id: i64,
         name: impl Into<Option<String>>,
         description: impl Into<Option<String>>,
-    ) -> Result<(), sqlx::Error> {
+    ) -> Result<()> {
         // TODO: refactor
         let name = name.into();
         let description = description.into();
@@ -90,7 +92,7 @@ impl Battle {
     }
 
     /// Fetches all population reports related to this battles
-    pub async fn get_pop_reports(&mut self, _pool: &SqlitePool) -> Result<(), sqlx::Error> {
+    pub async fn get_pop_reports(&mut self, _pool: &SqlitePool) -> Result<()> {
         eprintln!(
             "Population report requested but sqlx is broken; {}",
             Utc::now()

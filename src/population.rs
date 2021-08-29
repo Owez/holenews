@@ -2,6 +2,7 @@
 
 use chrono::prelude::*;
 use sqlx::{FromRow, SqlitePool};
+use crate::Result;
 
 /// Population report for a given battle, denoting a count for a given time
 #[derive(FromRow)]
@@ -22,7 +23,7 @@ impl Population {
         counted: i64,
         at_time: DateTime<Utc>,
         description: impl Into<Option<String>>,
-    ) -> Result<Self, sqlx::Error> {
+    ) -> Result<Self> {
         let description = description.into();
         let submitted = Utc::now();
 
@@ -44,7 +45,7 @@ impl Population {
         battle_id: i64,
         at_time: DateTime<Utc>,
         description: impl Into<Option<String>>,
-    ) -> Result<(), sqlx::Error> {
+    ) -> Result<()> {
         let description = description.into();
         let last_edited = Utc::now();
 

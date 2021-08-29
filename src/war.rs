@@ -1,5 +1,6 @@
 //! Contains [War] and implementations
 
+use crate::Result;
 use chrono::prelude::*;
 use sqlx::{FromRow, SqlitePool};
 
@@ -19,7 +20,7 @@ impl War {
         pool: &SqlitePool,
         num: i64,
         time_start: DateTime<Utc>,
-    ) -> Result<Self, sqlx::Error> {
+    ) -> Result<Self> {
         let submitted = Utc::now();
 
         sqlx::query!(
@@ -47,7 +48,7 @@ impl War {
         time_start: DateTime<Utc>,
         time_end: DateTime<Utc>,
         colonial_win: bool,
-    ) -> Result<Self, sqlx::Error> {
+    ) -> Result<Self> {
         let submitted = Utc::now();
 
         sqlx::query!("INSERT INTO war (num, time_start, time_end, colonial_win, submitted) VALUES (?, ?, ?, ?, ?)", num, time_start, time_end, colonial_win, submitted).execute(pool).await?;
@@ -62,7 +63,7 @@ impl War {
     }
 
     /// Attempts to get existing war from database
-    pub async fn get(pool: &SqlitePool, num: i64) -> Result<Option<Self>, sqlx::Error> {
+    pub async fn get(pool: &SqlitePool, num: i64) -> Result<Option<Self>> {
         // sqlx::query_as!(Self, "SELECT * FROM war WHERE num=?", num)
         //     .fetch_optional(pool)
         //     .await
@@ -75,7 +76,7 @@ impl War {
         num: i64,
         time_end: Option<Option<DateTime<Utc>>>,
         colonial_win: Option<Option<bool>>,
-    ) -> Result<(), sqlx::Error> {
+    ) -> Result<()> {
         // TODO: refactor
         if let Some(time_end_val) = time_end {
             if let Some(colonial_win_val) = colonial_win {

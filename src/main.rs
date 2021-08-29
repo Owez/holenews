@@ -1,14 +1,20 @@
 //! Automated reporting and wiki website for the [Foxhole](https://store.steampowered.com/app/505460/Foxhole/) game
 
+#![feature(non_ascii_idents)]
+#![deny(unsafe_code)]
+
 pub mod routes;
+pub mod map;
 
 mod battle;
 mod population;
 mod war;
+mod error;
 
 pub use battle::Battle;
 pub use population::Population;
 pub use war::War;
+pub use error::{Error,Result};
 
 use actix_web::{App, HttpServer};
 use dotenv::dotenv;

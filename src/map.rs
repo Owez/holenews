@@ -1,7 +1,11 @@
 //! Rich inner-game map bindings
 
 /// Common trait for all map locations of a given hex
-pub trait Location {
+pub trait Location: Sized {
+    fn from_name(name: &str) -> Option<Self> {
+        todo!("map location from name '{}'", name)
+    }
+
     /// Checks if this map location if major or not
     fn is_major(&self) -> bool;
 
@@ -42,6 +46,120 @@ pub enum Map {
     LochMor(LochMor),
 }
 
+impl Location for Map {
+    fn is_major(&self) -> bool {
+        match self {
+            Map::Stonecradle(val) => val.is_major(),
+            Map::AllodsBight(val) => val.is_major(),
+            Map::TempestIsland(val) => val.is_major(),
+            Map::GreatMarch(val) => val.is_major(),
+            Map::MarbanHol(val) => val.is_major(),
+            Map::ViperPit(val) => val.is_major(),
+            Map::ShackledChasm(val) => val.is_major(),
+            Map::DeadLands(val) => val.is_major(),
+            Map::Heartlands(val) => val.is_major(),
+            Map::LinnMercy(val) => val.is_major(),
+            Map::EndlessShore(val) => val.is_major(),
+            Map::Godcrofts(val) => val.is_major(),
+            Map::FishermansRow(val) => val.is_major(),
+            Map::Westgate(val) => val.is_major(),
+            Map::ReachingTrail(val) => val.is_major(),
+            Map::UmbralWildwood(val) => val.is_major(),
+            Map::Oarbreaker(val) => val.is_major(),
+            Map::CallahansPassage(val) => val.is_major(),
+            Map::DrownedVale(val) => val.is_major(),
+            Map::FarranacCoast(val) => val.is_major(),
+            Map::MooringCounty(val) => val.is_major(),
+            Map::WeatheredExpanse(val) => val.is_major(),
+            Map::LochMor(val) => val.is_major(),
+        }
+    }
+
+    fn location(&self) -> (f64, f64) {
+        match self {
+            Map::Stonecradle(val) => val.location(),
+            Map::AllodsBight(val) => val.location(),
+            Map::TempestIsland(val) => val.location(),
+            Map::GreatMarch(val) => val.location(),
+            Map::MarbanHol(val) => val.location(),
+            Map::ViperPit(val) => val.location(),
+            Map::ShackledChasm(val) => val.location(),
+            Map::DeadLands(val) => val.location(),
+            Map::Heartlands(val) => val.location(),
+            Map::LinnMercy(val) => val.location(),
+            Map::EndlessShore(val) => val.location(),
+            Map::Godcrofts(val) => val.location(),
+            Map::FishermansRow(val) => val.location(),
+            Map::Westgate(val) => val.location(),
+            Map::ReachingTrail(val) => val.location(),
+            Map::UmbralWildwood(val) => val.location(),
+            Map::Oarbreaker(val) => val.location(),
+            Map::CallahansPassage(val) => val.location(),
+            Map::DrownedVale(val) => val.location(),
+            Map::FarranacCoast(val) => val.location(),
+            Map::MooringCounty(val) => val.location(),
+            Map::WeatheredExpanse(val) => val.location(),
+            Map::LochMor(val) => val.location(),
+        }
+    }
+
+    fn name_api(&self) -> (&str, &str) {
+        match self {
+            Map::Stonecradle(val) => val.name_api(),
+            Map::AllodsBight(val) => val.name_api(),
+            Map::TempestIsland(val) => val.name_api(),
+            Map::GreatMarch(val) => val.name_api(),
+            Map::MarbanHol(val) => val.name_api(),
+            Map::ViperPit(val) => val.name_api(),
+            Map::ShackledChasm(val) => val.name_api(),
+            Map::DeadLands(val) => val.name_api(),
+            Map::Heartlands(val) => val.name_api(),
+            Map::LinnMercy(val) => val.name_api(),
+            Map::EndlessShore(val) => val.name_api(),
+            Map::Godcrofts(val) => val.name_api(),
+            Map::FishermansRow(val) => val.name_api(),
+            Map::Westgate(val) => val.name_api(),
+            Map::ReachingTrail(val) => val.name_api(),
+            Map::UmbralWildwood(val) => val.name_api(),
+            Map::Oarbreaker(val) => val.name_api(),
+            Map::CallahansPassage(val) => val.name_api(),
+            Map::DrownedVale(val) => val.name_api(),
+            Map::FarranacCoast(val) => val.name_api(),
+            Map::MooringCounty(val) => val.name_api(),
+            Map::WeatheredExpanse(val) => val.name_api(),
+            Map::LochMor(val) => val.name_api(),
+        }
+    }
+
+    fn name_friendly(&self) -> (&str, &str) {
+        match self {
+            Map::Stonecradle(val) => val.name_friendly(),
+            Map::AllodsBight(val) => val.name_friendly(),
+            Map::TempestIsland(val) => val.name_friendly(),
+            Map::GreatMarch(val) => val.name_friendly(),
+            Map::MarbanHol(val) => val.name_friendly(),
+            Map::ViperPit(val) => val.name_friendly(),
+            Map::ShackledChasm(val) => val.name_friendly(),
+            Map::DeadLands(val) => val.name_friendly(),
+            Map::Heartlands(val) => val.name_friendly(),
+            Map::LinnMercy(val) => val.name_friendly(),
+            Map::EndlessShore(val) => val.name_friendly(),
+            Map::Godcrofts(val) => val.name_friendly(),
+            Map::FishermansRow(val) => val.name_friendly(),
+            Map::Westgate(val) => val.name_friendly(),
+            Map::ReachingTrail(val) => val.name_friendly(),
+            Map::UmbralWildwood(val) => val.name_friendly(),
+            Map::Oarbreaker(val) => val.name_friendly(),
+            Map::CallahansPassage(val) => val.name_friendly(),
+            Map::DrownedVale(val) => val.name_friendly(),
+            Map::FarranacCoast(val) => val.name_friendly(),
+            Map::MooringCounty(val) => val.name_friendly(),
+            Map::WeatheredExpanse(val) => val.name_friendly(),
+            Map::LochMor(val) => val.name_friendly(),
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////////
 //  ALL BELOW WHERE FULLY AUTO-GENERATED BY IN-HOUSE SCRIPT //
 //////////////////////////////////////////////////////////////
@@ -76,7 +194,7 @@ pub enum Stonecradle {
     WorldsEnd,
 }
 
-impl MapLocation for Stonecradle {
+impl Location for Stonecradle {
     fn is_major(&self) -> bool {
         match self {
             Stonecradle::BucklerSound => true,
@@ -113,7 +231,7 @@ impl MapLocation for Stonecradle {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "Stonecradle",
             match self {
@@ -134,7 +252,7 @@ impl MapLocation for Stonecradle {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "Stonecradle",
             match self {
@@ -194,7 +312,7 @@ pub enum AllodsBight {
     WitchsLastFlight,
 }
 
-impl MapLocation for AllodsBight {
+impl Location for AllodsBight {
     fn is_major(&self) -> bool {
         match self {
             AllodsBight::ACaptainsRepose => false,
@@ -239,7 +357,7 @@ impl MapLocation for AllodsBight {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "AllodsBight",
             match self {
@@ -264,7 +382,7 @@ impl MapLocation for AllodsBight {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "AllodsBight",
             match self {
@@ -326,7 +444,7 @@ pub enum TempestIsland {
     TheRush,
 }
 
-impl MapLocation for TempestIsland {
+impl Location for TempestIsland {
     fn is_major(&self) -> bool {
         match self {
             TempestIsland::AlchimioEstate => true,
@@ -369,7 +487,7 @@ impl MapLocation for TempestIsland {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "TempestIsland",
             match self {
@@ -393,7 +511,7 @@ impl MapLocation for TempestIsland {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "TempestIsland",
             match self {
@@ -484,7 +602,7 @@ pub enum GreatMarch {
     ZealousApproach,
 }
 
-impl MapLocation for GreatMarch {
+impl Location for GreatMarch {
     fn is_major(&self) -> bool {
         match self {
             GreatMarch::CampSenti => true,
@@ -557,7 +675,7 @@ impl MapLocation for GreatMarch {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "GreatMarch",
             match self {
@@ -596,7 +714,7 @@ impl MapLocation for GreatMarch {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "GreatMarch",
             match self {
@@ -678,7 +796,7 @@ pub enum MarbanHol {
     TheSpitrocks,
 }
 
-impl MapLocation for MarbanHol {
+impl Location for MarbanHol {
     fn is_major(&self) -> bool {
         match self {
             MarbanHol::BleatingPlateau => false,
@@ -727,7 +845,7 @@ impl MapLocation for MarbanHol {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "MarbanHol",
             match self {
@@ -754,7 +872,7 @@ impl MapLocation for MarbanHol {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "MarbanHol",
             match self {
@@ -830,7 +948,7 @@ pub enum ViperPit {
     TwinFangs,
 }
 
-impl MapLocation for ViperPit {
+impl Location for ViperPit {
     fn is_major(&self) -> bool {
         match self {
             ViperPit::AfricsApproach => false,
@@ -885,7 +1003,7 @@ impl MapLocation for ViperPit {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "ViperPit",
             match self {
@@ -915,7 +1033,7 @@ impl MapLocation for ViperPit {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "ViperPit",
             match self {
@@ -996,7 +1114,7 @@ pub enum ShackledChasm {
     WidowsWeb,
 }
 
-impl MapLocation for ShackledChasm {
+impl Location for ShackledChasm {
     fn is_major(&self) -> bool {
         match self {
             ShackledChasm::ACarelessNet => false,
@@ -1053,7 +1171,7 @@ impl MapLocation for ShackledChasm {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "ShackledChasm",
             match self {
@@ -1084,7 +1202,7 @@ impl MapLocation for ShackledChasm {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "ShackledChasm",
             match self {
@@ -1204,7 +1322,7 @@ pub enum DeadLands {
     TheSteppes,
 }
 
-impl MapLocation for DeadLands {
+impl Location for DeadLands {
     fn is_major(&self) -> bool {
         match self {
             DeadLands::AbandonedWard => true,
@@ -1299,7 +1417,7 @@ impl MapLocation for DeadLands {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "DeadLands",
             match self {
@@ -1349,7 +1467,7 @@ impl MapLocation for DeadLands {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "DeadLands",
             match self {
@@ -1464,7 +1582,7 @@ pub enum Heartlands {
     UpperHeartlands,
 }
 
-impl MapLocation for Heartlands {
+impl Location for Heartlands {
     fn is_major(&self) -> bool {
         match self {
             Heartlands::EighteenthSideroad => false,
@@ -1535,7 +1653,7 @@ impl MapLocation for Heartlands {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "Heartlands",
             match self {
@@ -1573,7 +1691,7 @@ impl MapLocation for Heartlands {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "Heartlands",
             match self {
@@ -1656,7 +1774,7 @@ pub enum LinnMercy {
     UlsterFalls,
 }
 
-impl MapLocation for LinnMercy {
+impl Location for LinnMercy {
     fn is_major(&self) -> bool {
         match self {
             LinnMercy::Blackroad => false,
@@ -1707,7 +1825,7 @@ impl MapLocation for LinnMercy {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "LinnMercy",
             match self {
@@ -1735,7 +1853,7 @@ impl MapLocation for LinnMercy {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "LinnMercy",
             match self {
@@ -1820,7 +1938,7 @@ pub enum EndlessShore {
     Woodbind,
 }
 
-impl MapLocation for EndlessShore {
+impl Location for EndlessShore {
     fn is_major(&self) -> bool {
         match self {
             EndlessShore::BalorsCrown => false,
@@ -1883,7 +2001,7 @@ impl MapLocation for EndlessShore {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "EndlessShore",
             match self {
@@ -1917,7 +2035,7 @@ impl MapLocation for EndlessShore {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "EndlessShore",
             match self {
@@ -1998,15 +2116,13 @@ pub enum Godcrofts {
     TheFleeceRoad,
     /// The Kris Ford is a minor location
     TheKrisFord,
-    /// The Kris Ford is a minor location
-    TheKrisFord,
     /// Ursa Trail is a minor location
     UrsaTrail,
     /// Vicit Lagoon is a minor location
     VicitLagoon,
 }
 
-impl MapLocation for Godcrofts {
+impl Location for Godcrofts {
     fn is_major(&self) -> bool {
         match self {
             Godcrofts::AnchorBeach => true,
@@ -2030,7 +2146,6 @@ impl MapLocation for Godcrofts {
             Godcrofts::TheAxehead => true,
             Godcrofts::TheDiceRoad => false,
             Godcrofts::TheFleeceRoad => true,
-            Godcrofts::TheKrisFord => false,
             Godcrofts::TheKrisFord => false,
             Godcrofts::UrsaTrail => false,
             Godcrofts::VicitLagoon => false,
@@ -2061,13 +2176,12 @@ impl MapLocation for Godcrofts {
             Godcrofts::TheDiceRoad => (0.5630271, 0.33521596),
             Godcrofts::TheFleeceRoad => (0.6615385, 0.8981667),
             Godcrofts::TheKrisFord => (0.5956406, 0.72609246),
-            Godcrofts::TheKrisFord => (0.5956406, 0.72609246),
             Godcrofts::UrsaTrail => (0.5877143, 0.94025785),
             Godcrofts::VicitLagoon => (0.33476177, 0.36637142),
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "Godcrofts",
             match self {
@@ -2093,14 +2207,13 @@ impl MapLocation for Godcrofts {
                 Godcrofts::TheDiceRoad => "TheDiceRoad",
                 Godcrofts::TheFleeceRoad => "TheFleeceRoad",
                 Godcrofts::TheKrisFord => "TheKrisFord",
-                Godcrofts::TheKrisFord => "TheKrisFord",
                 Godcrofts::UrsaTrail => "UrsaTrail",
                 Godcrofts::VicitLagoon => "VicitLagoon",
             },
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "Godcrofts",
             match self {
@@ -2125,7 +2238,6 @@ impl MapLocation for Godcrofts {
                 Godcrofts::TheAxehead => "The Axehead",
                 Godcrofts::TheDiceRoad => "The Dice Road",
                 Godcrofts::TheFleeceRoad => "The Fleece Road",
-                Godcrofts::TheKrisFord => "The Kris Ford",
                 Godcrofts::TheKrisFord => "The Kris Ford",
                 Godcrofts::UrsaTrail => "Ursa Trail",
                 Godcrofts::VicitLagoon => "Vicit Lagoon",
@@ -2182,7 +2294,7 @@ pub enum FishermansRow {
     TorchofDemeter,
 }
 
-impl MapLocation for FishermansRow {
+impl Location for FishermansRow {
     fn is_major(&self) -> bool {
         match self {
             FishermansRow::ALostSot => false,
@@ -2237,7 +2349,7 @@ impl MapLocation for FishermansRow {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "FishermansRow",
             match self {
@@ -2267,7 +2379,7 @@ impl MapLocation for FishermansRow {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "FishermansRow",
             match self {
@@ -2316,14 +2428,10 @@ pub enum Westgate {
     Coastway,
     /// Cobber's Lane is a minor location
     CobbersLane,
-    /// Cobber's Lane is a minor location
-    CobbersLane,
     /// Ember Hills is a minor location
     EmberHills,
     /// Fand's Chain is a minor location
     FandsChain,
-    /// Fields of Badb is a minor location
-    FieldsofBadb,
     /// Fields of Badb is a minor location
     FieldsofBadb,
     /// Flidais' Pasture is a minor location
@@ -2372,8 +2480,6 @@ pub enum Westgate {
     TheHem,
     /// The King's Road is a minor location
     TheKingsRoad,
-    /// The King's Road is a minor location
-    TheKingsRoad,
     /// The Knight's Edge is a minor location
     TheKnightsEdge,
     /// Triton's Curse is a minor location
@@ -2392,7 +2498,7 @@ pub enum Westgate {
     ZeusDemise,
 }
 
-impl MapLocation for Westgate {
+impl Location for Westgate {
     fn is_major(&self) -> bool {
         match self {
             Westgate::AshStep => false,
@@ -2403,10 +2509,8 @@ impl MapLocation for Westgate {
             Westgate::Coasthill => false,
             Westgate::Coastway => false,
             Westgate::CobbersLane => false,
-            Westgate::CobbersLane => false,
             Westgate::EmberHills => false,
             Westgate::FandsChain => false,
-            Westgate::FieldsofBadb => false,
             Westgate::FieldsofBadb => false,
             Westgate::FlidaisPasture => false,
             Westgate::HandsomeHideaway => false,
@@ -2431,7 +2535,6 @@ impl MapLocation for Westgate {
             Westgate::TheGallows => true,
             Westgate::TheHem => false,
             Westgate::TheKingsRoad => false,
-            Westgate::TheKingsRoad => false,
             Westgate::TheKnightsEdge => false,
             Westgate::TritonsCurse => false,
             Westgate::WardenWalk => false,
@@ -2453,10 +2556,8 @@ impl MapLocation for Westgate {
             Westgate::Coasthill => (0.7492962, 0.5232728),
             Westgate::Coastway => (0.5137713, 0.98847944),
             Westgate::CobbersLane => (0.81818783, 0.3048373),
-            Westgate::CobbersLane => (0.81818783, 0.3048373),
             Westgate::EmberHills => (0.555335, 1.0591571),
             Westgate::FandsChain => (0.25625902, 0.14081238),
-            Westgate::FieldsofBadb => (0.51419544, 0.15018566),
             Westgate::FieldsofBadb => (0.51419544, 0.15018566),
             Westgate::FlidaisPasture => (0.6924164, 0.22017962),
             Westgate::HandsomeHideaway => (0.33405593, 0.4992943),
@@ -2481,7 +2582,6 @@ impl MapLocation for Westgate {
             Westgate::TheGallows => (0.3637351, 0.1061458),
             Westgate::TheHem => (0.7906987, 0.74425286),
             Westgate::TheKingsRoad => (0.7325495, 0.4098496),
-            Westgate::TheKingsRoad => (0.7325495, 0.4098496),
             Westgate::TheKnightsEdge => (0.579454, 0.28919458),
             Westgate::TritonsCurse => (0.2009395, 0.88355315),
             Westgate::WardenWalk => (0.8698958, 0.5327038),
@@ -2493,7 +2593,7 @@ impl MapLocation for Westgate {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "Westgate",
             match self {
@@ -2505,10 +2605,8 @@ impl MapLocation for Westgate {
                 Westgate::Coasthill => "Coasthill",
                 Westgate::Coastway => "Coastway",
                 Westgate::CobbersLane => "CobbersLane",
-                Westgate::CobbersLane => "CobbersLane",
                 Westgate::EmberHills => "EmberHills",
                 Westgate::FandsChain => "FandsChain",
-                Westgate::FieldsofBadb => "FieldsofBadb",
                 Westgate::FieldsofBadb => "FieldsofBadb",
                 Westgate::FlidaisPasture => "FlidaisPasture",
                 Westgate::HandsomeHideaway => "HandsomeHideaway",
@@ -2533,7 +2631,6 @@ impl MapLocation for Westgate {
                 Westgate::TheGallows => "TheGallows",
                 Westgate::TheHem => "TheHem",
                 Westgate::TheKingsRoad => "TheKingsRoad",
-                Westgate::TheKingsRoad => "TheKingsRoad",
                 Westgate::TheKnightsEdge => "TheKnightsEdge",
                 Westgate::TritonsCurse => "TritonsCurse",
                 Westgate::WardenWalk => "WardenWalk",
@@ -2546,7 +2643,7 @@ impl MapLocation for Westgate {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "Westgate",
             match self {
@@ -2558,10 +2655,8 @@ impl MapLocation for Westgate {
                 Westgate::Coasthill => "Coasthill",
                 Westgate::Coastway => "Coastway",
                 Westgate::CobbersLane => "Cobber's Lane",
-                Westgate::CobbersLane => "Cobber's Lane",
                 Westgate::EmberHills => "Ember Hills",
                 Westgate::FandsChain => "Fand's Chain",
-                Westgate::FieldsofBadb => "Fields of Badb",
                 Westgate::FieldsofBadb => "Fields of Badb",
                 Westgate::FlidaisPasture => "Flidais' Pasture",
                 Westgate::HandsomeHideaway => "Handsome Hideaway",
@@ -2585,7 +2680,6 @@ impl MapLocation for Westgate {
                 Westgate::TheDivide => "The Divide",
                 Westgate::TheGallows => "The Gallows",
                 Westgate::TheHem => "The Hem",
-                Westgate::TheKingsRoad => "The King's Road",
                 Westgate::TheKingsRoad => "The King's Road",
                 Westgate::TheKnightsEdge => "The Knight's Edge",
                 Westgate::TritonsCurse => "Triton's Curse",
@@ -2676,7 +2770,7 @@ pub enum ReachingTrail {
     WindyWay,
 }
 
-impl MapLocation for ReachingTrail {
+impl Location for ReachingTrail {
     fn is_major(&self) -> bool {
         match self {
             ReachingTrail::Brodytown => true,
@@ -2759,7 +2853,7 @@ impl MapLocation for ReachingTrail {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "ReachingTrail",
             match self {
@@ -2803,7 +2897,7 @@ impl MapLocation for ReachingTrail {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "ReachingTrail",
             match self {
@@ -2900,7 +2994,7 @@ pub enum UmbralWildwood {
     WeaversTrail,
 }
 
-impl MapLocation for UmbralWildwood {
+impl Location for UmbralWildwood {
     fn is_major(&self) -> bool {
         match self {
             UmbralWildwood::AdzeCrossroads => false,
@@ -2959,7 +3053,7 @@ impl MapLocation for UmbralWildwood {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "UmbralWildwood",
             match self {
@@ -2991,7 +3085,7 @@ impl MapLocation for UmbralWildwood {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "UmbralWildwood",
             match self {
@@ -3082,7 +3176,7 @@ pub enum Oarbreaker {
     TheIdes,
 }
 
-impl MapLocation for Oarbreaker {
+impl Location for Oarbreaker {
     fn is_major(&self) -> bool {
         match self {
             Oarbreaker::Barrenson => false,
@@ -3147,7 +3241,7 @@ impl MapLocation for Oarbreaker {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "Oarbreaker",
             match self {
@@ -3182,7 +3276,7 @@ impl MapLocation for Oarbreaker {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "Oarbreaker",
             match self {
@@ -3276,7 +3370,7 @@ pub enum CallahansPassage {
     WindingCrag,
 }
 
-impl MapLocation for CallahansPassage {
+impl Location for CallahansPassage {
     fn is_major(&self) -> bool {
         match self {
             CallahansPassage::CallahansEye => false,
@@ -3341,7 +3435,7 @@ impl MapLocation for CallahansPassage {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "CallahansPassage",
             match self {
@@ -3376,7 +3470,7 @@ impl MapLocation for CallahansPassage {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "CallahansPassage",
             match self {
@@ -3454,7 +3548,7 @@ pub enum DrownedVale {
     WispsWarning,
 }
 
-impl MapLocation for DrownedVale {
+impl Location for DrownedVale {
     fn is_major(&self) -> bool {
         match self {
             DrownedVale::Bootnap => true,
@@ -3503,7 +3597,7 @@ impl MapLocation for DrownedVale {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "DrownedVale",
             match self {
@@ -3530,7 +3624,7 @@ impl MapLocation for DrownedVale {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "DrownedVale",
             match self {
@@ -3630,7 +3724,7 @@ pub enum FarranacCoast {
     Victa,
 }
 
-impl MapLocation for FarranacCoast {
+impl Location for FarranacCoast {
     fn is_major(&self) -> bool {
         match self {
             FarranacCoast::ApollosLanding => false,
@@ -3709,7 +3803,7 @@ impl MapLocation for FarranacCoast {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "FarranacCoast",
             match self {
@@ -3751,7 +3845,7 @@ impl MapLocation for FarranacCoast {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "FarranacCoast",
             match self {
@@ -3836,7 +3930,7 @@ pub enum MooringCounty {
     Wiccwood,
 }
 
-impl MapLocation for MooringCounty {
+impl Location for MooringCounty {
     fn is_major(&self) -> bool {
         match self {
             MooringCounty::Borderlane => false,
@@ -3885,7 +3979,7 @@ impl MapLocation for MooringCounty {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "MooringCounty",
             match self {
@@ -3912,7 +4006,7 @@ impl MapLocation for MooringCounty {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "MooringCounty",
             match self {
@@ -3990,7 +4084,7 @@ pub enum WeatheredExpanse {
     WraithsGate,
 }
 
-impl MapLocation for WeatheredExpanse {
+impl Location for WeatheredExpanse {
     fn is_major(&self) -> bool {
         match self {
             WeatheredExpanse::Bannerwatch => false,
@@ -4047,7 +4141,7 @@ impl MapLocation for WeatheredExpanse {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "WeatheredExpanse",
             match self {
@@ -4078,7 +4172,7 @@ impl MapLocation for WeatheredExpanse {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "WeatheredExpanse",
             match self {
@@ -4158,7 +4252,7 @@ pub enum LochMor {
     WidowsWail,
 }
 
-impl MapLocation for LochMor {
+impl Location for LochMor {
     fn is_major(&self) -> bool {
         match self {
             LochMor::BastardsBlade => false,
@@ -4213,7 +4307,7 @@ impl MapLocation for LochMor {
         }
     }
 
-    fn name_api(&self) -> &str {
+    fn name_api(&self) -> (&str, &str) {
         (
             "LochMor",
             match self {
@@ -4243,7 +4337,7 @@ impl MapLocation for LochMor {
         )
     }
 
-    fn name_friendly(&self) -> &str {
+    fn name_friendly(&self) -> (&str, &str) {
         (
             "LochMor",
             match self {
