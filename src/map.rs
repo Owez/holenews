@@ -2,6 +2,7 @@
 
 /// Common trait for all map locations of a given hex
 pub trait Location: Sized {
+    /// Gets map location from api-centric name
     fn from_name(name: &str) -> Option<Self> {
         todo!("map location from name '{}'", name)
     }

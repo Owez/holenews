@@ -7,9 +7,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 /// Crate-specific central error variants
 pub enum Error {
-    /// Database error
     Database(sqlx::Error),
-    /// Map location not found error
     LocationNotFound,
 }
 
