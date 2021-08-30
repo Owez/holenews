@@ -7,17 +7,49 @@ pub trait Location: Sized {
         todo!("map location from name '{}'", name)
     }
 
+    /// Generates information from current details
+    fn info(&self) -> LocationInfo {
+        LocationInfo::new(self)
+    }
+
     /// Checks if this map location if major or not
     fn is_major(&self) -> bool;
 
     /// The `x` and `y` coordinates of this location
-    fn location(&self) -> (f64, f64);
+    fn coords(&self) -> (f64, f64);
 
     /// Provides the api-centric name for the overall hex map tile and inner location
     fn name_api(&self) -> (&str, &str);
 
     /// Provides the human-readable name for the overall hex map tile and inner location
     fn name_friendly(&self) -> (&str, &str);
+}
+
+/// Serializable location information generated from a given [Location] implementation
+pub struct LocationInfo {
+    pub is_major: bool,
+    pub coords: (f64, f64),
+    pub hex_api: String,
+    pub hex_friendly: String,
+    pub name_api: String,
+    pub name_friendly: String,
+}
+
+impl LocationInfo {
+    /// Generates information from given location implementation
+    pub fn new(location: &impl Location) -> Self {
+        let (hex_api, name_api) = location.name_api();
+        let (hex_friendly, name_friendly) = location.name_friendly().to_owned();
+
+        Self {
+            is_major: location.is_major(),
+            coords: location.coords(),
+            hex_api: hex_api.to_string(),
+            hex_friendly: hex_friendly.to_string(),
+            name_api: name_api.to_string(),
+            name_friendly: name_friendly.to_string(),
+        }
+    }
 }
 
 /// Rich location marker for each hex and then location of a map
@@ -76,31 +108,31 @@ impl Location for Map {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
-            Map::Stonecradle(val) => val.location(),
-            Map::AllodsBight(val) => val.location(),
-            Map::TempestIsland(val) => val.location(),
-            Map::GreatMarch(val) => val.location(),
-            Map::MarbanHol(val) => val.location(),
-            Map::ViperPit(val) => val.location(),
-            Map::ShackledChasm(val) => val.location(),
-            Map::DeadLands(val) => val.location(),
-            Map::Heartlands(val) => val.location(),
-            Map::LinnMercy(val) => val.location(),
-            Map::EndlessShore(val) => val.location(),
-            Map::Godcrofts(val) => val.location(),
-            Map::FishermansRow(val) => val.location(),
-            Map::Westgate(val) => val.location(),
-            Map::ReachingTrail(val) => val.location(),
-            Map::UmbralWildwood(val) => val.location(),
-            Map::Oarbreaker(val) => val.location(),
-            Map::CallahansPassage(val) => val.location(),
-            Map::DrownedVale(val) => val.location(),
-            Map::FarranacCoast(val) => val.location(),
-            Map::MooringCounty(val) => val.location(),
-            Map::WeatheredExpanse(val) => val.location(),
-            Map::LochMor(val) => val.location(),
+            Map::Stonecradle(val) => val.coords(),
+            Map::AllodsBight(val) => val.coords(),
+            Map::TempestIsland(val) => val.coords(),
+            Map::GreatMarch(val) => val.coords(),
+            Map::MarbanHol(val) => val.coords(),
+            Map::ViperPit(val) => val.coords(),
+            Map::ShackledChasm(val) => val.coords(),
+            Map::DeadLands(val) => val.coords(),
+            Map::Heartlands(val) => val.coords(),
+            Map::LinnMercy(val) => val.coords(),
+            Map::EndlessShore(val) => val.coords(),
+            Map::Godcrofts(val) => val.coords(),
+            Map::FishermansRow(val) => val.coords(),
+            Map::Westgate(val) => val.coords(),
+            Map::ReachingTrail(val) => val.coords(),
+            Map::UmbralWildwood(val) => val.coords(),
+            Map::Oarbreaker(val) => val.coords(),
+            Map::CallahansPassage(val) => val.coords(),
+            Map::DrownedVale(val) => val.coords(),
+            Map::FarranacCoast(val) => val.coords(),
+            Map::MooringCounty(val) => val.coords(),
+            Map::WeatheredExpanse(val) => val.coords(),
+            Map::LochMor(val) => val.coords(),
         }
     }
 
@@ -214,7 +246,7 @@ impl Location for Stonecradle {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             Stonecradle::BucklerSound => (0.51059383, 0.5146678),
             Stonecradle::FadingLights => (0.73406035, 0.69156134),
@@ -336,7 +368,7 @@ impl Location for AllodsBight {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             AllodsBight::ACaptainsRepose => (0.5932731, 0.8355915),
             AllodsBight::AllodsChildren => (0.11191041, 0.41417748),
@@ -467,7 +499,7 @@ impl Location for TempestIsland {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             TempestIsland::AlchimioEstate => (0.30793568, 0.09539125),
             TempestIsland::CirrisValve => (0.7130552, 0.48503992),
@@ -640,7 +672,7 @@ impl Location for GreatMarch {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             GreatMarch::CampSenti => (0.37455705, 0.362185),
             GreatMarch::DaltonMeadow => (0.09930786, 0.6400397),
@@ -822,7 +854,7 @@ impl Location for MarbanHol {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             MarbanHol::BleatingPlateau => (0.2703532, 0.5908183),
             MarbanHol::BubbleBasin => (0.38355634, 0.42492712),
@@ -977,7 +1009,7 @@ impl Location for ViperPit {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             ViperPit::AfricsApproach => (0.26043177, 0.6742477),
             ViperPit::AustriacaRiver => (0.48925853, 0.8535161),
@@ -1144,7 +1176,7 @@ impl Location for ShackledChasm {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             ShackledChasm::ACarelessNet => (0.43234968, 0.8701505),
             ShackledChasm::ANewSpring => (0.65531296, 0.26313987),
@@ -1371,7 +1403,7 @@ impl Location for DeadLands {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             DeadLands::AbandonedWard => (0.4065897, 0.4973474),
             DeadLands::BitingTarn => (0.82187194, 0.70537686),
@@ -1619,7 +1651,7 @@ impl Location for Heartlands {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             Heartlands::EighteenthSideroad => (0.5635743, 0.07919855),
             Heartlands::Barronshire => (0.30404317, 0.5293029),
@@ -1801,7 +1833,7 @@ impl Location for LinnMercy {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             LinnMercy::Blackroad => (0.46516654, 0.16474915),
             LinnMercy::FortDuncan => (0.73673666, 0.7660624),
@@ -1971,7 +2003,7 @@ impl Location for EndlessShore {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             EndlessShore::BalorsCrown => (0.8295298, 0.33451718),
             EndlessShore::BatteredLanding => (0.3055171, 0.55011296),
@@ -2153,7 +2185,7 @@ impl Location for Godcrofts {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             Godcrofts::AnchorBeach => (0.33879337, 0.91907495),
             Godcrofts::Argosa => (0.4455359, 0.4629214),
@@ -2323,7 +2355,7 @@ impl Location for FishermansRow {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             FishermansRow::ALostSot => (0.90655476, 0.49344444),
             FishermansRow::Arcadia => (0.38920873, 0.73095393),
@@ -2547,7 +2579,7 @@ impl Location for Westgate {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             Westgate::AshStep => (0.64588916, 1.041789),
             Westgate::CandleHills => (0.3809478, 0.876076),
@@ -2813,7 +2845,7 @@ impl Location for ReachingTrail {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             ReachingTrail::Brodytown => (0.44412765, 0.3227743),
             ReachingTrail::CampEos => (0.7520739, 0.70374876),
@@ -3025,7 +3057,7 @@ impl Location for UmbralWildwood {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             UmbralWildwood::AdzeCrossroads => (0.357383, 0.38652703),
             UmbralWildwood::Amethyst => (0.8178504, 0.38884524),
@@ -3210,7 +3242,7 @@ impl Location for Oarbreaker {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             Oarbreaker::Barrenson => (0.20925796, 0.58191305),
             Oarbreaker::BaseAkri => (0.9117557, 0.51201063),
@@ -3404,7 +3436,7 @@ impl Location for CallahansPassage {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             CallahansPassage::CallahansEye => (0.30864334, 0.26224336),
             CallahansPassage::ChapelAccess => (0.8670075, 0.52318686),
@@ -3574,7 +3606,7 @@ impl Location for DrownedVale {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             DrownedVale::Bootnap => (0.80842125, 0.5582795),
             DrownedVale::CoaldrifterStead => (0.66231805, 0.82284665),
@@ -3765,7 +3797,7 @@ impl Location for FarranacCoast {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             FarranacCoast::ApollosLanding => (0.4314927, 0.57976526),
             FarranacCoast::CarrionFields => (0.61662257, 0.45785448),
@@ -3956,7 +3988,7 @@ impl Location for MooringCounty {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             MooringCounty::Borderlane => (0.68016315, 0.05430618),
             MooringCounty::GravekeepersHoldfast => (0.4243501, 0.68474805),
@@ -4114,7 +4146,7 @@ impl Location for WeatheredExpanse {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             WeatheredExpanse::Bannerwatch => (0.04483044, 0.87344664),
             WeatheredExpanse::Barrowsfield => (0.43067294, 0.4653978),
@@ -4281,7 +4313,7 @@ impl Location for LochMor {
         }
     }
 
-    fn location(&self) -> (f64, f64) {
+    fn coords(&self) -> (f64, f64) {
         match self {
             LochMor::BastardsBlade => (0.21080314, 0.80878794),
             LochMor::ChatteringPrairie => (0.6458292, 0.30650327),
