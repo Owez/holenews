@@ -1,7 +1,7 @@
 //! Contains [Battle] and implementations
 
 use crate::map::*;
-use crate::{Error, Population, Result};
+use crate::{models::Population, Error, Result};
 use chrono::prelude::*;
 use sqlx::SqlitePool;
 

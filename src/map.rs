@@ -1,4 +1,4 @@
-//! Rich inner-game map bindings
+//! Rich inner-game map bindings; see [Map] for top-level variants
 
 /// Common trait for all map locations of a given hex
 pub trait Location: Sized {

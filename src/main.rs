@@ -5,15 +5,10 @@
 
 pub mod routes;
 pub mod map;
+pub mod models;
 
-mod battle;
-mod population;
-mod war;
 mod error;
 
-pub use battle::Battle;
-pub use population::Population;
-pub use war::War;
 pub use error::{Error,Result};
 
 use actix_web::{App, HttpServer};

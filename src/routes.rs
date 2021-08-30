@@ -7,6 +7,7 @@ pub fn init(cfg: &mut ServiceConfig) {
     cfg.service(index);
 }
 
+/// Homepage
 #[get("/")]
 async fn index() -> impl Responder {
     HttpResponse::Ok().body("TODO")
