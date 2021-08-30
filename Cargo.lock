@@ -886,6 +886,7 @@ dependencies = [
  "actix-web",
  "chrono",
  "dotenv",
+ "serde",
  "sqlx",
  "tokio 1.10.0",
 ]

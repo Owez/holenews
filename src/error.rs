@@ -9,6 +9,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 pub enum Error {
     Database(sqlx::Error),
     LocationNotFound,
+    WarNotFound(i64)
 }
 
 impl From<sqlx::Error> for Error {
@@ -22,6 +23,7 @@ impl fmt::Display for Error {
         match self {
             Error::Database(_) => write!(f, "Database error"),
             Error::LocationNotFound => write!(f, "Map location provided could not be found"),
+            Error::WarNotFound(num) => write!(f, "War number {} could not be found", num),
         }
     }
 }

@@ -6,6 +6,7 @@
 pub mod routes;
 pub mod map;
 pub mod models;
+pub mod schemas;
 
 mod error;
 

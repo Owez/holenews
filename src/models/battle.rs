@@ -44,6 +44,27 @@ impl Battle {
         })
     }
 
+    /// Gets top posts for homepage, typically ~10 in length
+    pub async fn get_homepage(pool: &SqlitePool) -> Result<Vec<Self>> {
+        sqlx::query!("SELECT * FROM battle WHERE submitted >= datetime('now','-1 day')")
+            .fetch_all(pool)
+            .await?
+            .into_iter()
+            .map(|record| {
+                Ok(Self {
+                    id: record.id,
+                    war_num: record.war_num,
+                    map: Map::from_name(&record.map_location).ok_or(Error::LocationNotFound)?,
+                    name: record.name,
+                    description: record.description,
+                    last_edited: record.last_edited,
+                    submitted: record.submitted,
+                    pop_reports: None,
+                })
+            })
+            .collect()
+    }
+
     /// Updates provided values to update, does nothing if all values are none
     pub async fn update(
         pool: &SqlitePool,
@@ -92,20 +113,16 @@ impl Battle {
     }
 
     /// Fetches all population reports related to this battles
-    pub async fn get_pop_reports(&mut self, _pool: &SqlitePool) -> Result<()> {
-        eprintln!(
-            "Population report requested but sqlx is broken; {}",
-            Utc::now()
+    pub async fn get_pop_reports(&mut self, pool: &SqlitePool) -> Result<()> {
+        self.pop_reports = Some(
+            sqlx::query_as!(
+                Population,
+                "SELECT * FROM population WHERE battle_id=?",
+                self.id
+            )
+            .fetch_all(pool)
+            .await?,
         );
-        // self.pop_reports = Some(
-        //     sqlx::query_as!(
-        //         Population,
-        //         "SELECT * FROM population WHERE battle_id=?",
-        //         self.id
-        //     )
-        //     .fetch_all(pool)
-        //     .await?,
-        // );
         Ok(())
     }
 }

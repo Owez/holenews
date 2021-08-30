@@ -1,5 +1,7 @@
 //! Rich inner-game map bindings; see [Map] for top-level variants
 
+use serde::Serialize;
+
 /// Common trait for all map locations of a given hex
 pub trait Location: Sized {
     /// Gets map location from api-centric name
@@ -26,6 +28,7 @@ pub trait Location: Sized {
 }
 
 /// Serializable location information generated from a given [Location] implementation
+#[derive(Serialize)]
 pub struct LocationInfo {
     pub is_major: bool,
     pub coords: (f64, f64),

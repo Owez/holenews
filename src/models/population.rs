@@ -1,8 +1,8 @@
 //! Contains [Population] and implementations
 
+use crate::Result;
 use chrono::prelude::*;
 use sqlx::{FromRow, SqlitePool};
-use crate::Result;
 
 /// Population report for a given battle, denoting a count for a given time
 #[derive(FromRow)]

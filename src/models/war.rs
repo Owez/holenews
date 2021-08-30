@@ -1,6 +1,6 @@
 //! Contains [War] and implementations
 
-use crate::Result;
+use crate::{Error, Result};
 use chrono::prelude::*;
 use sqlx::{FromRow, SqlitePool};
 
@@ -68,6 +68,11 @@ impl War {
         //     .fetch_optional(pool)
         //     .await
         todo!("fix war get for {:?} and num {}", pool, num)
+    }
+
+    /// Gets war from database, errors with not found compared to a normal get
+    pub async fn get_ensure(pool: &SqlitePool,num: i64) -> Result<Self> {
+        War::get(pool, num).await?.ok_or(Error::WarNotFound(num))
     }
 
     /// Updates provided values to update, does nothing if all values are none
