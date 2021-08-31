@@ -28,7 +28,7 @@ pub trait Location: Sized {
 }
 
 /// Serializable location information generated from a given [Location] implementation
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 pub struct LocationInfo {
     pub is_major: bool,
     pub coords: (f64, f64),

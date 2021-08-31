@@ -44,7 +44,7 @@ impl Battle {
         })
     }
 
-    /// Gets top posts for homepage, typically ~10 in length
+    /// Gets top posts for homepage, typically ~10 in length; fully gets pop reports
     pub async fn get_homepage(pool: &SqlitePool) -> Result<Vec<Self>> {
         sqlx::query!("SELECT * FROM battle WHERE submitted >= datetime('now','-1 day')")
             .fetch_all(pool)
@@ -59,7 +59,7 @@ impl Battle {
                     description: record.description,
                     last_edited: record.last_edited,
                     submitted: record.submitted,
-                    pop_reports: None,
+                    pop_reports: None, // TODO: get pop reports
                 })
             })
             .collect()

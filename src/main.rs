@@ -3,14 +3,14 @@
 #![feature(non_ascii_idents)]
 #![deny(unsafe_code)]
 
-pub mod routes;
 pub mod map;
 pub mod models;
+pub mod routes;
 pub mod schemas;
 
 mod error;
 
-pub use error::{Error,Result};
+pub use error::{Error, Result};
 
 use actix_web::{App, HttpServer};
 use dotenv::dotenv;
