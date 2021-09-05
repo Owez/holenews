@@ -2,6 +2,7 @@
 
 use crate::Result;
 use chrono::prelude::*;
+use log::trace;
 use sqlx::{FromRow, SqlitePool};
 
 /// Population report for a given battle, denoting a count for a given time
@@ -24,6 +25,11 @@ impl Population {
         at_time: NaiveDateTime,
         description: impl Into<Option<String>>,
     ) -> Result<Self> {
+        trace!(
+            "Adding new pop report with battle id of {} and time of {} to database",
+            battle_id,
+            at_time
+        );
         let description = description.into();
         let submitted = Utc::now().naive_utc();
 
@@ -46,6 +52,11 @@ impl Population {
         at_time: NaiveDateTime,
         description: impl Into<Option<String>>,
     ) -> Result<()> {
+        trace!(
+            "Updating pop report with battle id of {} and time of {} in database",
+            battle_id,
+            at_time
+        );
         let description = description.into();
         let last_edited = Utc::now().naive_utc();
 

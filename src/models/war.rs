@@ -2,6 +2,7 @@
 
 use crate::{Error, Result};
 use chrono::prelude::*;
+use log::trace;
 use sqlx::{FromRow, SqlitePool};
 
 /// Ongoing or historic war
@@ -21,6 +22,7 @@ impl War {
         num: i64,
         time_start: NaiveDateTime,
     ) -> Result<Self> {
+        trace!("Adding new ongoing war of number {} to database", num);
         let submitted = Utc::now().naive_utc();
 
         sqlx::query!(
@@ -49,6 +51,7 @@ impl War {
         time_end: NaiveDateTime,
         colonial_win: bool,
     ) -> Result<Self> {
+        trace!("Adding new historic war of number {} to database", num);
         let submitted = Utc::now().naive_utc();
 
         sqlx::query!("INSERT INTO war (num, time_start, time_end, colonial_win, submitted) VALUES (?, ?, ?, ?, ?)", num, time_start, time_end, colonial_win, submitted).execute(pool).await?;
@@ -64,6 +67,7 @@ impl War {
 
     /// Attempts to get existing war from database
     pub async fn get(pool: &SqlitePool, num: i64) -> Result<Option<Self>> {
+        trace!("Getting war of number {} from database", num);
         Ok(sqlx::query_as!(Self, "SELECT * FROM war WHERE num=?", num)
             .fetch_optional(pool)
             .await?)
@@ -81,6 +85,7 @@ impl War {
         time_end: Option<Option<NaiveDateTime>>,
         colonial_win: Option<Option<bool>>,
     ) -> Result<()> {
+        trace!("Updating war of number {} in database", num);
         // TODO: refactor
         if let Some(time_end_val) = time_end {
             if let Some(colonial_win_val) = colonial_win {

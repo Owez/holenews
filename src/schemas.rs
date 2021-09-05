@@ -3,6 +3,7 @@
 use crate::map::{Location, LocationInfo};
 use crate::models::{Battle, Population, War};
 use crate::Result;
+use log::trace;
 use serde::Serialize;
 use sqlx::SqlitePool;
 
@@ -16,6 +17,7 @@ pub struct Schema {
 impl Schema {
     /// Converts and adds a new war model
     pub fn add_war(&mut self, war: War) -> &mut Self {
+        trace!("Adding war to schema");
         let new_war = SchemaWar::from(war);
         match &mut self.wars {
             Some(wars) => wars.push(new_war),
@@ -26,6 +28,7 @@ impl Schema {
 
     /// Converts and adds multiple wars
     pub fn add_wars(&mut self, wars: Vec<War>) -> &mut Self {
+        trace!("Adding multiple wars to schema");
         let mapped = wars.into_iter().map(|war| SchemaWar::from(war)).collect();
         match &mut self.wars {
             Some(wars) => wars.extend(mapped),
@@ -36,6 +39,7 @@ impl Schema {
 
     /// Converts and adds a new battle model
     pub fn add_battle(&mut self, battle: Battle) -> &mut Self {
+        trace!("Adding battle to schema");
         let new_battle = SchemaBattle::from(battle);
         match &mut self.battles {
             Some(battles) => battles.push(new_battle),
@@ -46,6 +50,7 @@ impl Schema {
 
     /// Converts and adds multiple battles
     pub fn add_battles(&mut self, battles: Vec<Battle>) -> &mut Self {
+        trace!("Adding multiple battles to schema");
         let mapped = battles
             .into_iter()
             .map(|battle| SchemaBattle::from(battle))
@@ -60,6 +65,7 @@ impl Schema {
     /// Populates the `wars` part by all battles currently included
     #[allow(unused_mut)]
     pub async fn wars_from_battles(&mut self, pool: &SqlitePool) -> Result<&mut Self> {
+        trace!("Adding known wars from known battles to schema");
         // TODO: make nicer algorithm for this
         let mut war_todos = vec![];
         match &self.battles {
@@ -103,6 +109,7 @@ pub struct SchemaWar {
 
 impl From<War> for SchemaWar {
     fn from(war: War) -> Self {
+        trace!("Converting war to schema object");
         Self {
             num: war.num,
             time_start: war.time_start.to_string(),
@@ -127,6 +134,7 @@ pub struct SchemaBattle {
 
 impl From<Battle> for SchemaBattle {
     fn from(battle: Battle) -> Self {
+        trace!("Converting battle to schema object");
         let name = match battle.name {
             Some(name) => name,
             None => battle.gen_name(),

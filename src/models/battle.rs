@@ -3,6 +3,7 @@
 use crate::map::*;
 use crate::{models::Population, Error, Result};
 use chrono::prelude::*;
+use log::trace;
 use sqlx::SqlitePool;
 
 /// Single battle in the history of foxhole
@@ -26,6 +27,11 @@ impl Battle {
         name: impl Into<Option<String>>,
         description: impl Into<Option<String>>,
     ) -> Result<Self> {
+        trace!(
+            "Adding new battle with war number {} at location {} from database",
+            war_num,
+            map_location
+        );
         let name = name.into();
         let map = Map::from_name(&map_location).ok_or(Error::LocationNotFound)?;
         let description = description.into();
@@ -46,6 +52,7 @@ impl Battle {
 
     /// Attempts to get existing battle from database
     pub async fn get(pool: &SqlitePool, id: i64) -> Result<Option<Self>> {
+        trace!("Getting battle of id {} from database", id);
         let opt_record = sqlx::query!("SELECT * FROM battle WHERE id=?", id)
             .fetch_optional(pool)
             .await?;
@@ -72,6 +79,7 @@ impl Battle {
 
     /// Gets top posts for homepage, typically ~10 in length; fully gets pop reports
     pub async fn get_homepage(pool: &SqlitePool) -> Result<Vec<Self>> {
+        trace!("Getting homepage items from database");
         sqlx::query!("SELECT * FROM battle WHERE submitted >= datetime('now','-1 day')") // TODO: limit to 10-15
             .fetch_all(pool)
             .await?
@@ -98,6 +106,7 @@ impl Battle {
         name: impl Into<Option<String>>,
         description: impl Into<Option<String>>,
     ) -> Result<()> {
+        trace!("Updating battle of id {} in database", id);
         // TODO: refactor
         let name = name.into();
         let description = description.into();
@@ -140,6 +149,10 @@ impl Battle {
 
     /// Fetches all population reports related to this battles; chainable
     pub async fn get_pop_reports(mut self, pool: &SqlitePool) -> Result<Self> {
+        trace!(
+            "Getting pop reports for battle of id {} from database",
+            self.id
+        );
         self.pop_reports = Some(
             sqlx::query_as!(
                 Population,
