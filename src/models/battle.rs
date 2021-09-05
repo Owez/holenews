@@ -125,4 +125,9 @@ impl Battle {
         );
         Ok(())
     }
+
+    /// Generates a battle name automatically if a better one has not been assigned
+    pub fn gen_name(&self) -> String {
+        todo!("generate battle name")
+    }
 }

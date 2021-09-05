@@ -1,6 +1,6 @@
 //! Serde-based schemas to convert models such as battles into
 
-use crate::map::LocationInfo;
+use crate::map::{Location, LocationInfo};
 use crate::models::{Battle, Population, War};
 use crate::Result;
 use serde::Serialize;
@@ -96,14 +96,19 @@ impl Default for Schema {
 pub struct SchemaWar {
     pub num: i64,
     pub time_start: String,
-    pub time_end: String,
+    pub time_end: Option<String>,
     pub colonial_win: Option<bool>,
     // pub submitted: String, // not needed
 }
 
 impl From<War> for SchemaWar {
-    fn from(_war: War) -> Self {
-        todo!("from war for schema")
+    fn from(war: War) -> Self {
+        Self {
+            num: war.num,
+            time_start: war.time_start.to_string(),
+            time_end: war.time_end.map(|dt| dt.to_string()),
+            colonial_win: war.colonial_win,
+        }
     }
 }
 
@@ -115,15 +120,28 @@ pub struct SchemaBattle {
     pub location_info: LocationInfo,
     pub name: String,
     pub description: Option<String>,
-    pub last_edited: String,
+    pub last_edited: Option<String>,
     pub submitted: String,
-    pub pop_reports: Vec<SchemaPopulation>,
+    pub pop_reports: Option<Vec<SchemaPopulation>>,
 }
 
 impl From<Battle> for SchemaBattle {
     fn from(battle: Battle) -> Self {
+        let name = match battle.name {
+            Some(name) => name,
+            None => battle.gen_name(),
+        };
         let pop_reports = SchemaPopulation::from_reports(battle.pop_reports);
-        todo!("from battle for schema")
+        Self {
+            id: battle.id,
+            war_num: battle.war_num,
+            location_info: battle.map.info(),
+            name,
+            description: battle.description,
+            last_edited: battle.last_edited.map(|dt| dt.to_string()),
+            submitted: battle.submitted.to_string(),
+            pop_reports,
+        }
     }
 }
 
@@ -152,7 +170,12 @@ impl SchemaPopulation {
 }
 
 impl From<Population> for SchemaPopulation {
-    fn from(_pop_report: Population) -> Self {
-        todo!("from population for schema")
+    fn from(pop_report: Population) -> Self {
+        Self {
+            counted: pop_report.counted,
+            at_time: pop_report.at_time.to_string(),
+            description: pop_report.description,
+            last_edited: pop_report.last_edited.map(|dt| dt.to_string()),
+        }
     }
 }
