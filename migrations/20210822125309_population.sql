@@ -1,10 +1,10 @@
 CREATE TABLE population (
     battle_id INTEGER NOT NULL,
     counted INTEGER NOT NULL,
-    at_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    at_time DATETIME NOT NULL,
     description VARCHAR(150),
-    last_edited TIMESTAMP WITH TIME ZONE,
-    submitted TIMESTAMP WITH TIME ZONE NOT NULL,
+    last_edited DATETIME,
+    submitted DATETIME NOT NULL,
     PRIMARY KEY (battle_id, at_time),
     FOREIGN KEY (battle_id) REFERENCES battle(id)
 );

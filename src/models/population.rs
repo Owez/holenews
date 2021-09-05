@@ -9,10 +9,10 @@ use sqlx::{FromRow, SqlitePool};
 pub struct Population {
     pub battle_id: i64,
     pub counted: i64,
-    pub at_time: DateTime<Utc>,
+    pub at_time: NaiveDateTime,
     pub description: Option<String>,
-    pub last_edited: Option<DateTime<Utc>>,
-    pub submitted: DateTime<Utc>,
+    pub last_edited: Option<NaiveDateTime>,
+    pub submitted: NaiveDateTime,
 }
 
 impl Population {
@@ -21,11 +21,11 @@ impl Population {
         pool: &SqlitePool,
         battle_id: i64,
         counted: i64,
-        at_time: DateTime<Utc>,
+        at_time: NaiveDateTime,
         description: impl Into<Option<String>>,
     ) -> Result<Self> {
         let description = description.into();
-        let submitted = Utc::now();
+        let submitted = Utc::now().naive_utc();
 
         sqlx::query!("INSERT INTO population (battle_id, counted, at_time, description, submitted) VALUES (?, ?, ?, ?, ?)", battle_id, counted, at_time, description, submitted).execute(pool).await?;
 
@@ -43,11 +43,11 @@ impl Population {
     pub async fn update(
         pool: &SqlitePool,
         battle_id: i64,
-        at_time: DateTime<Utc>,
+        at_time: NaiveDateTime,
         description: impl Into<Option<String>>,
     ) -> Result<()> {
         let description = description.into();
-        let last_edited = Utc::now();
+        let last_edited = Utc::now().naive_utc();
 
         if let Some(desc_val) = description {
             sqlx::query!(

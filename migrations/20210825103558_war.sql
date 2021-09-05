@@ -1,9 +1,9 @@
 CREATE TABLE war (
     num INTEGER PRIMARY KEY NOT NULL,
-    time_start TIMESTAMP WITH TIME ZONE NOT NULL,
-    time_end TIMESTAMP WITH TIME ZONE,
+    time_start DATETIME NOT NULL,
+    time_end DATETIME,
     colonial_win BOOLEAN,
-    submitted TIMESTAMP WITH TIME ZONE NOT NULL
+    submitted DATETIME NOT NULL
 );
 
 -- num is the war number and primary key

@@ -8,10 +8,10 @@ use sqlx::{FromRow, SqlitePool};
 #[derive(FromRow)]
 pub struct War {
     pub num: i64,
-    pub time_start: DateTime<Utc>,
-    pub time_end: Option<DateTime<Utc>>,
+    pub time_start: NaiveDateTime,
+    pub time_end: Option<NaiveDateTime>,
     pub colonial_win: Option<bool>,
-    pub submitted: DateTime<Utc>,
+    pub submitted: NaiveDateTime,
 }
 
 impl War {
@@ -19,9 +19,9 @@ impl War {
     pub async fn new_ongoing(
         pool: &SqlitePool,
         num: i64,
-        time_start: DateTime<Utc>,
+        time_start: NaiveDateTime,
     ) -> Result<Self> {
-        let submitted = Utc::now();
+        let submitted = Utc::now().naive_utc();
 
         sqlx::query!(
             "INSERT INTO war (num, time_start, submitted) VALUES (?, ?, ?)",
@@ -45,11 +45,11 @@ impl War {
     pub async fn new_historic(
         pool: &SqlitePool,
         num: i64,
-        time_start: DateTime<Utc>,
-        time_end: DateTime<Utc>,
+        time_start: NaiveDateTime,
+        time_end: NaiveDateTime,
         colonial_win: bool,
     ) -> Result<Self> {
-        let submitted = Utc::now();
+        let submitted = Utc::now().naive_utc();
 
         sqlx::query!("INSERT INTO war (num, time_start, time_end, colonial_win, submitted) VALUES (?, ?, ?, ?, ?)", num, time_start, time_end, colonial_win, submitted).execute(pool).await?;
 
@@ -79,7 +79,7 @@ impl War {
     pub async fn update(
         pool: &SqlitePool,
         num: i64,
-        time_end: Option<Option<DateTime<Utc>>>,
+        time_end: Option<Option<NaiveDateTime>>,
         colonial_win: Option<Option<bool>>,
     ) -> Result<()> {
         // TODO: refactor

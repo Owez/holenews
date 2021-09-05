@@ -4,8 +4,8 @@ CREATE TABLE battle (
     map_location VARCHAR(64) NOT NULL,
     name VARCHAR(32),
     description VARCHAR(2000),
-    last_edited TIMESTAMP WITH TIME ZONE,
-    submitted TIMESTAMP WITH TIME ZONE NOT NULL,
+    last_edited DATETIME,
+    submitted DATETIME NOT NULL,
     FOREIGN KEY (war_num) REFERENCES war(num)
 );
 

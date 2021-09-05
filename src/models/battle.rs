@@ -12,8 +12,8 @@ pub struct Battle {
     pub map: Map,
     pub name: Option<String>,
     pub description: Option<String>,
-    pub last_edited: Option<DateTime<Utc>>,
-    pub submitted: DateTime<Utc>,
+    pub last_edited: Option<NaiveDateTime>,
+    pub submitted: NaiveDateTime,
     pub pop_reports: Option<Vec<Population>>,
 }
 
@@ -29,7 +29,7 @@ impl Battle {
         let name = name.into();
         let map = Map::from_name(&map_location).ok_or(Error::LocationNotFound)?;
         let description = description.into();
-        let submitted = Utc::now();
+        let submitted = Utc::now().naive_utc();
         let id = sqlx::query!("INSERT INTO battle (war_num, map_location, name, description, submitted) VALUES (?, ?, ?, ?, ?)", war_num, map_location, name, description,submitted).execute(pool).await?.last_insert_rowid();
 
         Ok(Self {
@@ -75,7 +75,7 @@ impl Battle {
         // TODO: refactor
         let name = name.into();
         let description = description.into();
-        let last_edited = Utc::now();
+        let last_edited = Utc::now().naive_utc();
 
         if let Some(name_val) = name {
             if let Some(description_val) = description {
