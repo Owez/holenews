@@ -15,9 +15,9 @@ pub struct Schema {
 
 impl Schema {
     /// Converts and adds a new war model
-    pub fn add_war(mut self, war: War) -> Self {
+    pub fn add_war(&mut self, war: War) -> &mut Self {
         let new_war = SchemaWar::from(war);
-        match self.wars {
+        match &mut self.wars {
             Some(wars) => wars.push(new_war),
             None => self.wars = Some(vec![new_war]),
         }
@@ -25,9 +25,9 @@ impl Schema {
     }
 
     /// Converts and adds multiple wars
-    pub fn add_wars(mut self, wars: Vec<War>) -> Self {
+    pub fn add_wars(&mut self, wars: Vec<War>) -> &mut Self {
         let mapped = wars.into_iter().map(|war| SchemaWar::from(war)).collect();
-        match self.wars {
+        match &mut self.wars {
             Some(wars) => wars.extend(mapped),
             None => self.wars = Some(mapped),
         }
@@ -35,9 +35,9 @@ impl Schema {
     }
 
     /// Converts and adds a new battle model
-    pub fn add_battle(mut self, battle: Battle) -> Self {
+    pub fn add_battle(&mut self, battle: Battle) -> &mut Self {
         let new_battle = SchemaBattle::from(battle);
-        match self.battles {
+        match &mut self.battles {
             Some(battles) => battles.push(new_battle),
             None => self.battles = Some(vec![new_battle]),
         }
@@ -45,12 +45,12 @@ impl Schema {
     }
 
     /// Converts and adds multiple battles
-    pub fn add_battles(mut self, battles: Vec<Battle>) -> Self {
+    pub fn add_battles(&mut self, battles: Vec<Battle>) -> &mut Self {
         let mapped = battles
             .into_iter()
             .map(|battle| SchemaBattle::from(battle))
             .collect();
-        match self.battles {
+        match &mut self.battles {
             Some(battles) => battles.extend(mapped),
             None => self.battles = Some(mapped),
         }
@@ -59,7 +59,7 @@ impl Schema {
 
     /// Populates the `wars` part by all battles currently included
     #[allow(unused_mut)]
-    pub async fn wars_from_battles(mut self, pool: &SqlitePool) -> Result<Self> {
+    pub async fn wars_from_battles(&mut self, pool: &SqlitePool) -> Result<&mut Self> {
         // TODO: make nicer algorithm for this
         let mut war_todos = vec![];
         match &self.battles {
