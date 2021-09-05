@@ -122,8 +122,8 @@ impl Battle {
         Ok(())
     }
 
-    /// Fetches all population reports related to this battles
-    pub async fn get_pop_reports(&mut self, pool: &SqlitePool) -> Result<()> {
+    /// Fetches all population reports related to this battles; chainable
+    pub async fn get_pop_reports(mut self, pool: &SqlitePool) -> Result<Self> {
         self.pop_reports = Some(
             sqlx::query_as!(
                 Population,
@@ -133,7 +133,7 @@ impl Battle {
             .fetch_all(pool)
             .await?,
         );
-        Ok(())
+        Ok(self)
     }
 
     /// Generates a battle name automatically if a better one has not been assigned

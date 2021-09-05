@@ -42,7 +42,12 @@ async fn get_battle(
 ) -> Result<impl Responder> {
     Ok(HttpResponse::Ok().json(
         Schema::default()
-            .add_battle(Battle::get_ensure(pool.get_ref(), id as i64).await?)
+            .add_battle(
+                Battle::get_ensure(pool.get_ref(), id as i64)
+                    .await?
+                    .get_pop_reports(pool.get_ref())
+                    .await?,
+            )
             .wars_from_battles(pool.get_ref())
             .await?,
     ))
