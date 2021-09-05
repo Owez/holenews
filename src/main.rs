@@ -1,6 +1,7 @@
 //! Automated reporting and wiki website for the [Foxhole](https://store.steampowered.com/app/505460/Foxhole/) game
 
 #![feature(non_ascii_idents)]
+#![feature(exclusive_range_pattern)]
 #![deny(unsafe_code)]
 
 pub mod map;

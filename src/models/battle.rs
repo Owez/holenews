@@ -138,6 +138,33 @@ impl Battle {
 
     /// Generates a battle name automatically if a better one has not been assigned
     pub fn gen_name(&self) -> String {
-        todo!("generate battle name")
+        let size = |num| match num {
+            0..30 => "Skirmish",
+            30..60 => "Clash",
+            60..80 => "Battle",
+            _ => "Onslaught",
+        };
+        let fmt = |sizetype: &str| match self.submitted.hour() {
+            0..2 | 22..24 => format!(
+                "The Midnight {} In {}",
+                sizetype,
+                self.map.name_friendly().1
+            ),
+            2..6 => format!(
+                "{} At Daybreak: {} In Chaos",
+                sizetype,
+                self.map.name_friendly().1
+            ),
+            6..19 => format!("The {} Of {}", sizetype, self.map.name_friendly().1),
+            _ => format!("{} In {} At Dusk", sizetype, self.map.name_friendly().1),
+        };
+
+        match &self.pop_reports {
+            Some(reports) if reports.len() != 0 => fmt(size(reports.last().unwrap().counted)),
+            _ => format!(
+                "Breaking: Reports Of Fighting In {}",
+                self.map.name_friendly().1
+            ),
+        }
     }
 }
