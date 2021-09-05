@@ -9,3 +9,6 @@
 .env
 holenews.db*
 scripts/mapdump.txt
+
+# debugging templates
+app.py

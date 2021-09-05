@@ -1,0 +1,35 @@
+/* index route only css */
+
+.header {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.header-title {
+    font-size: 5rem;
+    margin: 0;
+}
+
+.header-subtitle {
+    font-size: 150%;
+    font-style: italic;
+    margin: 0;
+}
+
+.content {
+    min-height: 50vh;
+    display: flex;
+}
+
+.content-left {
+    width: calc(50vw - 5vh - 2rem);
+    margin-left: 5vh;
+    padding-right: 2rem;
+    border-right: 1px solid #5b5b5b;
+}
+
+.content-right {
+    width: calc(50vw - 5vh - 2rem);
+    padding-left: 2rem;
+}

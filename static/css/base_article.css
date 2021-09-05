@@ -1,0 +1,41 @@
+/* article-specific styling used for multiple routes */
+
+article {
+    font-family: 'News Cycle', sans-serif;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #565656;
+}
+
+article>h1 {
+    font-family: 'News Cycle', sans-serif;
+    margin-bottom: 0;
+}
+
+.article-info {
+    color: gray;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+}
+
+.article-info-text {
+    margin-left: 0.75rem;
+    font-family: 'Ubuntu Mono', monospace;
+}
+
+.war-tag {
+    width: 1.25rem;
+    height: 0.75rem;
+    border-radius: 0.5rem;
+    padding: 0.35rem;
+    font-weight: bold;
+    border: 1px solid #8e8e8e;
+    float: left;
+    color: gray;
+    font-family: 'Ubuntu Mono', monospace;
+}
+
+.copy-link {
+    text-decoration: underline;
+    cursor: alias;
+}

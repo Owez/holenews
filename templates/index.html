@@ -1,0 +1,35 @@
+{# index/homepage route #}
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_article.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="header ns">
+    <h1 class="header-title">HoleNews</h1>
+    <p class="header-subtitle">The premier <a href="https://store.steampowered.com/app/505460/Foxhole/" target=”_blank”
+            class="noa">Foxhole</a> newspaper</p>
+</div>
+<div class="content">
+    <div class="content-left">
+        {% if articles %}
+        {% for article in articles %}
+        {% include 'base_article.html' %}
+        {% endfor %}
+        {% else %}
+        <h2>No Articles Found!</h2>
+        <p>No articles have been found to display, this means the website is either:</p>
+        <ul>
+            <li>Currently having a database error</li>
+            <li>Being viewed in a debugging state</li>
+        </ul>
+        <p>Please contact <span class="mono">root@ogriffiths.com</span> if this is not intended!</p>
+        {% endif %}
+    </div>
+    <div class="content-right">
+        <p>War statistics here</p>
+    </div>
+</div>
+{% endblock %}

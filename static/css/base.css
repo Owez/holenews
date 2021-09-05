@@ -1,0 +1,90 @@
+/* basic/global css used on all routes */
+
+body {
+    border: 0;
+    margin: 0;
+    background-color: #1d2021;
+    font-family: 'Montserrat', sans-serif;
+    color: lightgrey;
+    overflow-x: hidden;
+}
+
+h1 {
+    font-family: 'Alfa Slab One', cursive;
+    letter-spacing: 1px;
+}
+
+a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+hr {
+    border: 1px solid #565656;
+}
+
+nav {
+    width: 100vw;
+    height: 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #141618;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: calc(3vh + 1rem);
+    padding-right: calc(3vh + 1rem);
+    padding-top:0.1rem;
+    height: 3.5rem;
+    margin-top: 3rem;
+    background-color: #141618;
+}
+
+.nav-left {
+    margin-left: calc(4vw + 2rem);
+}
+
+.nav-right {
+    margin-right: calc(4vw + 2rem);
+}
+
+.nav-title {
+    font-size: 125%;
+    font-family: 'Alfa Slab One', cursive;
+    letter-spacing: -1.1px;
+}
+
+.noa {
+    text-decoration: none;
+}
+
+.fc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ns {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mono {
+    font-family: 'Ubuntu Mono', monospace;
+    background-color: #141618;
+    padding: 0.35rem;
+    border-radius: 0.5rem;
+}
+
+.container {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}

@@ -1,0 +1,38 @@
+{# dedicated article route #}
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_article.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/battle.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% include 'base_article.html' %}
+    <h2 class="insights-title">HoleNews Insights</h2>
+    <div class="insight-timeline">
+        <h3>Battle Timeline</h3>
+        <div class="insight-timeline-placeholder"></div>
+    </div>
+    <div class="insights-panels">
+        <div class="insight">
+            <h3>Fighting Heatmap</h3>
+            <img src="{{ url_for('static', filename='img/heatmap_bg.png') }}" alt="Fighting Heatmap" class="heatmap-bg">
+        </div>
+        <div class="insight">
+            <h3>Faction Balance</h3>
+            <div class="balance">
+                <div>
+                    <p class="balance-num colicolor">50%</p>
+                    <p class="balance-text colicolor">Colonials</p>
+                </div>
+                <p class="balance-vs">vs</p>
+                <div>
+                    <p class="balance-num wardencolor">50%</p>
+                    <p class="balance-text wardencolor">Wardens</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
