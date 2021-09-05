@@ -44,19 +44,35 @@ impl Battle {
         })
     }
 
-    /// TODO: document
-    pub async fn get(_pool: &SqlitePool, _id: i64) -> Result<Option<Self>> {
-        todo!()
+    /// Attempts to get existing battle from database
+    pub async fn get(pool: &SqlitePool, id: i64) -> Result<Option<Self>> {
+        let opt_record = sqlx::query!("SELECT * FROM battle WHERE id=?", id)
+            .fetch_optional(pool)
+            .await?;
+
+        Ok(match opt_record {
+            Some(record) => Some(Self {
+                id: record.id,
+                war_num: record.war_num,
+                map: Map::from_name(&record.map_location).ok_or(Error::LocationNotFound)?,
+                name: record.name,
+                description: record.description,
+                last_edited: record.last_edited,
+                submitted: record.submitted,
+                pop_reports: None,
+            }),
+            None => None,
+        })
     }
 
-    /// TODO: document
+    /// Gets battle from database, errors with not found compared to a normal get
     pub async fn get_ensure(pool: &SqlitePool, id: i64) -> Result<Self> {
         Self::get(pool, id).await?.ok_or(Error::BattleNotFound(id))
     }
 
     /// Gets top posts for homepage, typically ~10 in length; fully gets pop reports
     pub async fn get_homepage(pool: &SqlitePool) -> Result<Vec<Self>> {
-        sqlx::query!("SELECT * FROM battle WHERE submitted >= datetime('now','-1 day')")
+        sqlx::query!("SELECT * FROM battle WHERE submitted >= datetime('now','-1 day')") // TODO: limit to 10-15
             .fetch_all(pool)
             .await?
             .into_iter()
@@ -69,7 +85,7 @@ impl Battle {
                     description: record.description,
                     last_edited: record.last_edited,
                     submitted: record.submitted,
-                    pop_reports: None, // TODO: get pop reports
+                    pop_reports: None,
                 })
             })
             .collect()
@@ -138,33 +154,23 @@ impl Battle {
 
     /// Generates a battle name automatically if a better one has not been assigned
     pub fn gen_name(&self) -> String {
+        let map_name = self.map.name_friendly().1;
         let size = |num| match num {
             0..30 => "Skirmish",
             30..60 => "Clash",
             60..80 => "Battle",
             _ => "Onslaught",
         };
-        let fmt = |sizetype: &str| match self.submitted.hour() {
-            0..2 | 22..24 => format!(
-                "The Midnight {} In {}",
-                sizetype,
-                self.map.name_friendly().1
-            ),
-            2..6 => format!(
-                "{} At Daybreak: {} In Chaos",
-                sizetype,
-                self.map.name_friendly().1
-            ),
-            6..19 => format!("The {} Of {}", sizetype, self.map.name_friendly().1),
-            _ => format!("{} In {} At Dusk", sizetype, self.map.name_friendly().1),
+        let fmt = |sizetype| match self.submitted.hour() {
+            0..2 | 22..24 => format!("The Midnight {} In {}", sizetype, map_name),
+            2..6 => format!("{} At Daybreak: {} In Chaos", sizetype, map_name),
+            6..19 => format!("The {} Of {}", sizetype, map_name),
+            _ => format!("{} In {} At Dusk", sizetype, map_name),
         };
 
         match &self.pop_reports {
             Some(reports) if reports.len() != 0 => fmt(size(reports.last().unwrap().counted)),
-            _ => format!(
-                "Breaking: Reports Of Fighting In {}",
-                self.map.name_friendly().1
-            ),
+            _ => format!("Breaking: Reports Of Fighting In {}", map_name),
         }
     }
 }

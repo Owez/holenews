@@ -64,14 +64,13 @@ impl War {
 
     /// Attempts to get existing war from database
     pub async fn get(pool: &SqlitePool, num: i64) -> Result<Option<Self>> {
-        // sqlx::query_as!(Self, "SELECT * FROM war WHERE num=?", num)
-        //     .fetch_optional(pool)
-        //     .await
-        todo!("fix war get for {:?} and num {}", pool, num)
+        Ok(sqlx::query_as!(Self, "SELECT * FROM war WHERE num=?", num)
+            .fetch_optional(pool)
+            .await?)
     }
 
     /// Gets war from database, errors with not found compared to a normal get
-    pub async fn get_ensure(pool: &SqlitePool,num: i64) -> Result<Self> {
+    pub async fn get_ensure(pool: &SqlitePool, num: i64) -> Result<Self> {
         War::get(pool, num).await?.ok_or(Error::WarNotFound(num))
     }
 
