@@ -13,6 +13,7 @@ pub enum Error {
     Database(sqlx::Error),
     LocationNotFound,
     WarNotFound(i64),
+    BattleNotFound(i64),
 }
 
 impl From<sqlx::Error> for Error {
@@ -27,6 +28,7 @@ impl fmt::Display for Error {
             Error::Database(_) => write!(f, "Database error"),
             Error::LocationNotFound => write!(f, "Map location provided could not be found"),
             Error::WarNotFound(num) => write!(f, "War number {} could not be found", num),
+            Error::BattleNotFound(id) => write!(f, "Battle id {} could not be found", id),
         }
     }
 }
@@ -35,7 +37,9 @@ impl ResponseError for Error {
     fn status_code(&self) -> StatusCode {
         match self {
             Error::Database(_) => StatusCode::INTERNAL_SERVER_ERROR,
-            Error::LocationNotFound | Error::WarNotFound(_) => StatusCode::NOT_FOUND,
+            Error::LocationNotFound | Error::WarNotFound(_) | Error::BattleNotFound(_) => {
+                StatusCode::NOT_FOUND
+            }
         }
     }
 

@@ -44,6 +44,16 @@ impl Battle {
         })
     }
 
+    /// TODO: document
+    pub async fn get(_pool: &SqlitePool, _id: i64) -> Result<Option<Self>> {
+        todo!()
+    }
+
+    /// TODO: document
+    pub async fn get_ensure(pool: &SqlitePool, id: i64) -> Result<Self> {
+        Self::get(pool, id).await?.ok_or(Error::BattleNotFound(id))
+    }
+
     /// Gets top posts for homepage, typically ~10 in length; fully gets pop reports
     pub async fn get_homepage(pool: &SqlitePool) -> Result<Vec<Self>> {
         sqlx::query!("SELECT * FROM battle WHERE submitted >= datetime('now','-1 day')")
