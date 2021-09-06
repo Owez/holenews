@@ -1,67 +1,35 @@
-<!-- partially converted -->
+{# index/homepage route #}
+{% extends 'base.html' %}
 
-<!-- basic/global template used for all -->
-<!DOCTYPE html>
-<html lang="en">
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_article.css') }}">
+{% endblock %}
 
-<head>
-    <!-- basic metadata -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@400;700&family=News+Cycle:wght@400;700&family=Ubuntu+Mono&display=swap"
-        rel="stylesheet">
-    <!-- headers/stylesheets -->
-    <link rel="stylesheet" href="/static/css/base.css">
-    <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="stylesheet" href="/static/css/base_article.css">
-    <!-- title -->
-    <title>HoleNews</title>
-</head>
-
-<body>
-    <!-- navbar -->
-    <nav>
-        <div class="nav-left"><a href="/" class="nav-title noa">HN</a></div>
-        <div class="nav-right">
-            <p>More content here</p>
-        </div>
-    </nav>
-    <!-- page content -->
-    <div class="header ns">
-        <h1 class="header-title">HoleNews</h1>
-        <p class="header-subtitle">The premier <a href="https://store.steampowered.com/app/505460/Foxhole/"
-                target=”_blank” class="noa">Foxhole</a> newspaper</p>
+{% block content %}
+<div class="header ns">
+    <h1 class="header-title">HoleNews</h1>
+    <p class="header-subtitle">The premier <a href="https://store.steampowered.com/app/505460/Foxhole/" target=”_blank”
+            class="noa">Foxhole</a> newspaper</p>
+</div>
+<div class="content">
+    <div class="content-left">
+        {% if articles %}
+        {% for article in articles %}
+        {% include 'base_article.html' %}
+        {% endfor %}
+        {% else %}
+        <h2>No Articles Found!</h2>
+        <p>No articles have been found to display, this means the website is either:</p>
+        <ul>
+            <li>Currently having a database error</li>
+            <li>Being viewed in a debugging state</li>
+        </ul>
+        <p>Please contact <span class="mono">root@ogriffiths.com</span> if this is not intended!</p>
+        {% endif %}
     </div>
-    <div class="content">
-        <div class="content-left">
-            {% if articles %}
-            {% for article in articles %}
-            {% include 'base_article.html' %}
-            {% endfor %}
-            {% else %}
-            <h2>No Articles Found!</h2>
-            <p>No articles have been found to display, this means the website is either:</p>
-            <ul>
-                <li>Currently having a database error</li>
-                <li>Being viewed in a debugging state</li>
-            </ul>
-            <p>Please contact <span class="mono">root@ogriffiths.com</span> if this is not intended!</p>
-            {% endif %}
-        </div>
-        <div class="content-right">
-            <p>War statistics here</p>
-        </div>
+    <div class="content-right">
+        <p>War statistics here</p>
     </div>
-    <!-- footer -->
-    <footer>
-        <p>Copyright © 2021 <a href="https://ogriffiths.com">Owen Griffiths</a></p>
-        <a href="https://ogriffiths.com" class="noa">🔗</a>
-    </footer>
-    <!-- scripts -->
-    <script src="/static/js/base.js"></script>
-</body>
+</div>
+{% endblock %}
