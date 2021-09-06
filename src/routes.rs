@@ -29,29 +29,33 @@ mod api {
     #[get("/api/war/{num}")]
     pub async fn get_war(
         pool: web::Data<SqlitePool>,
-        web::Path(num): web::Path<usize>,
+        num: web::Path<usize>,
     ) -> Result<impl Responder> {
         info!("GET for api war of num {} route", num);
+        let pool = pool.get_ref();
+        let num = num.into_inner();
         Ok(HttpResponse::Ok()
-            .json(Schema::default().add_war(War::get_ensure(pool.get_ref(), num as i64).await?)))
+            .json(Schema::default().add_war(War::get_ensure(pool, num as i64).await?)))
     }
 
     /// Gets battle by it's id
     #[get("/api/battle/{id}")]
     pub async fn get_battle(
         pool: web::Data<SqlitePool>,
-        web::Path(id): web::Path<usize>,
+        id: web::Path<usize>,
     ) -> Result<impl Responder> {
         info!("GET for api battle of id {} route", id);
+        let pool = pool.get_ref();
+        let id = id.into_inner();
         Ok(HttpResponse::Ok().json(
             Schema::default()
                 .add_battle(
-                    Battle::get_ensure(pool.get_ref(), id as i64)
+                    Battle::get_ensure(pool, id as i64)
                         .await?
-                        .get_pop_reports(pool.get_ref())
+                        .get_pop_reports(pool)
                         .await?,
                 )
-                .wars_from_battles(pool.get_ref())
+                .wars_from_battles(pool)
                 .await?,
         ))
     }
@@ -83,5 +87,9 @@ pub fn init(cfg: &mut ServiceConfig) {
     cfg.service(basic::index);
 
     trace!("Configuring static file routes");
-    cfg.service(Files::new("/static", ".").prefer_utf8(true));
+    cfg.service(
+        Files::new("/static", "./static")
+            .show_files_listing()
+            .prefer_utf8(true),
+    );
 }

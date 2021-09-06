@@ -1,4 +1,6 @@
-{# basic article with content being added via another template #}
+<!-- not converted -->
+
+<!-- start of base article -->
 <article>
     <h1><a href="{% if article.is_battle %}{{ url_for('battle', id=article.id) }}{% else %}{{ url_for('war', war_num=article.war_num) }}{% endif %}"
             class="noa">{{ article.title }}</a></h1>
@@ -16,3 +18,4 @@
         this article</a> and add your own journalistic experiences!
     {% endif %}
 </article>
+<!-- end of base article -->

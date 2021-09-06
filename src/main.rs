@@ -13,9 +13,9 @@ mod error;
 
 pub use error::{Error, Result};
 
-use actix_web::{App, HttpServer};
+use actix_web::{web::Data, App, HttpServer};
 use dotenv::dotenv;
-use log::{info, trace};
+use log::{error, info, trace};
 use simplelog::*;
 use sqlx::sqlite::SqlitePoolOptions;
 use std::{env, fs::File};
@@ -23,7 +23,7 @@ use std::{env, fs::File};
 /// Address to bind to
 const BIND_ADDR: (&str, u16) = ("0.0.0.0", 3224);
 
-#[tokio::main]
+#[actix_web::main]
 async fn main() {
     dotenv().ok();
 
@@ -47,13 +47,11 @@ async fn main() {
     .unwrap();
     info!("Starting holenews instance");
 
-    // load/save resources
-
-    // config
+    // load database
     info!("Loading database");
     trace!("Getting database url from environment variables");
     let db_url = &env::var("DATABASE_URL").expect("Couldn't find DATABASE_URL");
-    trace!("Loading pool from new SQLITE connection");
+    trace!("Loading sqlx pool from new sqlite connection");
     let pool = SqlitePoolOptions::new()
         .max_connections(5)
         .connect(db_url)
@@ -61,11 +59,22 @@ async fn main() {
         .expect("Couldn't connect to pool");
 
     // run actix
-    info!("Starting web server");
-    HttpServer::new(move || App::new().data(pool.clone()).configure(routes::init))
-        .bind(BIND_ADDR)
-        .expect("Couldn't bind server")
-        .run()
-        .await
-        .expect("Server failed")
+    println!("Starting web server at {}..", bind_url()); // on purpose
+    let server = HttpServer::new(move || {
+        App::new()
+            .app_data(Data::new(pool.clone()))
+            .configure(routes::init)
+    });
+    match server.bind(BIND_ADDR) {
+        Ok(server) => match server.run().await {
+            Ok(()) => info!("Server ended successfully"),
+            Err(_) => error!("Could not run server at {}", bind_url()),
+        },
+        Err(_) => error!("Could not bind server to {}", bind_url()),
+    }
+}
+
+/// Generates url/address string from known bind address
+fn bind_url() -> String {
+    format!("http://{}:{} address", BIND_ADDR.0, BIND_ADDR.1)
 }

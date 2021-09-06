@@ -1,41 +1,40 @@
-{# basic/global template used for all #}
+<!-- fully converted -->
+
+<!-- basic/global template used for all -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    {# basic metadata #}
+    <!-- basic metadata -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {# google fonts #}
+    <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@400;700&family=News+Cycle:wght@400;700&family=Ubuntu+Mono&display=swap"
         rel="stylesheet">
-    {# headers/stylesheets #}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    {% block head %}{% endblock %}
-    {# title #}
+    <!-- headers/stylesheets -->
+    <link rel="stylesheet" href="/static/css/base.css">
+    <!-- title -->
     <title>HoleNews</title>
 </head>
 
 <body>
-    {# navbar #}
+    <!-- navbar -->
     <nav>
-        <div class="nav-left"><a href="{{ url_for('index') }}" class="nav-title noa">HN</a></div>
+        <div class="nav-left"><a href="/" class="nav-title noa">HN</a></div>
         <div class="nav-right">
             <p>More content here</p>
         </div>
     </nav>
-    {# page content #}
-    {% block content %}{% endblock %}
-    {# footer #}
+    <!-- page content -->
+    <!-- footer -->
     <footer>
         <p>Copyright © 2021 <a href="https://ogriffiths.com">Owen Griffiths</a></p>
         <a href="https://ogriffiths.com" class="noa">🔗</a>
     </footer>
-    {# scripts #}
-    <script src="{{ url_for('static', filename='js/holenews.js') }}"></script>
-    {% block scripts %}{% endblock %}
+    <!-- scripts -->
+    <script src="/static/js/base.js"></script>
 </body>

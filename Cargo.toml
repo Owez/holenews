@@ -8,9 +8,9 @@ log = "0.4"
 maud = "0.*"
 chrono = "0.4"
 dotenv = "0.15"
-actix-web = "3"
+actix-web = "4.0.0-beta.8"
 simplelog = "^0.10.0"
-actix-files = "0.5"
+actix-files = "0.6.0-beta.6"
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 sqlx = { version = "0.5", features = [ "runtime-tokio-rustls", "sqlite", "chrono" ] }
