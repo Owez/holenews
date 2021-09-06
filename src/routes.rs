@@ -31,9 +31,9 @@ mod api {
         pool: web::Data<SqlitePool>,
         num: web::Path<usize>,
     ) -> Result<impl Responder> {
+        let num = num.into_inner();
         info!("GET for api war of num {} route", num);
         let pool = pool.get_ref();
-        let num = num.into_inner();
         Ok(HttpResponse::Ok()
             .json(Schema::default().add_war(War::get_ensure(pool, num as i64).await?)))
     }
@@ -44,9 +44,9 @@ mod api {
         pool: web::Data<SqlitePool>,
         id: web::Path<usize>,
     ) -> Result<impl Responder> {
+        let id = id.into_inner();
         info!("GET for api battle of id {} route", id);
         let pool = pool.get_ref();
-        let id = id.into_inner();
         Ok(HttpResponse::Ok().json(
             Schema::default()
                 .add_battle(
@@ -65,7 +65,7 @@ mod api {
 mod basic {
     use crate::{Error, Result};
     use actix_files::NamedFile;
-    use actix_web::{get, Responder};
+    use actix_web::{get, web, Responder};
     use log::info;
     use std::path::PathBuf;
 
@@ -74,6 +74,22 @@ mod basic {
     pub async fn index() -> Result<impl Responder> {
         info!("GET for basic index route");
         let path: PathBuf = "./static/html/index.html".parse().unwrap();
+        NamedFile::open(path).map_err(|err| Error::StaticOpen(err))
+    }
+
+    #[get("/battle/{id}")]
+    pub async fn battle(id: web::Path<usize>) -> Result<impl Responder> {
+        let id = id.into_inner();
+        info!("GET for basic battle of id {} route", id);
+        let path: PathBuf = "./static/html/battle.html".parse().unwrap();
+        NamedFile::open(path).map_err(|err| Error::StaticOpen(err))
+    }
+
+    #[get("/war/{num}")]
+    pub async fn war(num: web::Path<usize>) -> Result<impl Responder> {
+        let num = num.into_inner();
+        info!("GET for war battle of num {} route", num);
+        let path: PathBuf = "./static/html/war.html".parse().unwrap();
         NamedFile::open(path).map_err(|err| Error::StaticOpen(err))
     }
 }
@@ -85,6 +101,8 @@ pub fn init(cfg: &mut ServiceConfig) {
     cfg.service(api::get_war);
     cfg.service(api::get_battle);
     cfg.service(basic::index);
+    cfg.service(basic::battle);
+    cfg.service(basic::war);
 
     trace!("Configuring static file routes");
     cfg.service(
