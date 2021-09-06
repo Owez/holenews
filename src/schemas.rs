@@ -16,7 +16,7 @@ pub struct Schema {
 
 impl Schema {
     /// Converts and adds a new war model
-    pub fn add_war(&mut self, war: War) -> &mut Self {
+    pub fn add_war(mut self, war: War) -> Self {
         trace!("Adding war to schema");
         let new_war = SchemaWar::from(war);
         match &mut self.wars {
@@ -27,7 +27,7 @@ impl Schema {
     }
 
     /// Converts and adds multiple wars
-    pub fn add_wars(&mut self, wars: Vec<War>) -> &mut Self {
+    pub fn add_wars(mut self, wars: Vec<War>) -> Self {
         trace!("Adding multiple wars to schema");
         let mapped = wars.into_iter().map(|war| SchemaWar::from(war)).collect();
         match &mut self.wars {
@@ -38,7 +38,7 @@ impl Schema {
     }
 
     /// Converts and adds a new battle model
-    pub fn add_battle(&mut self, battle: Battle) -> &mut Self {
+    pub fn add_battle(mut self, battle: Battle) -> Self {
         trace!("Adding battle to schema");
         let new_battle = SchemaBattle::from(battle);
         match &mut self.battles {
@@ -49,7 +49,7 @@ impl Schema {
     }
 
     /// Converts and adds multiple battles
-    pub fn add_battles(&mut self, battles: Vec<Battle>) -> &mut Self {
+    pub fn add_battles(mut self, battles: Vec<Battle>) -> Self {
         trace!("Adding multiple battles to schema");
         let mapped = battles
             .into_iter()
@@ -64,7 +64,7 @@ impl Schema {
 
     /// Populates the `wars` part by all battles currently included
     #[allow(unused_mut)]
-    pub async fn wars_from_battles(&mut self, pool: &SqlitePool) -> Result<&mut Self> {
+    pub async fn wars_from_battles(self, pool: &SqlitePool) -> Result<Self> {
         trace!("Adding known wars from known battles to schema");
         // TODO: make nicer algorithm for this
         let mut war_todos = vec![];
@@ -85,6 +85,14 @@ impl Schema {
             wars.push(War::get_ensure(pool, war_num).await?)
         }
         Ok(self.add_wars(wars))
+    }
+
+    /// Converts this schema into a standardized tera context for use in templating
+    pub fn to_tmpl_ctx(self) -> tera::Context {
+        let mut tmpl_ctx = tera::Context::new();
+        tmpl_ctx.insert("battles", &self.battles);
+        tmpl_ctx.insert("wars", &self.wars);
+        tmpl_ctx
     }
 }
 

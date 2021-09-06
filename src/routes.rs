@@ -9,35 +9,47 @@ use log::{info, trace};
 use sqlx::SqlitePool;
 
 #[get("/")]
-async fn index(pool: web::Data<SqlitePool>) -> Result<impl Responder> {
+async fn index(pool: web::Data<SqlitePool>, tmpl: web::Data<tera::Tera>) -> Result<impl Responder> {
     info!("GET of index/homepage route");
     let pool = pool.get_ref();
-    let _schema = Schema::default()
+    let tmpl_ctx = Schema::default()
         .add_battles(Battle::get_homepage(pool).await?)
         .wars_from_battles(pool)
-        .await?;
-    Ok(HttpResponse::Ok().body("tera here soon"))
+        .await?
+        .to_tmpl_ctx();
+    Ok(HttpResponse::Ok().body(tmpl.render("index.html", &tmpl_ctx)?))
 }
 
 #[get("/battle/{id}")]
-async fn battle(pool: web::Data<SqlitePool>, id: web::Path<usize>) -> Result<impl Responder> {
+async fn battle(
+    pool: web::Data<SqlitePool>,
+    tmpl: web::Data<tera::Tera>,
+    id: web::Path<usize>,
+) -> Result<impl Responder> {
     let id = id.into_inner();
     info!("GET of battle of id {} route", id);
     let pool = pool.get_ref();
-    let _schema = Schema::default()
+    let tmpl_ctx = Schema::default()
         .add_battle(Battle::get_ensure(pool, id as i64).await?)
         .wars_from_battles(pool)
-        .await?;
-    Ok(HttpResponse::Ok().body("tera here soon"))
+        .await?
+        .to_tmpl_ctx();
+    Ok(HttpResponse::Ok().body(tmpl.render("battle.html", &tmpl_ctx)?))
 }
 
 #[get("/war/{num}")]
-async fn war(pool: web::Data<SqlitePool>, num: web::Path<usize>) -> Result<impl Responder> {
+async fn war(
+    pool: web::Data<SqlitePool>,
+    tmpl: web::Data<tera::Tera>,
+    num: web::Path<usize>,
+) -> Result<impl Responder> {
     let num = num.into_inner();
     info!("GET of war of num {} route", num);
     let pool = pool.get_ref();
-    let _schema = Schema::default().add_war(War::get_ensure(pool, num as i64).await?);
-    Ok(HttpResponse::Ok().body("tera here soon"))
+    let tmpl_ctx = Schema::default()
+        .add_war(War::get_ensure(pool, num as i64).await?)
+        .to_tmpl_ctx();
+    Ok(HttpResponse::Ok().body(tmpl.render("war.html", &tmpl_ctx)?))
 }
 
 /// Factories all routes together for an actix app

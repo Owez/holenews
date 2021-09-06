@@ -18,7 +18,8 @@ use dotenv::dotenv;
 use log::{error, info, trace};
 use simplelog::*;
 use sqlx::sqlite::SqlitePoolOptions;
-use std::{env, fs::File};
+use std::{env, fs::File, process};
+use tera::Tera;
 
 /// Address to bind to
 const BIND_ADDR: (&str, u16) = ("0.0.0.0", 3224);
@@ -58,19 +59,36 @@ async fn main() {
         .await
         .expect("Couldn't connect to pool");
 
+    // init terra
+    trace!("Constructing tera templating instance");
+    let tera = match Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")) {
+        Ok(tera) => tera,
+        Err(err) => {
+            error!("Could not construct tera templating instance, {}", err);
+            process::exit(1)
+        }
+    };
+
     // run actix
     println!("Starting web server at {}..", bind_url()); // on purpose
     let server = HttpServer::new(move || {
         App::new()
+            .app_data(Data::new(tera.clone()))
             .app_data(Data::new(pool.clone()))
             .configure(routes::init)
     });
     match server.bind(BIND_ADDR) {
         Ok(server) => match server.run().await {
             Ok(()) => info!("Server ended successfully"),
-            Err(_) => error!("Could not run server at {}", bind_url()),
+            Err(_) => {
+                error!("Could not run server at {}", bind_url());
+                process::exit(1)
+            }
         },
-        Err(_) => error!("Could not bind server to {}", bind_url()),
+        Err(_) => {
+            error!("Could not bind server to {}", bind_url());
+            process::exit(1)
+        }
     }
 }
 

@@ -15,6 +15,7 @@ pub enum Error {
     LocationNotFound,
     WarNotFound(i64),
     BattleNotFound(i64),
+    TemplateRender(tera::Error),
 }
 
 impl From<sqlx::Error> for Error {
@@ -23,22 +24,33 @@ impl From<sqlx::Error> for Error {
     }
 }
 
+impl From<tera::Error> for Error {
+    fn from(err: tera::Error) -> Self {
+        Self::TemplateRender(err)
+    }
+}
+
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // TODO: add mixed logging here too
         match self {
             Error::StaticOpen(_) => write!(f, "Could not retrieve html file from static files"),
             Error::Database(_) => write!(f, "Database error"),
             Error::LocationNotFound => write!(f, "Map location provided could not be found"),
             Error::WarNotFound(num) => write!(f, "War number {} could not be found", num),
             Error::BattleNotFound(id) => write!(f, "Battle id {} could not be found", id),
+            Error::TemplateRender(_) => write!(f, "Could not properly render html template"),
         }
     }
 }
 
 impl ResponseError for Error {
     fn status_code(&self) -> StatusCode {
+        // TODO: make this better and add tera templating?
         match self {
-            Error::StaticOpen(_) | Error::Database(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            Error::StaticOpen(_) | Error::Database(_) | Error::TemplateRender(_) => {
+                StatusCode::INTERNAL_SERVER_ERROR
+            }
             Error::LocationNotFound | Error::WarNotFound(_) | Error::BattleNotFound(_) => {
                 StatusCode::NOT_FOUND
             }
