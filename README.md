@@ -18,7 +18,7 @@ Then, once you have installed Rust, launch an instance with the following comman
 cargo run
 ```
 
-The outputted binary will be in the `target/release/` directory. Now all that's left is optional [configuration](#configuration) and then you can move your binary and database to whatever location is most suitable.
+Now all that's left is optional [configuration](#configuration) and then you can move your binary and database to whatever location is most suitable! 😊
 
 ## Configuration
 
