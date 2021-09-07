@@ -4,22 +4,21 @@ Automated reporting and wiki website for the [Foxhole](https://store.steampowere
 
 ## Running
 
-Once you have installed Rust, compile with the following command:
+First, please install [`sqlx-cli`](https://crates.io/crates/sqlx-cli) and run the migrations as such:
 
 ```shell
-# build in release mode
-cargo build --release
-```
-
-The outputted binary will be in the `target/release/` directory. Once you have fetched that, please install [`sqlx-cli`]() and run the migrations as such:
-
-```shell
-cargo install sqlx-cli
+cargo install sqlx-cli --no-default-features --features sqlite
 sqlx database create
 sqlx migrate run
 ```
 
-Now all that's left is optional [configuration](#configuration) and then you can move your binary and database to whatever location is most suitable.
+Then, once you have installed Rust, launch an instance with the following command:
+
+```shell
+cargo run
+```
+
+The outputted binary will be in the `target/release/` directory. Now all that's left is optional [configuration](#configuration) and then you can move your binary and database to whatever location is most suitable.
 
 ## Configuration
 
