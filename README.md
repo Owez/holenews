@@ -31,7 +31,9 @@ LOG_TRACE=yes
 ```
 
 <!-- Just some decoration -->
+<br>
+<hr>
 <p align="center">
-    <br><br>
-    <img src="static/img/heatmap_bg.png" width=500/>
+    <br>
+    <img src="static/img/heatmap_bg.png" width=450/>
 </p>
