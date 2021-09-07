@@ -16,6 +16,8 @@ pub enum Error {
     WarNotFound(i64),
     BattleNotFound(i64),
     TemplateRender(tera::Error),
+    DataTooShort,
+    DataTooLong,
 }
 
 impl From<sqlx::Error> for Error {
@@ -40,6 +42,8 @@ impl fmt::Display for Error {
             Error::WarNotFound(num) => write!(f, "War number {} could not be found", num),
             Error::BattleNotFound(id) => write!(f, "Battle id {} could not be found", id),
             Error::TemplateRender(_) => write!(f, "Could not properly render html template"),
+            Error::DataTooShort => write!(f, "Inputted data was too short"),
+            Error::DataTooLong => write!(f, "Inputted data was too long"),
         }
     }
 }
@@ -54,6 +58,7 @@ impl ResponseError for Error {
             Error::LocationNotFound | Error::WarNotFound(_) | Error::BattleNotFound(_) => {
                 StatusCode::NOT_FOUND
             }
+            Error::DataTooShort | Error::DataTooLong => StatusCode::BAD_REQUEST,
         }
     }
 

@@ -6,6 +6,11 @@ use chrono::prelude::*;
 use log::trace;
 use sqlx::SqlitePool;
 
+const MIN_NAME: usize = 5;
+const MIN_DESCRIPTION: usize = 0;
+const MAX_NAME: usize = 32;
+const MAX_DESCRIPTION: usize = 2000;
+
 /// Single battle in the history of foxhole
 pub struct Battle {
     pub id: i64,
@@ -110,10 +115,23 @@ impl Battle {
         // TODO: refactor
         let name = name.into();
         let description = description.into();
+
         let last_edited = Utc::now().naive_utc();
 
         if let Some(name_val) = name {
-            if let Some(description_val) = description {
+            let name_len = name_val.len();
+            if name_len > MAX_NAME {
+                return Err(Error::DataTooLong);
+            } else if name_len < MIN_NAME {
+                return Err(Error::DataTooShort);
+            } else if let Some(description_val) = description {
+                let description_len = description_val.len();
+                if description_len > MAX_DESCRIPTION {
+                    return Err(Error::DataTooLong);
+                } else if description_len < MIN_DESCRIPTION {
+                    return Err(Error::DataTooShort);
+                }
+
                 sqlx::query!(
                     "UPDATE battle SET last_edited=?, name=?, description=? WHERE id=?",
                     last_edited,
@@ -134,6 +152,13 @@ impl Battle {
                 .await?;
             }
         } else if let Some(description_val) = description {
+            let description_len = description_val.len();
+            if description_len > MAX_DESCRIPTION {
+                return Err(Error::DataTooLong);
+            } else if description_len < MIN_DESCRIPTION {
+                return Err(Error::DataTooShort);
+            }
+
             sqlx::query!(
                 "UPDATE battle SET last_edited=?, description=? WHERE id=?",
                 last_edited,
