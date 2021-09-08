@@ -101,15 +101,21 @@ fn bind_url() -> String {
 
 /// Taken from [Tera Docs](https://tera.netlify.app/docs/#introduction), allows `url_for` mapping of templates
 fn make_url_for(urls: BTreeMap<String, String>) -> impl tera::Function {
-    // TODO: add `extra` tag
     Box::new(
         move |args: &HashMap<String, tera::Value>| -> tera::Result<tera::Value> {
             match args.get("name") {
                 Some(val) => match tera::from_value::<String>(val.clone()) {
-                    Ok(v) => Ok(tera::to_value(urls.get(&v).unwrap()).unwrap()),
-                    Err(_) => Err("oops".into()),
+                    Ok(v) => {
+                        let mut output = urls.get(&v).unwrap().to_string();
+                        if let Some(extra) = args.get("extra") {
+                            output.push_str(&format!("/{}", extra))
+                        }
+
+                        Ok(tera::to_value(output).unwrap())
+                    }
+                    Err(_) => Err("oops".into()), // TODO: update
                 },
-                None => Err("oops".into()),
+                None => Err("oops".into()), // TODO: update
             }
         },
     )
