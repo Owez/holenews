@@ -18,8 +18,13 @@ use dotenv::dotenv;
 use log::{error, info, trace};
 use simplelog::*;
 use sqlx::sqlite::SqlitePoolOptions;
-use std::{env, fs::File, process};
-use tera::Tera;
+use std::{
+    collections::{BTreeMap, HashMap},
+    env,
+    fs::File,
+    process,
+};
+use tera::{self, Tera};
 
 /// Address to bind to
 const BIND_ADDR: (&str, u16) = ("0.0.0.0", 3224);
@@ -61,13 +66,14 @@ async fn main() {
 
     // init terra
     trace!("Constructing tera templating instance");
-    let tera = match Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")) {
+    let mut tera = match Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")) {
         Ok(tera) => tera,
         Err(err) => {
             error!("Could not construct tera templating instance, {}", err);
             process::exit(1)
         }
     };
+    tera.register_function("url_for", make_url_for(route_urls()));
 
     // run actix
     println!("Starting web server at {}..", bind_url()); // on purpose
@@ -95,4 +101,28 @@ async fn main() {
 /// Generates url/address string from known bind address
 fn bind_url() -> String {
     format!("http://{}:{} address", BIND_ADDR.0, BIND_ADDR.1)
+}
+
+/// Taken from [Tera Docs](https://tera.netlify.app/docs/#introduction), allows `url_for` mapping of templates
+fn make_url_for(urls: BTreeMap<String, String>) -> impl tera::Function { // TODO: add `extra` tag
+    Box::new(
+        move |args: &HashMap<String, tera::Value>| -> tera::Result<tera::Value> {
+            match args.get("name") {
+                Some(val) => match tera::from_value::<String>(val.clone()) {
+                    Ok(v) => Ok(tera::to_value(urls.get(&v).unwrap()).unwrap()),
+                    Err(_) => Err("oops".into()),
+                },
+                None => Err("oops".into()),
+            }
+        },
+    )
+}
+
+/// Returns urls used for routes, inglorious due to tera
+fn route_urls() -> BTreeMap<String, String> {
+    let mut urls = BTreeMap::new();
+    urls.insert("index".to_string(), "/".to_string());
+    urls.insert("battle".to_string(), "/battle".to_string());
+    urls.insert("war".to_string(), "/war".to_string());
+    urls
 }

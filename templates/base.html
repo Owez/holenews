@@ -14,7 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@400;700&family=News+Cycle:wght@400;700&family=Ubuntu+Mono&display=swap"
         rel="stylesheet">
     {# headers/stylesheets #}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="/static/css/base.css">
     {% block head %}{% endblock %}
     {# title #}
     <title>HoleNews</title>
@@ -23,7 +23,7 @@
 <body>
     {# navbar #}
     <nav>
-        <div class="nav-left"><a href="{{ url_for('index') }}" class="nav-title noa">HN</a></div>
+        <div class="nav-left"><a href="{{ url_for(name='index') }}" class="nav-title noa">HN</a></div>
         <div class="nav-right">
             <p>More content here</p>
         </div>
@@ -36,6 +36,6 @@
         <a href="https://ogriffiths.com" class="noa">🔗</a>
     </footer>
     {# scripts #}
-    <script src="{{ url_for('static', filename='js/holenews.js') }}"></script>
+    <script src="/static/js/holenews.js"></script>
     {% block scripts %}{% endblock %}
 </body>
