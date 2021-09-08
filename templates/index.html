@@ -3,7 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="/static/css/index.css">
-<link rel="stylesheet" href="/static/css/base_article.css">
+<link rel="stylesheet" href="/static/css/article.css">
 {% endblock %}
 
 {% block content %}
@@ -14,9 +14,29 @@
 </div>
 <div class="content">
     <div class="content-left">
-        {% if articles %}
-        {% for article in articles %}
-        {% include 'base_article.html' %}
+        {% if wars or battles %}
+        {% for war in wars %}
+        <p>War #{war.num} here</p>
+        {% endfor %}
+        {% for battle in battles %}
+        <article>
+            <h1><a href="{{ url_for(name='battle', extra=battle.id) }}" class="noa">{{ battle.title }}</a></h1>
+            <p class="article-info">
+                <a href="{{ url_for(name='war', extra=battle.war_num) }}" class="war-tag fc noa">
+                    {{ battle.war_num }}
+                </a>
+                <span class="article-info-text">{{ battle.friendly_date }} — <span class="copy-link"
+                        href="{{ url_for(name='battle', extra=battle.id) }}"
+                        onclick="copy_link(this)">Copylink</span></span>
+            </p>
+            {% if battle.body %}
+            {{ battle.body }}
+            {% else %}
+            Unfortunately no user-submitted information is currently available for this battle, feel free to <a
+                href="{{ url_for(name='battle', extra=battle.id) }}#edit">edit
+                this battle</a> and add your own journalistic experiences!
+            {% endif %}
+        </article>
         {% endfor %}
         {% else %}
         <h2>No Articles Found!</h2>
