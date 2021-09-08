@@ -18,12 +18,8 @@ use dotenv::dotenv;
 use log::{error, info, trace};
 use simplelog::*;
 use sqlx::sqlite::SqlitePoolOptions;
-use std::{
-    collections::{BTreeMap, HashMap},
-    env,
-    fs::File,
-    process,
-};
+use std::collections::{BTreeMap, HashMap};
+use std::{env, fs::File, process};
 use tera::{self, Tera};
 
 /// Address to bind to
@@ -104,7 +100,8 @@ fn bind_url() -> String {
 }
 
 /// Taken from [Tera Docs](https://tera.netlify.app/docs/#introduction), allows `url_for` mapping of templates
-fn make_url_for(urls: BTreeMap<String, String>) -> impl tera::Function { // TODO: add `extra` tag
+fn make_url_for(urls: BTreeMap<String, String>) -> impl tera::Function {
+    // TODO: add `extra` tag
     Box::new(
         move |args: &HashMap<String, tera::Value>| -> tera::Result<tera::Value> {
             match args.get("name") {

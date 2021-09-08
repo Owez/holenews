@@ -28,11 +28,3 @@ The following environment variables may be changed in order to configure an inst
 DATABASE_URL=sqlite://holenews.db
 LOG_TRACE=yes
 ```
-
-<!-- Just some decoration -->
-<br>
-<hr>
-<p align="center">
-    <br>
-    <img src="static/img/heatmap_bg.png" width=450/>
-</p>
