@@ -2,6 +2,13 @@
 
 Automated reporting and wiki website for the [Foxhole](https://store.steampowered.com/app/505460/Foxhole/) game
 
+## Showcase
+
+Some screenshots displaying the current state of the HoleNews frontend:
+
+![Homepage](static/img/readme-frontpage.png)
+![Battle article + insights](static/img/readme-battle.png)
+
 ## Running
 
 First, please install [`sqlx-cli`](https://crates.io/crates/sqlx-cli) and run the migrations as such:
