@@ -10,6 +10,7 @@
 holenews.db*
 scripts/mapdump.txt
 instance.log
+holenews-release/
 
 # debugging templates
 app.py
