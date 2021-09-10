@@ -3,6 +3,7 @@
 #![feature(non_ascii_idents)]
 #![feature(exclusive_range_pattern)]
 #![deny(unsafe_code)]
+#![warn(missing_docs)]
 
 pub mod map;
 pub mod models;

@@ -8,10 +8,15 @@ use sqlx::{FromRow, SqlitePool};
 /// Ongoing or historic war
 #[derive(FromRow)]
 pub struct War {
+    /// Number of war according to external sources
     pub num: i64,
+    /// Start timestamp of this war
     pub time_start: NaiveDateTime,
+    /// End timestamp of this war if it is historic
     pub time_end: Option<NaiveDateTime>,
+    /// Indicates if the colonial faction won if it is historic
     pub colonial_win: Option<bool>,
+    /// Timestamp of when this battle was submitted to the database
     pub submitted: NaiveDateTime,
 }
 

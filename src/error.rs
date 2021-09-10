@@ -10,13 +10,21 @@ pub type Result<T> = std::result::Result<T, Error>;
 /// Crate-specific central error variants
 #[derive(Debug)]
 pub enum Error {
+    /// Static file opening error (most likely missing)
     StaticOpen(io::Error),
+    /// Database error from sqlx
     Database(sqlx::Error),
+    /// Map location couldn't be found
     LocationNotFound,
+    /// War of number couldn't be found
     WarNotFound(i64),
+    /// Battle of id couldn't be found
     BattleNotFound(i64),
+    /// There was an error rendering templates using tera
     TemplateRender(tera::Error),
+    /// Data provided for an input was too short
     DataTooShort,
+    /// Data provided for an input was too long
     DataTooLong,
 }
 

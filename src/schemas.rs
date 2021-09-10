@@ -8,6 +8,7 @@ use serde::Serialize;
 use sqlx::SqlitePool;
 
 /// Top-level schema used as a basis for others, in order to unify constructs
+#[allow(missing_docs)]
 #[derive(Serialize, Clone)]
 pub struct Schema {
     pub wars: Option<Vec<SchemaWar>>,
@@ -106,13 +107,13 @@ impl Default for Schema {
 }
 
 /// Conversion for a war model
+#[allow(missing_docs)]
 #[derive(Serialize, Clone)]
 pub struct SchemaWar {
     pub num: i64,
     pub time_start: String,
     pub time_end: Option<String>,
     pub colonial_win: Option<bool>,
-    // pub submitted: String, // not needed
 }
 
 impl From<War> for SchemaWar {
@@ -128,6 +129,7 @@ impl From<War> for SchemaWar {
 }
 
 /// Conversion for a battle model
+#[allow(missing_docs)]
 #[derive(Serialize, Clone)]
 pub struct SchemaBattle {
     pub id: i64,
@@ -162,6 +164,7 @@ impl From<Battle> for SchemaBattle {
 }
 
 /// Conversion for a population model; typically used as a vector of these
+#[allow(missing_docs)]
 #[derive(Serialize, Clone)]
 pub struct SchemaPopulation {
     pub counted: i64,
@@ -172,6 +175,7 @@ pub struct SchemaPopulation {
 }
 
 impl SchemaPopulation {
+    /// Converts optional vector of population reports to a vector of schemas
     pub fn from_reports(pop_reports: Option<Vec<Population>>) -> Option<Vec<Self>> {
         match pop_reports {
             Some(pop_reports) => Some(

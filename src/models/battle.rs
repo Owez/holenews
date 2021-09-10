@@ -13,13 +13,21 @@ const MAX_DESCRIPTION: usize = 2000;
 
 /// Single battle in the history of foxhole
 pub struct Battle {
+    /// Id of battle, autoincremented
     pub id: i64,
+    /// Number of war that this battle corresponds to
     pub war_num: i64,
+    /// Map location this battle occurred in
     pub map: Map,
+    /// Optional user-submitted name of this battle
     pub name: Option<String>,
+    /// Optional user-submitted description of this battle
     pub description: Option<String>,
+    /// When the last piece user-submitted content was edited, if any
     pub last_edited: Option<NaiveDateTime>,
+    /// Timestamp of when this battle was submitted to the database
     pub submitted: NaiveDateTime,
+    /// Population reports of this battle which may be fetched after making this structure
     pub pop_reports: Option<Vec<Population>>,
 }
 

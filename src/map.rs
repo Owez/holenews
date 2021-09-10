@@ -30,11 +30,17 @@ pub trait Location: Sized {
 /// Serializable location information generated from a given [Location] implementation
 #[derive(Serialize, Clone)]
 pub struct LocationInfo {
+    /// Indicates if this location is a major point
     pub is_major: bool,
+    /// Coordinates of location
     pub coords: (f64, f64),
+    /// Hex name which is suitable for api usage
     pub hex_api: String,
+    /// Hex name to display to users
     pub hex_friendly: String,
+    /// Location name which is suitable for api usage
     pub name_api: String,
+    /// Location name to display to users
     pub name_friendly: String,
 }
 
@@ -56,6 +62,7 @@ impl LocationInfo {
 }
 
 /// Rich location marker for each hex and then location of a map
+#[allow(missing_docs)]
 pub enum Map {
     Stonecradle(Stonecradle),
     AllodsBight(AllodsBight),

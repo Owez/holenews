@@ -8,11 +8,17 @@ use sqlx::{FromRow, SqlitePool};
 /// Population report for a given battle, denoting a count for a given time
 #[derive(FromRow)]
 pub struct Population {
+    /// Battle id this corresponds to
     pub battle_id: i64,
+    /// Amount of population counted for this report
     pub counted: i64,
+    /// Date at which this count occured, merged with the battle id as a primary key
     pub at_time: NaiveDateTime,
+    /// Optional user-submitted description of this report
     pub description: Option<String>,
+    /// When the last piece user-submitted content was edited, if any
     pub last_edited: Option<NaiveDateTime>,
+    /// Timestamp of when this battle was submitted to the database
     pub submitted: NaiveDateTime,
 }
 
