@@ -1,8 +1,11 @@
 //! Serde-based schemas to convert models such as battles into
 
+use std::time::Duration;
+
 use crate::map::{Location, LocationInfo};
 use crate::models::{Battle, Population, War};
 use crate::Result;
+use chrono::{NaiveDateTime, Utc};
 use log::trace;
 use serde::Serialize;
 use sqlx::SqlitePool;
@@ -112,6 +115,8 @@ impl Default for Schema {
 pub struct SchemaWar {
     pub num: i64,
     pub time_start: String,
+    /// Indicates if this was in the last 24 hours, for usage in templating
+    pub was_today: bool,
     pub time_end: Option<String>,
     pub colonial_win: Option<bool>,
 }
@@ -122,6 +127,7 @@ impl From<War> for SchemaWar {
         Self {
             num: war.num,
             time_start: war.time_start.to_string(),
+            was_today: war.time_start > last_day_native(),
             time_end: war.time_end.map(|dt| dt.to_string()),
             colonial_win: war.colonial_win,
         }
@@ -198,4 +204,10 @@ impl From<Population> for SchemaPopulation {
             last_edited: pop_report.last_edited.map(|dt| dt.to_string()),
         }
     }
+}
+
+/// Gets 24 hours before current time
+fn last_day_native() -> NaiveDateTime {
+    let utc = Utc::now() - chrono::Duration::from_std(Duration::from_secs(60 * 60 * 24)).unwrap();
+    utc.naive_utc()
 }
