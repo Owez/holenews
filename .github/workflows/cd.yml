@@ -1,0 +1,11 @@
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types:
+      - completed
+
+name: Continuous Deployment
+
+  # only:
+  #   refs:
+  #     - master
